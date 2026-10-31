@@ -8,42 +8,60 @@
     "--pretty"
   ],
   "disabled": [],
-  "endTimestamp": 1793433066167,
+  "endTimestamp": 1793433170246,
   "failedBuilds": {},
   "fdroiddata": {
-    "commitId": null,
+    "commitId": "a87443ef1d4955dceed72f4a9fdb11fa078e0971",
     "isDirty": false,
     "modifiedFiles": [],
     "untrackedFiles": [
       "config.yml",
       "icon.png",
-      "metadata/it.michele.sveglia.yml",
-      "repo/sveglia-1.0.0.apk"
+      "metadata/dev.antidroidvirus.yml",
+      "metadata/io.github.thamichele.smbcommander.yml",
+      "metadata/io.github.thamichele.webradiodroid.yml",
+      "metadata/it.michele.wgswitch.yml",
+      "repo/dev.antidroidvirus_140.apk",
+      "repo/io.github.thamichele.smbcommander_1001000.apk",
+      "repo/io.github.thamichele.webradiodroid_2200000.apk",
+      "repo/it.michele.wgswitch_20000.apk"
     ]
   },
   "jarsigner": "/usr/bin/jarsigner",
   "keytool": "/usr/bin/keytool",
   "needsUpdate": [
-    "it.michele.sveglia"
+    "dev.antidroidvirus",
+    "io.github.thamichele.smbcommander",
+    "io.github.thamichele.webradiodroid",
+    "it.michele.sveglia",
+    "it.michele.wgswitch"
   ],
   "noPackages": [
-    "it.michele.sveglia"
+    "dev.antidroidvirus",
+    "io.github.thamichele.smbcommander",
+    "io.github.thamichele.webradiodroid",
+    "it.michele.sveglia",
+    "it.michele.wgswitch"
   ],
   "noUpdateCheck": [
-    "it.michele.sveglia"
+    "dev.antidroidvirus",
+    "io.github.thamichele.smbcommander",
+    "io.github.thamichele.webradiodroid",
+    "it.michele.sveglia",
+    "it.michele.wgswitch"
   ],
   "stages": {
-    "archive_old_apks archive": 1793433059480,
-    "delete_disabled_builds": 1793433059127,
-    "index.make archive": 1793433059481,
-    "index.make repo": 1793433063036,
-    "prepare_apps archive": 1793433059480,
-    "prepare_apps repo": 1793433063035,
-    "process_apks": 1793433059127,
-    "read_added_date_from_all_apks": 1793433059479,
-    "remove_apks": 1793433059478,
-    "scan_repo_files": 1793433059478
+    "archive_old_apks archive": 1793433163258,
+    "delete_disabled_builds": 1793433160849,
+    "index.make archive": 1793433163260,
+    "index.make repo": 1793433167010,
+    "prepare_apps archive": 1793433163259,
+    "prepare_apps repo": 1793433167009,
+    "process_apks": 1793433160849,
+    "read_added_date_from_all_apks": 1793433163258,
+    "remove_apks": 1793433163257,
+    "scan_repo_files": 1793433163256
   },
-  "startTimestamp": 1793433059000,
+  "startTimestamp": 1793433160000,
   "subcommand": "update"
 }

@@ -1,6 +1,6 @@
 {
   "repo": {
-    "timestamp": 1793433063000,
+    "timestamp": 1793433167000,
     "version": 20002,
     "name": "App personali",
     "icon": "icon.png",
@@ -12,6 +12,33 @@
     "uninstall": []
   },
   "apps": [
+    {
+      "authorName": "Michele",
+      "categories": [
+        "Security"
+      ],
+      "suggestedVersionCode": "140",
+      "description": "App per uso personale: registra quali app usano posizione, fotocamera, microfono,\ncontatti, SMS e altri permessi, segnala i comportamenti insoliti, d\u00e0 un punteggio\ndi rischio alle app installate e controlla i file scaricati e le app appena installate.\n\nRichiede il permesso GET_APP_OPS_STATS concesso una volta via ADB. Shizuku \u00e8 facoltativo.",
+      "issueTracker": "https://github.com/thamichele/antidroidvirus/issues",
+      "license": "Unknown",
+      "name": "AntiDroidVirus",
+      "sourceCode": "https://github.com/thamichele/antidroidvirus",
+      "summary": "Registra e segnala l'uso dei permessi e le app sospette",
+      "added": 1793433161000,
+      "packageName": "dev.antidroidvirus",
+      "lastUpdated": 1793433161000
+    },
+    {
+      "categories": [
+        "fdroid-repo"
+      ],
+      "suggestedVersionCode": "1001000",
+      "license": "Unknown",
+      "name": "SMBCommander",
+      "added": 1793433162000,
+      "packageName": "io.github.thamichele.smbcommander",
+      "lastUpdated": 1793433162000
+    },
     {
       "authorName": "Michele",
       "categories": [
@@ -29,9 +56,251 @@
       "icon": "it.michele.sveglia.10000.png",
       "packageName": "it.michele.sveglia",
       "lastUpdated": 1793433059000
+    },
+    {
+      "authorName": "Michele",
+      "categories": [
+        "Multimedia",
+        "Internet"
+      ],
+      "suggestedVersionCode": "2200000",
+      "description": "Ascolta le tue webradio dal telefono e in auto con Android Auto. WebRadioDroid nasce da Transistor\n(Y20K, licenza MIT) e aggiunge loghi delle stazioni in Android Auto, preferiti, nomi personalizzati\ne un timer di spegnimento pi\u00f9 comodo.\n\nFunzioni principali:\n* ricerca delle stazioni nell'archivio radio-browser.info oppure aggiunta di un link di streaming\n* loghi delle stazioni cercati in automatico sul web quando mancano\n* tieni premuto su una stazione per fissarla in cima ai preferiti o darle un nome a tuo piacere\n* timer di spegnimento con scelta rapida della durata: allo scadere l'app si chiude del tutto, per risparmiare batteria\n* notifica con barra di avanzamento per ogni brano e cambio stazione con i tasti avanti e indietro\n* tema arancione\n\nNessuna pubblicit\u00e0 e nessun tracciamento.",
+      "issueTracker": "https://github.com/thamichele/webradiodroid/issues",
+      "license": "MIT",
+      "name": "WebRadioDroid",
+      "sourceCode": "https://github.com/thamichele/webradiodroid",
+      "summary": "Webradio per telefono e Android Auto, con loghi automatici e tema arancione",
+      "webSite": "https://github.com/thamichele/webradiodroid",
+      "added": 1793433162000,
+      "packageName": "io.github.thamichele.webradiodroid",
+      "lastUpdated": 1793433162000
+    },
+    {
+      "authorName": "Michele",
+      "categories": [
+        "Connectivity",
+        "System"
+      ],
+      "suggestedVersionCode": "20000",
+      "description": "Controlla un tunnel dell'app WireGuard ufficiale: lo spegne quando sei collegato a una delle reti WiFi\no dei dispositivi Bluetooth scelti, oppure ad Android Auto, e lo riaccende negli altri casi.\n\nRichiede l'app WireGuard con l'opzione \"Consenti app di controllo remoto\" attiva.",
+      "issueTracker": "https://github.com/thamichele/wgswitch/issues",
+      "license": "Proprietary",
+      "name": "WG Switch",
+      "sourceCode": "https://github.com/thamichele/wgswitch",
+      "summary": "Spegne e riaccende il tunnel WireGuard in base a WiFi, Bluetooth e Android Auto",
+      "added": 1793433163000,
+      "icon": "it.michele.wgswitch.20000.png",
+      "packageName": "it.michele.wgswitch",
+      "lastUpdated": 1793433163000
     }
   ],
   "packages": {
+    "dev.antidroidvirus": [
+      {
+        "added": 1793433161000,
+        "apkName": "dev.antidroidvirus_140.apk",
+        "hash": "4e139c24e620490be9724c37acefe0402839bb68b23fa06ba2deaa4db3e4f6e0",
+        "hashType": "sha256",
+        "minSdkVersion": 30,
+        "nativecode": [
+          "arm64-v8a",
+          "armeabi-v7a",
+          "x86",
+          "x86_64"
+        ],
+        "packageName": "dev.antidroidvirus",
+        "sig": "416dbd272844efda19db2dbc9d74cb35",
+        "signer": "52c6192939571634951b82ee34424660f5055be2efb8c50280f0dfa772eae9eb",
+        "size": 2264553,
+        "targetSdkVersion": 36,
+        "uses-permission": [
+          [
+            "android.permission.GET_APP_OPS_STATS",
+            null
+          ],
+          [
+            "android.permission.PACKAGE_USAGE_STATS",
+            null
+          ],
+          [
+            "android.permission.QUERY_ALL_PACKAGES",
+            null
+          ],
+          [
+            "android.permission.POST_NOTIFICATIONS",
+            null
+          ],
+          [
+            "android.permission.MANAGE_EXTERNAL_STORAGE",
+            null
+          ],
+          [
+            "android.permission.REQUEST_DELETE_PACKAGES",
+            null
+          ],
+          [
+            "android.permission.FOREGROUND_SERVICE",
+            null
+          ],
+          [
+            "android.permission.FOREGROUND_SERVICE_SPECIAL_USE",
+            null
+          ],
+          [
+            "android.permission.RECEIVE_BOOT_COMPLETED",
+            null
+          ],
+          [
+            "android.permission.HIDE_OVERLAY_WINDOWS",
+            null
+          ],
+          [
+            "moe.shizuku.manager.permission.API_V23",
+            null
+          ],
+          [
+            "dev.antidroidvirus.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION",
+            null
+          ]
+        ],
+        "versionCode": 140,
+        "versionName": "0.6.2"
+      }
+    ],
+    "io.github.thamichele.smbcommander": [
+      {
+        "added": 1793433162000,
+        "apkName": "io.github.thamichele.smbcommander_1001000.apk",
+        "hash": "91d5d211a5fbe65d7cea497c8511a942e1ff074d88451cb502f7aa0ca5e93a58",
+        "hashType": "sha256",
+        "minSdkVersion": 26,
+        "nativecode": [
+          "arm64-v8a",
+          "armeabi-v7a",
+          "x86",
+          "x86_64"
+        ],
+        "packageName": "io.github.thamichele.smbcommander",
+        "sig": "85ea845c54d1f71da43bdec9d4cafdab",
+        "signer": "3b92a1bacd13aa6c05b651eb0a2489c8032f62b4f7c6834835cae72e23d9028c",
+        "size": 16599262,
+        "targetSdkVersion": 37,
+        "uses-permission": [
+          [
+            "android.permission.INTERNET",
+            null
+          ],
+          [
+            "android.permission.READ_MEDIA_IMAGES",
+            null
+          ],
+          [
+            "android.permission.READ_MEDIA_VIDEO",
+            null
+          ],
+          [
+            "android.permission.READ_EXTERNAL_STORAGE",
+            32
+          ],
+          [
+            "android.permission.ACCESS_MEDIA_LOCATION",
+            null
+          ],
+          [
+            "android.permission.POST_NOTIFICATIONS",
+            null
+          ],
+          [
+            "android.permission.FOREGROUND_SERVICE",
+            null
+          ],
+          [
+            "android.permission.FOREGROUND_SERVICE_DATA_SYNC",
+            null
+          ],
+          [
+            "android.permission.WAKE_LOCK",
+            null
+          ],
+          [
+            "android.permission.ACCESS_NETWORK_STATE",
+            null
+          ],
+          [
+            "android.permission.RECEIVE_BOOT_COMPLETED",
+            null
+          ],
+          [
+            "io.github.thamichele.smbcommander.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION",
+            null
+          ]
+        ],
+        "versionCode": 1001000,
+        "versionName": "1.1.0"
+      }
+    ],
+    "io.github.thamichele.webradiodroid": [
+      {
+        "added": 1793433162000,
+        "apkName": "io.github.thamichele.webradiodroid_2200000.apk",
+        "hash": "b6ccf360ad562935a38774ba767b30be2f5104c565c94a40c5cde6577abb04c4",
+        "hashType": "sha256",
+        "minSdkVersion": 25,
+        "packageName": "io.github.thamichele.webradiodroid",
+        "sig": "f5c6313cad11625467121d0206ed111a",
+        "signer": "6f57e29c9299491823e19da5e688175f622ae14a404b7fbb2f429042214005b0",
+        "size": 3589274,
+        "targetSdkVersion": 37,
+        "uses-permission": [
+          [
+            "android.permission.FOREGROUND_SERVICE",
+            null
+          ],
+          [
+            "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK",
+            null
+          ],
+          [
+            "android.permission.INTERNET",
+            null
+          ],
+          [
+            "android.permission.WAKE_LOCK",
+            null
+          ],
+          [
+            "android.permission.ACCESS_WIFI_STATE",
+            null
+          ],
+          [
+            "android.permission.ACCESS_NETWORK_STATE",
+            null
+          ],
+          [
+            "android.permission.READ_EXTERNAL_STORAGE",
+            null
+          ],
+          [
+            "android.permission.VIBRATE",
+            null
+          ],
+          [
+            "androidx.car.app.MEDIA_TEMPLATES",
+            null
+          ],
+          [
+            "android.permission.RECEIVE_BOOT_COMPLETED",
+            null
+          ],
+          [
+            "io.github.thamichele.webradiodroid.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION",
+            null
+          ]
+        ],
+        "versionCode": 2200000,
+        "versionName": "2.0.0"
+      }
+    ],
     "it.michele.sveglia": [
       {
         "added": 1793433059000,
@@ -76,6 +345,72 @@
         ],
         "versionCode": 10000,
         "versionName": "1.0.0"
+      }
+    ],
+    "it.michele.wgswitch": [
+      {
+        "added": 1793433163000,
+        "apkName": "it.michele.wgswitch_20000.apk",
+        "hash": "94facc9dd702485b80a579832d38dd4e9291057b774833b4181df60aa6147d38",
+        "hashType": "sha256",
+        "minSdkVersion": 33,
+        "packageName": "it.michele.wgswitch",
+        "sig": "5b915cafe721845fa834569b132dbc07",
+        "signer": "23234767bec703550d705d3cd819d578832a2a1c7f9cebef15784125dac5caa0",
+        "size": 54230,
+        "targetSdkVersion": 34,
+        "uses-permission": [
+          [
+            "android.permission.ACCESS_NETWORK_STATE",
+            null
+          ],
+          [
+            "android.permission.ACCESS_WIFI_STATE",
+            null
+          ],
+          [
+            "android.permission.ACCESS_COARSE_LOCATION",
+            null
+          ],
+          [
+            "android.permission.ACCESS_FINE_LOCATION",
+            null
+          ],
+          [
+            "android.permission.ACCESS_BACKGROUND_LOCATION",
+            null
+          ],
+          [
+            "android.permission.BLUETOOTH_CONNECT",
+            null
+          ],
+          [
+            "android.permission.FOREGROUND_SERVICE",
+            null
+          ],
+          [
+            "android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE",
+            null
+          ],
+          [
+            "android.permission.POST_NOTIFICATIONS",
+            null
+          ],
+          [
+            "android.permission.RECEIVE_BOOT_COMPLETED",
+            null
+          ],
+          [
+            "android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS",
+            null
+          ],
+          [
+            "com.wireguard.android.permission.CONTROL_TUNNELS",
+            null
+          ]
+        ],
+        "versionCode": 20000,
+        "versionName": "2.0.0"
       }
     ]
   }
