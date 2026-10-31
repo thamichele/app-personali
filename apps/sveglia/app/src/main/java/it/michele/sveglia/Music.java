@@ -5,9 +5,11 @@ import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.media.AudioManager;
+import android.net.Uri;
 import android.media.browse.MediaBrowser;
 import android.media.session.MediaController;
 import android.media.session.MediaSessionManager;
@@ -66,6 +68,9 @@ final class Music {
             i = new Intent("org.y20k.transistor.action.START").setClassName(a.app, "org.y20k.transistor.MainActivity");
             if (a.media.isEmpty()) i.putExtra("START_LAST_PLAYED_STATION", true);
             else i.putExtra("STATION_UUID", a.media);
+        } else if (a.isLink()) {
+            // link di una playlist o di un album (es. open.qobuz.com/playlist/...), aperto solo nell'app scelta
+            i = new Intent(Intent.ACTION_VIEW, Uri.parse(a.query)).setPackage(a.app);
         } else if (a.media.isEmpty() && !a.query.isEmpty()) {
             i = new Intent(MediaStore.INTENT_ACTION_MEDIA_PLAY_FROM_SEARCH).setPackage(a.app)
                     .putExtra(SearchManager.QUERY, a.query);
@@ -87,23 +92,33 @@ final class Music {
         }
     }
 
+    /** App musicali note che non sempre si dichiarano tali. */
+    private static final Set<String> KNOWN = new HashSet<>(java.util.Arrays.asList(
+            QOBUZ, "com.spotify.music", "com.aspiro.tidal", "com.google.android.apps.youtube.music",
+            "deezer.android.app", "com.amazon.mp3", "com.apple.android.music", "com.soundcloud.android",
+            "com.sec.android.app.music", "com.maxmpz.audioplayer", "tv.plex.labs.plexamp", "com.bandcamp.android"));
+
     /**
-     * App musicali: quelle con un catalogo multimediale (lo stesso usato da Android Auto), che accettano
-     * "riproduci da ricerca" o che si dichiarano app musicali. Prima WebRadioDroid e Qobuz, poi in ordine alfabetico.
+     * Solo app musicali: WebRadioDroid, quelle note, quelle con categoria "audio" o che si dichiarano lettori
+     * musicali. Prima WebRadioDroid e Qobuz, poi in ordine alfabetico.
      */
     static List<App> musicApps(Context c) {
         PackageManager pm = c.getPackageManager();
-        Set<String> pkgs = new HashSet<>();
-        for (ResolveInfo r : pm.queryIntentServices(new Intent(BROWSER_SERVICE), 0)) pkgs.add(r.serviceInfo.packageName);
-        for (ResolveInfo r : pm.queryIntentActivities(new Intent(MediaStore.INTENT_ACTION_MEDIA_PLAY_FROM_SEARCH), 0)) {
-            pkgs.add(r.activityInfo.packageName);
-        }
-        Intent music = new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_APP_MUSIC);
-        for (ResolveInfo r : pm.queryIntentActivities(music, 0)) pkgs.add(r.activityInfo.packageName);
-        pkgs.remove(c.getPackageName());
+        Set<String> music = new HashSet<>();
+        Intent player = new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_APP_MUSIC);
+        for (ResolveInfo r : pm.queryIntentActivities(player, 0)) music.add(r.activityInfo.packageName);
 
         List<App> apps = new ArrayList<>();
-        for (String pkg : pkgs) if (installed(c, pkg)) apps.add(new App(pkg, label(c, pkg)));
+        Set<String> seen = new HashSet<>();
+        Intent launcher = new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER);
+        for (ResolveInfo r : pm.queryIntentActivities(launcher, 0)) {
+            String pkg = r.activityInfo.packageName;
+            if (pkg.equals(c.getPackageName()) || !seen.add(pkg)) continue;
+            boolean audio = r.activityInfo.applicationInfo.category == ApplicationInfo.CATEGORY_AUDIO;
+            if (isWebRadio(pkg) || KNOWN.contains(pkg) || music.contains(pkg) || audio) {
+                apps.add(new App(pkg, r.loadLabel(pm).toString()));
+            }
+        }
         Collections.sort(apps, new Comparator<App>() {
             @Override
             public int compare(App a, App b) {

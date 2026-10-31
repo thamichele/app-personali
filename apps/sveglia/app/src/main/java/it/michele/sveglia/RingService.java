@@ -71,19 +71,24 @@ public class RingService extends Service {
     private void tryPlay(boolean retry) {
         final Alarm a = current;
         if (a == null) return;
-        boolean chosen = !a.media.isEmpty() || !a.query.isEmpty();
+        boolean chosen = a.hasChoice();
         boolean silent = !getSystemService(AudioManager.class).isMusicActive();
         // l'azione di avvio di WebRadioDroid fa già partire la stazione scelta
         boolean started = Music.isWebRadio(a.app) && Music.launchPlays(this, a);
         if (!retry) {
             // anche se l'app è già ripartita da sola (ultima riproduzione) va chiesto quello che è stato scelto
-            if (chosen && !started) Music.command(this, a, true);
-            else if (silent) Music.command(this, a, false);
+            if (chosen && !started) {
+                Music.command(this, a, true);
+            } else if (silent) {
+                // il tasto Play è il comando che tutte le app accettano (Qobuz ignora gli altri)
+                new Store(this).log("tasto Play all'app");
+                Music.pressApp(this, a.app, KeyEvent.KEYCODE_MEDIA_PLAY);
+            }
             return;
         }
         if (!silent) return;
         new Store(this).log("ancora silenzio: riprovo");
-        Music.command(this, a, chosen && !started);
+        if (chosen && !started) Music.command(this, a, true); else Music.pressApp(this, a.app, KeyEvent.KEYCODE_MEDIA_PLAY);
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {

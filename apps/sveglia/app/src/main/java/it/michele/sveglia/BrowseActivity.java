@@ -75,7 +75,7 @@ public class BrowseActivity extends Activity {
 
         search = new EditText(this);
         search.setSingleLine();
-        search.setHint("Cerca");
+        search.setHint("Cerca, oppure incolla un link di playlist o album");
         search.setTextColor(Ui.TEXT);
         search.setHintTextColor(Ui.OFF);
         search.setImeOptions(EditorInfo.IME_ACTION_DONE);
@@ -177,7 +177,8 @@ public class BrowseActivity extends Activity {
         labels.add("▶  Ultima riproduzione");
         if (!q.isEmpty()) {
             entries.add(QUERY);
-            labels.add("🔍  Quando suona, cerca “" + q + "”");
+            labels.add(q.startsWith("https://") ? "\uD83D\uDD17  Quando suona, apri il link e premi Play"
+                    : "🔍  Quando suona, cerca “" + q + "”");
         }
         if (stack.size() > 1) {
             entries.add(UP);

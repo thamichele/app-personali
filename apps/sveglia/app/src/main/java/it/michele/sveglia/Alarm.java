@@ -48,9 +48,16 @@ final class Alarm {
         return (c.get(Calendar.DAY_OF_WEEK) + 5) % 7;
     }
 
-    /** "Ultima riproduzione", il titolo scelto o la ricerca. */
+    /** La "ricerca" è un link https da aprire nell'app (es. una playlist Qobuz). */
+    boolean isLink() { return media.isEmpty() && query.startsWith("https://"); }
+
+    /** true se va chiesto all'app un elemento o una ricerca (non per i link, che si aprono all'avvio). */
+    boolean hasChoice() { return !media.isEmpty() || (!query.isEmpty() && !isLink()); }
+
+    /** "Ultima riproduzione", il titolo scelto, il link o la ricerca. */
     String what() {
         if (!media.isEmpty()) return mediaTitle.isEmpty() ? media : mediaTitle;
+        if (isLink()) return "Link " + query.replaceFirst("^https://", "");
         if (!query.isEmpty()) return "Cerca \u201c" + query + "\u201d";
         return "Ultima riproduzione";
     }
