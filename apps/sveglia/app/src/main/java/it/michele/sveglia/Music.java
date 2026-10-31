@@ -1,0 +1,182 @@
+package it.michele.sveglia;
+
+import android.app.NotificationManager;
+import android.app.SearchManager;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.media.AudioManager;
+import android.media.browse.MediaBrowser;
+import android.media.session.MediaController;
+import android.media.session.MediaSessionManager;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.SystemClock;
+import android.provider.MediaStore;
+import android.view.KeyEvent;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+/** Avvio delle app musicali usate come suoneria. */
+final class Music {
+    static final String WEBRADIO = "io.github.thamichele.webradiodroid";
+    static final String QOBUZ = "com.qobuz.music";
+    static final String BROWSER_SERVICE = "android.media.browse.MediaBrowserService";
+
+    private Music() {}
+
+    /** App avviabile con nome visibile. */
+    static final class App {
+        final String pkg;
+        final String label;
+        App(String pkg, String label) { this.pkg = pkg; this.label = label; }
+    }
+
+    static boolean isWebRadio(String pkg) {
+        return pkg.equals(WEBRADIO) || pkg.equals(WEBRADIO + ".debug");
+    }
+
+    /**
+     * Intent che apre l'app e, quando l'app lo permette, avvia già la riproduzione: WebRadioDroid ha un'azione
+     * per l'ultima stazione o una stazione precisa; per una ricerca si usa l'azione standard "riproduci da ricerca".
+     */
+    static Intent launchIntent(Context c, Alarm a) {
+        Intent i = playIntent(c, a);
+        if (i == null) i = c.getPackageManager().getLaunchIntentForPackage(a.app);
+        if (i != null) i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        return i;
+    }
+
+    /** true se l'intent di avvio fa partire da solo quello che è stato scelto. */
+    static boolean launchPlays(Context c, Alarm a) {
+        return playIntent(c, a) != null;
+    }
+
+    private static Intent playIntent(Context c, Alarm a) {
+        Intent i = null;
+        if (isWebRadio(a.app)) {
+            i = new Intent("org.y20k.transistor.action.START").setClassName(a.app, "org.y20k.transistor.MainActivity");
+            if (a.media.isEmpty()) i.putExtra("START_LAST_PLAYED_STATION", true);
+            else i.putExtra("STATION_UUID", a.media);
+        } else if (a.media.isEmpty() && !a.query.isEmpty()) {
+            i = new Intent(MediaStore.INTENT_ACTION_MEDIA_PLAY_FROM_SEARCH).setPackage(a.app)
+                    .putExtra(SearchManager.QUERY, a.query);
+        }
+        return i != null && c.getPackageManager().resolveActivity(i, 0) != null ? i : null;
+    }
+
+    static boolean installed(Context c, String pkg) {
+        return !pkg.isEmpty() && c.getPackageManager().getLaunchIntentForPackage(pkg) != null;
+    }
+
+    static String label(Context c, String pkg) {
+        if (pkg.isEmpty()) return "Suoneria di sistema";
+        try {
+            PackageManager pm = c.getPackageManager();
+            return pm.getApplicationLabel(pm.getApplicationInfo(pkg, 0)).toString();
+        } catch (PackageManager.NameNotFoundException e) {
+            return pkg + " (non installata)";
+        }
+    }
+
+    /**
+     * App musicali: quelle con un catalogo multimediale (lo stesso usato da Android Auto), che accettano
+     * "riproduci da ricerca" o che si dichiarano app musicali. Prima WebRadioDroid e Qobuz, poi in ordine alfabetico.
+     */
+    static List<App> musicApps(Context c) {
+        PackageManager pm = c.getPackageManager();
+        Set<String> pkgs = new HashSet<>();
+        for (ResolveInfo r : pm.queryIntentServices(new Intent(BROWSER_SERVICE), 0)) pkgs.add(r.serviceInfo.packageName);
+        for (ResolveInfo r : pm.queryIntentActivities(new Intent(MediaStore.INTENT_ACTION_MEDIA_PLAY_FROM_SEARCH), 0)) {
+            pkgs.add(r.activityInfo.packageName);
+        }
+        Intent music = new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_APP_MUSIC);
+        for (ResolveInfo r : pm.queryIntentActivities(music, 0)) pkgs.add(r.activityInfo.packageName);
+        pkgs.remove(c.getPackageName());
+
+        List<App> apps = new ArrayList<>();
+        for (String pkg : pkgs) if (installed(c, pkg)) apps.add(new App(pkg, label(c, pkg)));
+        Collections.sort(apps, new Comparator<App>() {
+            @Override
+            public int compare(App a, App b) {
+                int pa = priority(a.pkg), pb = priority(b.pkg);
+                return pa != pb ? pa - pb : a.label.compareToIgnoreCase(b.label);
+            }
+        });
+        return apps;
+    }
+
+    private static int priority(String pkg) {
+        if (isWebRadio(pkg)) return 0;
+        if (pkg.equals(QOBUZ)) return 1;
+        return 2;
+    }
+
+    /** Servizio catalogo dell'app, null se non ne ha. */
+    static ComponentName browserService(Context c, String pkg) {
+        List<ResolveInfo> list = c.getPackageManager().queryIntentServices(new Intent(BROWSER_SERVICE).setPackage(pkg), 0);
+        return list.isEmpty() ? null : new ComponentName(pkg, list.get(0).serviceInfo.name);
+    }
+
+    /**
+     * Chiede all'app di riprodurre l'elemento scelto o la ricerca: tramite la sua sessione multimediale se
+     * l'accesso alle notifiche è concesso (funziona anche con le app che non aprono il catalogo, es. Qobuz),
+     * altrimenti tramite il catalogo. Se nessuna delle due strade è disponibile non fa nulla.
+     */
+    static void playChoice(final Context c, final Alarm a) {
+        MediaController session = session(c, a.app);
+        if (session != null) {
+            send(session.getTransportControls(), a);
+            return;
+        }
+        ComponentName service = browserService(c, a.app);
+        if (service == null) return;
+        final MediaBrowser[] holder = new MediaBrowser[1];
+        holder[0] = new MediaBrowser(c, service, new MediaBrowser.ConnectionCallback() {
+            @Override
+            public void onConnected() {
+                send(new MediaController(c, holder[0].getSessionToken()).getTransportControls(), a);
+                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() { holder[0].disconnect(); }
+                }, 5_000);
+            }
+        }, null);
+        holder[0].connect();
+    }
+
+    private static void send(MediaController.TransportControls tc, Alarm a) {
+        if (!a.media.isEmpty()) tc.playFromMediaId(a.media, null); else tc.playFromSearch(a.query, null);
+    }
+
+    /** true se l'utente ha concesso l'accesso alle notifiche, che permette di vedere le sessioni multimediali. */
+    static boolean sessionAccess(Context c) {
+        return c.getSystemService(NotificationManager.class)
+                .isNotificationListenerAccessGranted(new ComponentName(c, MediaListener.class));
+    }
+
+    /** Sessione multimediale attiva dell'app, null se non c'è o se manca l'accesso. */
+    private static MediaController session(Context c, String pkg) {
+        if (!sessionAccess(c)) return null;
+        MediaSessionManager msm = c.getSystemService(MediaSessionManager.class);
+        for (MediaController mc : msm.getActiveSessions(new ComponentName(c, MediaListener.class))) {
+            if (mc.getPackageName().equals(pkg)) return mc;
+        }
+        return null;
+    }
+
+    /** Tasto multimediale inviato alla sessione attiva (l'app appena aperta). */
+    static void press(Context c, int keyCode) {
+        AudioManager am = c.getSystemService(AudioManager.class);
+        long t = SystemClock.uptimeMillis();
+        am.dispatchMediaKeyEvent(new KeyEvent(t, t, KeyEvent.ACTION_DOWN, keyCode, 0));
+        am.dispatchMediaKeyEvent(new KeyEvent(t, t, KeyEvent.ACTION_UP, keyCode, 0));
+    }
+}
