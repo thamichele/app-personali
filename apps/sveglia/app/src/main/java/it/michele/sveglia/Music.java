@@ -1,5 +1,6 @@
 package it.michele.sveglia;
 
+import android.app.NotificationManager;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -9,6 +10,7 @@ import android.content.pm.ResolveInfo;
 import android.media.AudioManager;
 import android.media.browse.MediaBrowser;
 import android.media.session.MediaController;
+import android.media.session.MediaSessionManager;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
@@ -124,31 +126,50 @@ final class Music {
     }
 
     /**
-     * Chiede all'app, tramite il suo catalogo, di riprodurre l'elemento scelto o la ricerca.
-     * Se l'app non accetta la connessione invia il tasto Play (ultima riproduzione).
+     * Chiede all'app di riprodurre l'elemento scelto o la ricerca: tramite la sua sessione multimediale se
+     * l'accesso alle notifiche è concesso (funziona anche con le app che non aprono il catalogo, es. Qobuz),
+     * altrimenti tramite il catalogo. Se nessuna delle due strade è disponibile non fa nulla.
      */
     static void playChoice(final Context c, final Alarm a) {
-        ComponentName service = browserService(c, a.app);
-        if (service == null) {
-            press(c, KeyEvent.KEYCODE_MEDIA_PLAY);
+        MediaController session = session(c, a.app);
+        if (session != null) {
+            send(session.getTransportControls(), a);
             return;
         }
+        ComponentName service = browserService(c, a.app);
+        if (service == null) return;
         final MediaBrowser[] holder = new MediaBrowser[1];
         holder[0] = new MediaBrowser(c, service, new MediaBrowser.ConnectionCallback() {
             @Override
             public void onConnected() {
-                MediaController.TransportControls tc = new MediaController(c, holder[0].getSessionToken()).getTransportControls();
-                if (!a.media.isEmpty()) tc.playFromMediaId(a.media, null); else tc.playFromSearch(a.query, null);
+                send(new MediaController(c, holder[0].getSessionToken()).getTransportControls(), a);
                 new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                     @Override
                     public void run() { holder[0].disconnect(); }
                 }, 5_000);
             }
-
-            @Override
-            public void onConnectionFailed() { press(c, KeyEvent.KEYCODE_MEDIA_PLAY); }
         }, null);
         holder[0].connect();
+    }
+
+    private static void send(MediaController.TransportControls tc, Alarm a) {
+        if (!a.media.isEmpty()) tc.playFromMediaId(a.media, null); else tc.playFromSearch(a.query, null);
+    }
+
+    /** true se l'utente ha concesso l'accesso alle notifiche, che permette di vedere le sessioni multimediali. */
+    static boolean sessionAccess(Context c) {
+        return c.getSystemService(NotificationManager.class)
+                .isNotificationListenerAccessGranted(new ComponentName(c, MediaListener.class));
+    }
+
+    /** Sessione multimediale attiva dell'app, null se non c'è o se manca l'accesso. */
+    private static MediaController session(Context c, String pkg) {
+        if (!sessionAccess(c)) return null;
+        MediaSessionManager msm = c.getSystemService(MediaSessionManager.class);
+        for (MediaController mc : msm.getActiveSessions(new ComponentName(c, MediaListener.class))) {
+            if (mc.getPackageName().equals(pkg)) return mc;
+        }
+        return null;
     }
 
     /** Tasto multimediale inviato alla sessione attiva (l'app appena aperta). */

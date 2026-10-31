@@ -5,6 +5,7 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.media.browse.MediaBrowser;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -37,6 +38,8 @@ public class BrowseActivity extends Activity {
     private ArrayAdapter<String> adapter;
     private EditText search;
     private TextView status;
+    private TextView access;
+    private boolean noCatalog;
 
     private static final Object LAST = new Object();
     private static final Object QUERY = new Object();
@@ -96,9 +99,25 @@ public class BrowseActivity extends Activity {
         root.addView(list, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 1));
         setContentView(root);
 
+        access = Ui.text(this, "", 14, Ui.TEXT, false);
+        access.setBackground(Ui.rounded(0xFF5A1A10, Ui.dp(this, 16)));
+        access.setPadding(Ui.dp(this, 16), Ui.dp(this, 10), Ui.dp(this, 16), Ui.dp(this, 10));
+        access.setVisibility(View.GONE);
+        access.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) {
+            try {
+                startActivity(new Intent(Settings.ACTION_NOTIFICATION_LISTENER_DETAIL_SETTINGS).putExtra(
+                        Settings.EXTRA_NOTIFICATION_LISTENER_COMPONENT_NAME,
+                        new ComponentName(BrowseActivity.this, MediaListener.class).flattenToString()));
+            } catch (RuntimeException e) {
+                startActivity(new Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS));
+            }
+        }});
+        root.addView(access, 4, matchWrap(Ui.dp(this, 8)));
+
         ComponentName service = Music.browserService(this, pkg);
         if (service == null) {
             status.setText("L'app non ha un catalogo da sfogliare: scrivi cosa cercare, verrà chiesto all'app quando suona.");
+            noCatalog = true;
         } else {
             browser = new MediaBrowser(this, service, new MediaBrowser.ConnectionCallback() {
                 @Override
@@ -108,11 +127,27 @@ public class BrowseActivity extends Activity {
                 public void onConnectionFailed() {
                     status.setText("L'app non permette di sfogliare il suo catalogo: scrivi cosa cercare, "
                             + "verrà chiesto all'app quando suona.");
+                    noCatalog = true;
+                    refreshAccess();
                 }
             }, null);
             browser.connect();
         }
         refresh();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshAccess();
+    }
+
+    /** Senza catalogo la ricerca passa dalla sessione multimediale dell'app, che richiede l'accesso alle notifiche. */
+    private void refreshAccess() {
+        boolean needed = noCatalog && !Music.sessionAccess(this);
+        access.setVisibility(needed ? View.VISIBLE : View.GONE);
+        access.setText("Perché la ricerca funzioni con questa app consenti a Sveglia l'accesso alle notifiche "
+                + "(serve solo a comandare la riproduzione, le notifiche non vengono lette). Tocca qui.");
     }
 
     private void open(String parentId) {
