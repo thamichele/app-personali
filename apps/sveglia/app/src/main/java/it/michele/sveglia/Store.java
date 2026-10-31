@@ -19,6 +19,8 @@ final class Store {
     private static final String KEY_ALARMS = "alarms";
     private static final String KEY_SNOOZE = "snooze_min";
     private static final String KEY_VOLUME = "music_volume";
+    private static final String KEY_LOG = "log";
+    private static final int MAX_LOG_LINES = 40;
 
     private final SharedPreferences sp;
 
@@ -83,4 +85,17 @@ final class Store {
     /** Volume musica in percentuale impostato quando suona la sveglia; 0 = lascia quello attuale. */
     int musicVolume() { return sp.getInt(KEY_VOLUME, 50); }
     void setMusicVolume(int v) { sp.edit().putInt(KEY_VOLUME, Math.max(0, Math.min(v, 100))).apply(); }
+
+    /** Registro di cosa è successo quando la sveglia ha suonato, per capire perché una ricerca non parte. */
+    String log() { return sp.getString(KEY_LOG, ""); }
+
+    synchronized void log(String msg) {
+        String line = new java.text.SimpleDateFormat("dd/MM HH:mm:ss", java.util.Locale.ITALY).format(new java.util.Date()) + "  " + msg;
+        String[] old = log().isEmpty() ? new String[0] : log().split("\n");
+        StringBuilder sb = new StringBuilder(line);
+        for (int i = 0; i < old.length && i < MAX_LOG_LINES - 1; i++) sb.append('\n').append(old[i]);
+        sp.edit().putString(KEY_LOG, sb.toString()).apply();
+    }
+
+    void clearLog() { sp.edit().putString(KEY_LOG, "").apply(); }
 }

@@ -56,8 +56,9 @@ public class RingService extends Service {
         }
     };
     /**
-     * Dopo l'apertura dell'app: chiede quello che è stato scelto. Al secondo tentativo, se è ancora tutto
-     * silenzioso, riprova e poi preme Play (ultima riproduzione); dopo MUSIC_WAIT_MS parte la suoneria.
+     * Dopo l'apertura dell'app chiede quello che è stato scelto. Molte app (es. Qobuz) creano la sessione
+     * multimediale solo quando suonano: se non c'è ancora, il tasto Play la attiva (parte l'ultimo brano) e al
+     * secondo tentativo la richiesta va alla sessione. Dopo MUSIC_WAIT_MS di silenzio parte la suoneria.
      */
     private final Runnable play = new Runnable() {
         @Override
@@ -67,30 +68,26 @@ public class RingService extends Service {
         @Override
         public void run() { tryPlay(true); }
     };
+    private boolean choiceSent;
 
     private void tryPlay(boolean retry) {
         Alarm a = current;
         if (a == null) return;
+        Store store = new Store(this);
         boolean chosen = !a.media.isEmpty() || !a.query.isEmpty();
         boolean silent = !getSystemService(AudioManager.class).isMusicActive();
         // l'azione di avvio di WebRadioDroid fa già partire la stazione scelta
         boolean started = Music.isWebRadio(a.app) && Music.launchPlays(this, a);
-        if (!retry) {
-            // anche se l'app è già ripartita da sola (ultima riproduzione) va chiesto quello che è stato scelto
-            if (chosen && !started) Music.playChoice(this, a);
-            else if (silent) Music.press(this, KeyEvent.KEYCODE_MEDIA_PLAY);
+        if (!chosen || started || choiceSent) {
+            if (silent && (!started || retry)) {
+                store.log("silenzio: premo Play");
+                Music.press(this, KeyEvent.KEYCODE_MEDIA_PLAY);
+            }
             return;
         }
-        if (!silent) return;
-        if (chosen && !started) {
-            Music.playChoice(this, a);
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if (!getSystemService(AudioManager.class).isMusicActive()) Music.press(RingService.this, KeyEvent.KEYCODE_MEDIA_PLAY);
-                }
-            }, PLAY_RETRY_MS / 2);
-        } else {
+        choiceSent = Music.playChoice(this, a);
+        if (!choiceSent && silent) {
+            store.log(retry ? "ancora silenzio: premo Play" : "premo Play per attivare la sessione dell'app");
             Music.press(this, KeyEvent.KEYCODE_MEDIA_PLAY);
         }
     }
@@ -139,6 +136,8 @@ public class RingService extends Service {
         if (current != null) stopSound();
         current = a;
         musicLaunched = false;
+        choiceSent = false;
+        new Store(this).log("suona " + a.time() + ": " + Music.label(this, a.app) + " · " + a.what());
         startForeground(NOTIF_ID, notification(a), ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK);
         if (wakeLock == null) {
             wakeLock = getSystemService(PowerManager.class).newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "sveglia:ring");
@@ -199,6 +198,7 @@ public class RingService extends Service {
     /** Suoneria di sistema in loop sul canale sveglia (rispetta il volume sveglia del telefono). */
     private void playTone() {
         if (player != null) return;
+        new Store(this).log("suoneria di sistema");
         Uri[] uris = {RingtoneManager.getActualDefaultRingtoneUri(this, RingtoneManager.TYPE_ALARM),
                 Settings.System.DEFAULT_ALARM_ALERT_URI, Settings.System.DEFAULT_RINGTONE_URI};
         for (Uri uri : uris) {
