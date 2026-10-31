@@ -1,0 +1,6 @@
+# App con un repository GitHub proprio: fdroid.sh copia l'ultima versione di ognuna nel repository F-Droid
+# unico, prendendola dal repository F-Droid dell'app. Una riga per app: indirizzo del suo repository F-Droid.
+https://raw.githubusercontent.com/thamichele/wgswitch/fdroid/repo
+https://raw.githubusercontent.com/thamichele/webradiodroid/fdroid/repo
+https://raw.githubusercontent.com/thamichele/smbcommander/fdroid/repo
+https://thamichele.github.io/antidroidvirus/repo

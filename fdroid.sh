@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 # Aggiorna il repository F-Droid personale della collezione (ramo "fdroid", servito da raw.githubusercontent.com):
-# un solo repository con tutte le app.
-# Uso: FDROID_KEYSTORE=... FDROID_PASS=... ./fdroid.sh build/sveglia/sveglia-X.Y.Z.apk [altri APK...]
+# un solo repository con tutte le app, comprese quelle con un repo GitHub proprio (elencate in fdroid/esterne.txt).
+# Uso: FDROID_KEYSTORE=... FDROID_PASS=... ./fdroid.sh [build/<app>/<app>-X.Y.Z.apk ...]
+# Senza APK aggiorna solo le app esterne.
 # Richiede fdroidserver (pip install fdroidserver), apksigner e git. La chiave del repo F-Droid
 # non è nel repository: senza di essa i client F-Droid rifiutano l'indice aggiornato.
 set -euo pipefail
 cd "$(dirname "$0")"
-: "${FDROID_KEYSTORE:?}" "${FDROID_PASS:?}" "${1:?APK da pubblicare}"
+: "${FDROID_KEYSTORE:?}" "${FDROID_PASS:?}"
 REPO_URL=https://raw.githubusercontent.com/thamichele/app-personali/fdroid/repo
 WORK=build/fdroid
 rm -rf "$WORK"
@@ -17,8 +18,9 @@ else
   git init -q -b fdroid "$WORK"
 fi
 mkdir -p "$WORK/repo/icons" "$WORK/metadata"
-cp "$@" "$WORK/repo/"
+[ $# -eq 0 ] || cp "$@" "$WORK/repo/"
 cp apps/*/fdroid/metadata/*.yml "$WORK/metadata/"
+python3 fdroid/esterne.py fdroid/esterne.txt "$WORK"
 # fdroid cerca repo_icon nella cartella di lavoro e lo copia in repo/icons/
 cp apps/sveglia/assets/icon-512.png "$WORK/icon.png"
 cat > "$WORK/config.yml" <<CONFIG
