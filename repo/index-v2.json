@@ -1,0 +1,110 @@
+{
+  "repo": {
+    "name": {
+      "en-US": "App personali"
+    },
+    "description": {
+      "en-US": "Repository F-Droid personale delle app di Michele"
+    },
+    "icon": {
+      "en-US": {
+        "name": "/icons/icon.png",
+        "sha256": "05c3ab8756b2cc81cba5c9a1d91cc5607ed56b4cc7a8b582039f19c7c9504c43",
+        "size": 21337
+      }
+    },
+    "address": "https://raw.githubusercontent.com/thamichele/app-personali/fdroid/repo",
+    "timestamp": 1793433063000,
+    "categories": {
+      "Multimedia": {
+        "name": {
+          "en-US": "Multimedia"
+        }
+      },
+      "Time": {
+        "name": {
+          "en-US": "Time"
+        }
+      }
+    }
+  },
+  "packages": {
+    "it.michele.sveglia": {
+      "metadata": {
+        "added": 1793433059000,
+        "categories": [
+          "Time",
+          "Multimedia"
+        ],
+        "issueTracker": "https://github.com/thamichele/app-personali/issues",
+        "lastUpdated": 1793433059000,
+        "license": "Proprietary",
+        "sourceCode": "https://github.com/thamichele/app-personali/tree/main/apps/sveglia",
+        "authorName": "Michele",
+        "name": {
+          "en-US": "Sveglia"
+        },
+        "summary": {
+          "en-US": "Sveglie multiple che suonano con la tua app musicale preferita"
+        },
+        "description": {
+          "en-US": "Sveglie multiple con giorni della settimana, nome e posticipo, con un aspetto ispirato all'orologio Samsung.\n\nOgni sveglia può suonare con la suoneria di sistema oppure avviare un'app musicale, per esempio\nWebRadioDroid (riprende l'ultima stazione) o Qobuz. Se l'app non parte, suona la suoneria di sistema."
+        },
+        "icon": {
+          "en-US": {
+            "name": "/icons/it.michele.sveglia.10000.png",
+            "sha256": "c6b87530aa106f687148caff7b3285231c207320c8b963fe0520e76be808a4ac",
+            "size": 1771
+          }
+        },
+        "preferredSigner": "be7bf46d0327ed4ffa40d81b7e484c98201dcd50cee414b8fffe1080e401f82e"
+      },
+      "versions": {
+        "e5b098cdee4148434bca74f27ca5f41daa7d3f573e056baf4d2a5d98ce7a91b2": {
+          "added": 1793433059000,
+          "file": {
+            "name": "/sveglia-1.0.0.apk",
+            "sha256": "e5b098cdee4148434bca74f27ca5f41daa7d3f573e056baf4d2a5d98ce7a91b2",
+            "size": 66668
+          },
+          "manifest": {
+            "versionName": "1.0.0",
+            "versionCode": 10000,
+            "usesSdk": {
+              "minSdkVersion": 33,
+              "targetSdkVersion": 34
+            },
+            "signer": {
+              "sha256": [
+                "be7bf46d0327ed4ffa40d81b7e484c98201dcd50cee414b8fffe1080e401f82e"
+              ]
+            },
+            "usesPermission": [
+              {
+                "name": "android.permission.USE_EXACT_ALARM"
+              },
+              {
+                "name": "android.permission.POST_NOTIFICATIONS"
+              },
+              {
+                "name": "android.permission.USE_FULL_SCREEN_INTENT"
+              },
+              {
+                "name": "android.permission.FOREGROUND_SERVICE"
+              },
+              {
+                "name": "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"
+              },
+              {
+                "name": "android.permission.RECEIVE_BOOT_COMPLETED"
+              },
+              {
+                "name": "android.permission.WAKE_LOCK"
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "/etc/issue.net": "Ubuntu 24.04.5 LTS",
+  "antiFeatures": {},
+  "apksigner": "/usr/bin/apksigner",
+  "archivePolicy0": [],
+  "commandLine": [
+    "/home/runner/work/_temp/venv/bin/fdroid update",
+    "--pretty"
+  ],
+  "disabled": [],
+  "endTimestamp": 1793433066167,
+  "failedBuilds": {},
+  "fdroiddata": {
+    "commitId": null,
+    "isDirty": false,
+    "modifiedFiles": [],
+    "untrackedFiles": [
+      "config.yml",
+      "icon.png",
+      "metadata/it.michele.sveglia.yml",
+      "repo/sveglia-1.0.0.apk"
+    ]
+  },
+  "jarsigner": "/usr/bin/jarsigner",
+  "keytool": "/usr/bin/keytool",
+  "needsUpdate": [
+    "it.michele.sveglia"
+  ],
+  "noPackages": [
+    "it.michele.sveglia"
+  ],
+  "noUpdateCheck": [
+    "it.michele.sveglia"
+  ],
+  "stages": {
+    "archive_old_apks archive": 1793433059480,
+    "delete_disabled_builds": 1793433059127,
+    "index.make archive": 1793433059481,
+    "index.make repo": 1793433063036,
+    "prepare_apps archive": 1793433059480,
+    "prepare_apps repo": 1793433063035,
+    "process_apks": 1793433059127,
+    "read_added_date_from_all_apks": 1793433059479,
+    "remove_apks": 1793433059478,
+    "scan_repo_files": 1793433059478
+  },
+  "startTimestamp": 1793433059000,
+  "subcommand": "update"
+}

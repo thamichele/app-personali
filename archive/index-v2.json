@@ -1,0 +1,20 @@
+{
+  "repo": {
+    "name": {
+      "en-US": "My First F-Droid Archive Demo"
+    },
+    "description": {
+      "en-US": "These are the apps that have been archived from the main repo."
+    },
+    "icon": {
+      "en-US": {
+        "name": "/icons/icon.png",
+        "sha256": "05c3ab8756b2cc81cba5c9a1d91cc5607ed56b4cc7a8b582039f19c7c9504c43",
+        "size": 21337
+      }
+    },
+    "address": "https://raw.githubusercontent.com/thamichele/app-personali/fdroid/archive",
+    "timestamp": 1793433059000
+  },
+  "packages": {}
+}

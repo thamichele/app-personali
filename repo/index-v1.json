@@ -1,0 +1,82 @@
+{
+  "repo": {
+    "timestamp": 1793433063000,
+    "version": 20002,
+    "name": "App personali",
+    "icon": "icon.png",
+    "address": "https://raw.githubusercontent.com/thamichele/app-personali/fdroid/repo",
+    "description": "Repository F-Droid personale delle app di Michele"
+  },
+  "requests": {
+    "install": [],
+    "uninstall": []
+  },
+  "apps": [
+    {
+      "authorName": "Michele",
+      "categories": [
+        "Time",
+        "Multimedia"
+      ],
+      "suggestedVersionCode": "10000",
+      "description": "Sveglie multiple con giorni della settimana, nome e posticipo, con un aspetto ispirato all'orologio Samsung.\n\nOgni sveglia pu\u00f2 suonare con la suoneria di sistema oppure avviare un'app musicale, per esempio\nWebRadioDroid (riprende l'ultima stazione) o Qobuz. Se l'app non parte, suona la suoneria di sistema.",
+      "issueTracker": "https://github.com/thamichele/app-personali/issues",
+      "license": "Proprietary",
+      "name": "Sveglia",
+      "sourceCode": "https://github.com/thamichele/app-personali/tree/main/apps/sveglia",
+      "summary": "Sveglie multiple che suonano con la tua app musicale preferita",
+      "added": 1793433059000,
+      "icon": "it.michele.sveglia.10000.png",
+      "packageName": "it.michele.sveglia",
+      "lastUpdated": 1793433059000
+    }
+  ],
+  "packages": {
+    "it.michele.sveglia": [
+      {
+        "added": 1793433059000,
+        "apkName": "sveglia-1.0.0.apk",
+        "hash": "e5b098cdee4148434bca74f27ca5f41daa7d3f573e056baf4d2a5d98ce7a91b2",
+        "hashType": "sha256",
+        "minSdkVersion": 33,
+        "packageName": "it.michele.sveglia",
+        "sig": "ad6d05dea4be9ea1eb58f3f6ddd6b951",
+        "signer": "be7bf46d0327ed4ffa40d81b7e484c98201dcd50cee414b8fffe1080e401f82e",
+        "size": 66668,
+        "targetSdkVersion": 34,
+        "uses-permission": [
+          [
+            "android.permission.USE_EXACT_ALARM",
+            null
+          ],
+          [
+            "android.permission.POST_NOTIFICATIONS",
+            null
+          ],
+          [
+            "android.permission.USE_FULL_SCREEN_INTENT",
+            null
+          ],
+          [
+            "android.permission.FOREGROUND_SERVICE",
+            null
+          ],
+          [
+            "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK",
+            null
+          ],
+          [
+            "android.permission.RECEIVE_BOOT_COMPLETED",
+            null
+          ],
+          [
+            "android.permission.WAKE_LOCK",
+            null
+          ]
+        ],
+        "versionCode": 10000,
+        "versionName": "1.0.0"
+      }
+    ]
+  }
+}
