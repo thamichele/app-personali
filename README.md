@@ -28,14 +28,15 @@ che Android accetta solo se firmati con la stessa chiave. Ogni app ha la sua chi
 Un'app che resta nel suo repository basta aggiungerla a `fdroid/esterne.txt` (indirizzo del suo repository F-Droid)
 e alla seconda tabella: `fdroid.sh` ne copia l'ultima versione, con la sua firma, nel repository unico.
 
+## Installare
+Aggiungi a F-Droid (o Droid-ify, Neo Store) il repository unico con tutte le app:
+
+https://raw.githubusercontent.com/thamichele/app-personali/fdroid/repo?fingerprint=DAE772F4AD70621AC22E5EBB60164CC70A9472A9F4638A69385108905A78FA02
+
 ## Pubblicare una nuova versione
 1. Aggiorna `VERSION_NAME` in `apps/<app>/app.conf` (nuova funzione: MINORE+1; correzione: CORREZIONE+1).
-2. `KEYSTORE=... KS_PASS=... ./build.sh <app>`
-3. `FDROID_KEYSTORE=... FDROID_PASS=... ./fdroid.sh build/<app>/<app>-X.Y.Z.apk`, poi il push del ramo `fdroid`
-   indicato dallo script, e una release `<app>-vX.Y.Z` con l'APK allegato.
+2. Unisci in `main`: GitHub Actions compila con la chiave vera (secret `RELEASE_KEYSTORE_BASE64` e
+   `RELEASE_KEYSTORE_PASSWORD`), crea la release `<app>-vX.Y.Z` e aggiorna il ramo `fdroid`.
 
-Per portare nel repository unico una nuova versione di un'app esterna, pubblicala prima nel suo repository e poi
-lancia `./fdroid.sh` senza APK.
-
-Il repository F-Droid (uno per tutte le app) sarà `https://raw.githubusercontent.com/thamichele/app-personali/fdroid/repo`
-dopo la prima pubblicazione.
+Le nuove versioni delle app esterne arrivano nel repository unico entro un giorno: il workflow gira anche ogni
+notte. A mano: `FDROID_KEYSTORE=... FDROID_PASS=... ./fdroid.sh [APK...]`, poi il push del ramo `fdroid`.
