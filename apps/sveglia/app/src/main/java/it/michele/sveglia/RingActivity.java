@@ -46,7 +46,7 @@ public class RingActivity extends Activity {
         root.addView(Ui.text(this, now, 88, Ui.TEXT, true));
         root.addView(Ui.text(this, Ui.date(System.currentTimeMillis()), 20, Ui.OFF, false));
         if (!a.label.isEmpty()) root.addView(Ui.text(this, a.label, 24, Ui.TEXT, false), top(Ui.dp(this, 32)));
-        if (!a.app.isEmpty()) root.addView(Ui.text(this, "♪ " + Music.label(this, a.app), 17, Ui.OFF, false), top(Ui.dp(this, 12)));
+        if (!a.app.isEmpty()) root.addView(Ui.text(this, "♪ " + Music.label(this, a.app) + " · " + a.what(), 17, Ui.OFF, false), top(Ui.dp(this, 12)));
 
         View spacer = new View(this);
         root.addView(spacer, new LinearLayout.LayoutParams(1, 0, 1));
@@ -62,13 +62,13 @@ public class RingActivity extends Activity {
         root.addView(stop, lp);
         setContentView(root);
 
-        if (!RingService.musicLaunched && Music.installed(this, a.app)) launchMusic(a.app);
+        if (!RingService.musicLaunched && Music.installed(this, a.app)) launchMusic(a);
     }
 
     /** Apre l'app musicale (consentito solo mentre questa schermata è in primo piano), poi torna qui. */
-    private void launchMusic(String pkg) {
+    private void launchMusic(Alarm a) {
         try {
-            startActivity(Music.launchIntent(this, pkg));
+            startActivity(Music.launchIntent(this, a));
         } catch (RuntimeException e) {
             return; // niente musica: dopo l'attesa il servizio suona la suoneria di riserva
         }

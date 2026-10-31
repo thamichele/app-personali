@@ -141,7 +141,7 @@ public class MainActivity extends Activity {
         if (!a.label.isEmpty()) left.addView(Ui.text(this, a.label, 16, color, false));
         left.addView(Ui.text(this, a.time(), 52, color, true));
         left.addView(days(a));
-        if (!a.app.isEmpty()) left.addView(Ui.text(this, "♪ " + Music.label(this, a.app), 14, Ui.OFF, false));
+        if (!a.app.isEmpty()) left.addView(Ui.text(this, "♪ " + Music.label(this, a.app) + " · " + a.what(), 14, Ui.OFF, false));
         row.addView(left, new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
 
         Switch on = new Switch(this);

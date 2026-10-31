@@ -3,6 +3,7 @@ package it.michele.sveglia;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -21,7 +22,10 @@ public class EditActivity extends Activity {
     private Alarm alarm;
     private TimePicker picker;
     private EditText label;
+    private static final int REQ_BROWSE = 1;
     private TextView sound;
+    private TextView whatLabel;
+    private TextView what;
     private final TextView[] dayViews = new TextView[7];
 
     @Override
@@ -88,8 +92,18 @@ public class EditActivity extends Activity {
         sound.setPadding(0, Ui.dp(this, 8), 0, Ui.dp(this, 8));
         sound.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { chooseSound(); }});
         card.addView(sound);
-        card.addView(Ui.text(this, "Con un'app musicale la sveglia apre l'app e avvia la riproduzione. "
-                + "Se dopo 20 secondi non suona niente parte la suoneria di sistema.", 13, Ui.OFF, false));
+        whatLabel = Ui.text(this, "Cosa riprodurre", 15, Ui.OFF, false);
+        card.addView(whatLabel, matchWrap(Ui.dp(this, 8)));
+        what = Ui.text(this, "", 19, Ui.TEXT, false);
+        what.setPadding(0, Ui.dp(this, 8), 0, Ui.dp(this, 8));
+        what.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) {
+            startActivityForResult(new Intent(EditActivity.this, BrowseActivity.class)
+                    .putExtra(BrowseActivity.EXTRA_PKG, alarm.app), REQ_BROWSE);
+        }});
+        card.addView(what);
+        refreshSound();
+        card.addView(Ui.text(this, "Con un'app musicale la sveglia apre l'app e avvia quello che hai scelto. "
+                + "Se dopo 20 secondi non suona niente parte la suoneria di sistema.", 13, Ui.OFF, false), matchWrap(Ui.dp(this, 8)));
 
         LinearLayout buttons = new LinearLayout(this);
         TextView cancel = Ui.pill(this, "Annulla", Ui.PILL, Ui.TEXT);
@@ -133,18 +147,42 @@ public class EditActivity extends Activity {
     }
 
     private void chooseSound() {
-        final List<Music.App> apps = Music.launchable(this);
+        final List<Music.App> apps = Music.musicApps(this);
         String[] names = new String[apps.size() + 1];
         names[0] = "Suoneria di sistema";
         for (int i = 0; i < apps.size(); i++) names[i + 1] = apps.get(i).label;
         new AlertDialog.Builder(this)
                 .setTitle("Suono sveglia")
                 .setItems(names, new DialogInterface.OnClickListener() { @Override public void onClick(DialogInterface d, int which) {
-                    alarm.app = which == 0 ? "" : apps.get(which - 1).pkg;
-                    sound.setText(Music.label(EditActivity.this, alarm.app));
+                    String app = which == 0 ? "" : apps.get(which - 1).pkg;
+                    if (!app.equals(alarm.app)) {
+                        alarm.app = app;
+                        alarm.media = alarm.mediaTitle = alarm.query = "";
+                    }
+                    refreshSound();
                 }})
                 .show();
     }
+
+    private void refreshSound() {
+        sound.setText(Music.label(this, alarm.app));
+        int v = alarm.app.isEmpty() ? View.GONE : View.VISIBLE;
+        whatLabel.setVisibility(v);
+        what.setVisibility(v);
+        what.setText(alarm.what());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode != REQ_BROWSE || resultCode != RESULT_OK || data == null) return;
+        alarm.media = nonNull(data.getStringExtra(BrowseActivity.EXTRA_MEDIA));
+        alarm.mediaTitle = nonNull(data.getStringExtra(BrowseActivity.EXTRA_TITLE));
+        alarm.query = nonNull(data.getStringExtra(BrowseActivity.EXTRA_QUERY));
+        refreshSound();
+    }
+
+    private static String nonNull(String s) { return s == null ? "" : s; }
 
     private LinearLayout.LayoutParams matchWrap(int topMargin) {
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(

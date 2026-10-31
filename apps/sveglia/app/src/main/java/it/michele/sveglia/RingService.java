@@ -34,7 +34,7 @@ public class RingService extends Service {
     private static final int NOTIF_ID = 1;
     /** Attesa massima dell'app musicale prima della suoneria di riserva. */
     private static final long MUSIC_WAIT_MS = 20_000;
-    private static final long PLAY_KEY_MS = 4_000;
+    private static final long PLAY_DELAY_MS = 4_000;
     /** Dopo questo tempo la sveglia smette da sola. */
     private static final long TIMEOUT_MS = 10 * 60_000;
 
@@ -54,10 +54,21 @@ public class RingService extends Service {
             if (!getSystemService(AudioManager.class).isMusicActive()) playTone();
         }
     };
-    private final Runnable playKey = new Runnable() {
+    /** Dopo l'apertura dell'app: avvia quello che è stato scelto, oppure l'ultima riproduzione. */
+    private final Runnable play = new Runnable() {
         @Override
         public void run() {
-            if (!getSystemService(AudioManager.class).isMusicActive()) Music.press(RingService.this, KeyEvent.KEYCODE_MEDIA_PLAY);
+            Alarm a = current;
+            if (a == null) return;
+            boolean chosen = !a.media.isEmpty() || !a.query.isEmpty();
+            boolean silent = !getSystemService(AudioManager.class).isMusicActive();
+            if (Music.launchPlays(RingService.this, a)) {
+                if (!chosen && silent) Music.press(RingService.this, KeyEvent.KEYCODE_MEDIA_PLAY);
+            } else if (chosen) {
+                Music.playChoice(RingService.this, a);
+            } else if (silent) {
+                Music.press(RingService.this, KeyEvent.KEYCODE_MEDIA_PLAY);
+            }
         }
     };
     private final Runnable timeout = new Runnable() {
@@ -89,7 +100,7 @@ public class RingService extends Service {
         } else if (ACTION_MUSIC.equals(action)) {
             musicLaunched = true;
             handler.removeCallbacks(fallback);
-            handler.postDelayed(playKey, PLAY_KEY_MS);
+            handler.postDelayed(play, PLAY_DELAY_MS);
             handler.postDelayed(fallback, MUSIC_WAIT_MS);
         } else if (ACTION_SNOOZE.equals(action)) {
             finish(true);

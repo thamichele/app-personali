@@ -17,6 +17,10 @@ final class Alarm {
     String label = "";
     /** Pacchetto dell'app musicale da avviare; vuoto = suoneria di sistema. */
     String app = "";
+    /** Cosa riprodurre nell'app: elemento scelto dal catalogo (id e titolo) o testo da cercare; vuoti = ultima riproduzione. */
+    String media = "";
+    String mediaTitle = "";
+    String query = "";
     /** Orario del posticipo in corso (millisecondi), 0 se nessuno. */
     long snoozeAt;
 
@@ -44,11 +48,19 @@ final class Alarm {
         return (c.get(Calendar.DAY_OF_WEEK) + 5) % 7;
     }
 
+    /** "Ultima riproduzione", il titolo scelto o la ricerca. */
+    String what() {
+        if (!media.isEmpty()) return mediaTitle.isEmpty() ? media : mediaTitle;
+        if (!query.isEmpty()) return "Cerca \u201c" + query + "\u201d";
+        return "Ultima riproduzione";
+    }
+
     String time() { return String.format(java.util.Locale.ITALY, "%02d:%02d", hour, minute); }
 
     JSONObject toJson() throws JSONException {
         return new JSONObject().put("id", id).put("h", hour).put("m", minute).put("days", days)
-                .put("on", enabled).put("label", label).put("app", app).put("snooze", snoozeAt);
+                .put("on", enabled).put("label", label).put("app", app)
+                .put("media", media).put("mediaTitle", mediaTitle).put("query", query).put("snooze", snoozeAt);
     }
 
     static Alarm fromJson(JSONObject o) {
@@ -60,6 +72,9 @@ final class Alarm {
         a.enabled = o.optBoolean("on", true);
         a.label = o.optString("label");
         a.app = o.optString("app");
+        a.media = o.optString("media");
+        a.mediaTitle = o.optString("mediaTitle");
+        a.query = o.optString("query");
         a.snoozeAt = o.optLong("snooze");
         return a;
     }
