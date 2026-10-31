@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.media.AudioManager;
 import android.media.browse.MediaBrowser;
 import android.media.session.MediaController;
 import android.media.session.MediaSessionManager;
@@ -127,31 +126,35 @@ final class Music {
     }
 
     /**
-     * Chiede all'app di riprodurre l'elemento scelto o la ricerca: tramite la sua sessione multimediale se
-     * l'accesso alle notifiche è concesso (funziona anche con le app che non aprono il catalogo, es. Qobuz),
-     * altrimenti tramite il catalogo. Se nessuna delle due strade è disponibile non fa nulla.
+     * Comanda l'app scelta, mai la sessione di un'altra app: choice = true chiede l'elemento scelto o la ricerca,
+     * false avvia l'ultima riproduzione. Strade in ordine: sessione multimediale (con l'accesso alle notifiche),
+     * catalogo dell'app, tasto Play inviato solo a quell'app.
      */
-    static boolean playChoice(final Context c, final Alarm a) {
+    static void command(final Context c, final Alarm a, final boolean choice) {
         final Store store = new Store(c);
+        final String what = choice ? (a.media.isEmpty() ? "ricerca" : "elemento scelto") : "Play";
         MediaController session = session(c, a.app);
         if (session != null) {
             PlaybackState st = session.getPlaybackState();
-            long actions = st == null ? 0 : st.getActions();
-            long needed = a.media.isEmpty() ? PlaybackState.ACTION_PLAY_FROM_SEARCH : PlaybackState.ACTION_PLAY_FROM_MEDIA_ID;
-            store.log("sessione trovata, " + (a.media.isEmpty() ? "ricerca" : "riproduzione per id")
-                    + ((actions & needed) != 0 ? " dichiarata" : " NON dichiarata") + " dall'app: invio");
-            send(session.getTransportControls(), a);
-            return true;
+            long needed = !choice ? PlaybackState.ACTION_PLAY
+                    : a.media.isEmpty() ? PlaybackState.ACTION_PLAY_FROM_SEARCH : PlaybackState.ACTION_PLAY_FROM_MEDIA_ID;
+            boolean declared = st != null && (st.getActions() & needed) != 0;
+            store.log("sessione: invio " + what + (declared ? "" : " (non dichiarato dall'app)"));
+            send(session.getTransportControls(), a, choice);
+            return;
         }
-        store.log(sessionAccess(c) ? "nessuna sessione attiva dell'app" : "accesso alle notifiche non concesso");
         ComponentName service = browserService(c, a.app);
-        if (service == null) return false;
+        if (service == null) {
+            store.log("nessuna sessione né catalogo: tasto Play all'app");
+            pressApp(c, a.app, KeyEvent.KEYCODE_MEDIA_PLAY);
+            return;
+        }
         final MediaBrowser[] holder = new MediaBrowser[1];
         holder[0] = new MediaBrowser(c, service, new MediaBrowser.ConnectionCallback() {
             @Override
             public void onConnected() {
-                store.log("catalogo collegato: invio");
-                send(new MediaController(c, holder[0].getSessionToken()).getTransportControls(), a);
+                store.log("catalogo: invio " + what);
+                send(new MediaController(c, holder[0].getSessionToken()).getTransportControls(), a, choice);
                 new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                     @Override
                     public void run() { holder[0].disconnect(); }
@@ -159,14 +162,25 @@ final class Music {
             }
 
             @Override
-            public void onConnectionFailed() { store.log("catalogo rifiutato dall'app"); }
+            public void onConnectionFailed() {
+                store.log("catalogo rifiutato: tasto Play all'app");
+                pressApp(c, a.app, KeyEvent.KEYCODE_MEDIA_PLAY);
+            }
         }, null);
         holder[0].connect();
-        return false;
     }
 
-    private static void send(MediaController.TransportControls tc, Alarm a) {
-        if (!a.media.isEmpty()) tc.playFromMediaId(a.media, null); else tc.playFromSearch(a.query, null);
+    private static void send(MediaController.TransportControls tc, Alarm a, boolean choice) {
+        if (!choice) tc.play();
+        else if (!a.media.isEmpty()) tc.playFromMediaId(a.media, null);
+        else tc.playFromSearch(a.query, null);
+    }
+
+    /** Mette in pausa l'app che suonava per la sveglia. */
+    static void pause(Context c, String pkg) {
+        MediaController session = session(c, pkg);
+        if (session != null) session.getTransportControls().pause();
+        else pressApp(c, pkg, KeyEvent.KEYCODE_MEDIA_PAUSE);
     }
 
     /** true se l'utente ha concesso l'accesso alle notifiche, che permette di vedere le sessioni multimediali. */
@@ -185,11 +199,12 @@ final class Music {
         return null;
     }
 
-    /** Tasto multimediale inviato alla sessione attiva (l'app appena aperta). */
-    static void press(Context c, int keyCode) {
-        AudioManager am = c.getSystemService(AudioManager.class);
+    /** Tasto multimediale inviato solo all'app indicata (al suo ricevitore dei tasti multimediali). */
+    static void pressApp(Context c, String pkg, int keyCode) {
         long t = SystemClock.uptimeMillis();
-        am.dispatchMediaKeyEvent(new KeyEvent(t, t, KeyEvent.ACTION_DOWN, keyCode, 0));
-        am.dispatchMediaKeyEvent(new KeyEvent(t, t, KeyEvent.ACTION_UP, keyCode, 0));
+        for (int action : new int[]{KeyEvent.ACTION_DOWN, KeyEvent.ACTION_UP}) {
+            c.sendBroadcast(new Intent(Intent.ACTION_MEDIA_BUTTON).setPackage(pkg)
+                    .putExtra(Intent.EXTRA_KEY_EVENT, new KeyEvent(t, t, action, keyCode, 0)));
+        }
     }
 }
