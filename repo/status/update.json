@@ -8,23 +8,16 @@
     "--pretty"
   ],
   "disabled": [],
-  "endTimestamp": 1793433170246,
+  "endTimestamp": 1793434083945,
   "failedBuilds": {},
   "fdroiddata": {
-    "commitId": "a87443ef1d4955dceed72f4a9fdb11fa078e0971",
+    "commitId": "4ad9c777f0a69a02706e0b63999409c82eee2326",
     "isDirty": false,
     "modifiedFiles": [],
     "untrackedFiles": [
       "config.yml",
       "icon.png",
-      "metadata/dev.antidroidvirus.yml",
-      "metadata/io.github.thamichele.smbcommander.yml",
-      "metadata/io.github.thamichele.webradiodroid.yml",
-      "metadata/it.michele.wgswitch.yml",
-      "repo/dev.antidroidvirus_140.apk",
-      "repo/io.github.thamichele.smbcommander_1001000.apk",
-      "repo/io.github.thamichele.webradiodroid_2200000.apk",
-      "repo/it.michele.wgswitch_20000.apk"
+      "repo/sveglia-1.1.0.apk"
     ]
   },
   "jarsigner": "/usr/bin/jarsigner",
@@ -51,17 +44,17 @@
     "it.michele.wgswitch"
   ],
   "stages": {
-    "archive_old_apks archive": 1793433163258,
-    "delete_disabled_builds": 1793433160849,
-    "index.make archive": 1793433163260,
-    "index.make repo": 1793433167010,
-    "prepare_apps archive": 1793433163259,
-    "prepare_apps repo": 1793433167009,
-    "process_apks": 1793433160849,
-    "read_added_date_from_all_apks": 1793433163258,
-    "remove_apks": 1793433163257,
-    "scan_repo_files": 1793433163256
+    "archive_old_apks archive": 1793434078772,
+    "delete_disabled_builds": 1793434077290,
+    "index.make archive": 1793434078774,
+    "index.make repo": 1793434081516,
+    "prepare_apps archive": 1793434078773,
+    "prepare_apps repo": 1793434081515,
+    "process_apks": 1793434077291,
+    "read_added_date_from_all_apks": 1793434078772,
+    "remove_apks": 1793434078771,
+    "scan_repo_files": 1793434078771
   },
-  "startTimestamp": 1793433160000,
+  "startTimestamp": 1793434077000,
   "subcommand": "update"
 }
