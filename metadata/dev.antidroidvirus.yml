@@ -1,12 +1,12 @@
 {
   "Name": "AntiDroidVirus",
-  "Summary": "Registra e segnala l'uso dei permessi e le app sospette",
-  "Description": "App per uso personale: registra quali app usano posizione, fotocamera, microfono,\ncontatti, SMS e altri permessi, segnala i comportamenti insoliti, dà un punteggio\ndi rischio alle app installate e controlla i file scaricati e le app appena installate.\n\nRichiede il permesso GET_APP_OPS_STATS concesso una volta via ADB. Shizuku è facoltativo.",
   "AuthorName": "Michele",
   "License": "Unknown",
   "Categories": [
-    "Security"
+    "Security",
+    "System"
   ],
+  "WebSite": "https://github.com/thamichele/antidroidvirus",
   "SourceCode": "https://github.com/thamichele/antidroidvirus",
   "IssueTracker": "https://github.com/thamichele/antidroidvirus/issues"
 }

@@ -8,16 +8,19 @@
     "--pretty"
   ],
   "disabled": [],
-  "endTimestamp": 1793435657345,
+  "endTimestamp": 1793453072483,
   "failedBuilds": {},
   "fdroiddata": {
-    "commitId": "907d58985a2f17d5d17b8405b9204bcb953e270d",
-    "isDirty": false,
-    "modifiedFiles": [],
+    "commitId": "e0016e556184856adc0e9bcbd8bb1adeee848254",
+    "isDirty": true,
+    "modifiedFiles": [
+      "metadata/dev.antidroidvirus.yml"
+    ],
     "untrackedFiles": [
       "config.yml",
       "icon.png",
-      "repo/sveglia-1.2.0.apk"
+      "repo/dev.antidroidvirus_143.apk",
+      "repo/io.github.thamichele.smbcommander_1002000.apk"
     ]
   },
   "jarsigner": "/usr/bin/jarsigner",
@@ -44,17 +47,17 @@
     "it.michele.wgswitch"
   ],
   "stages": {
-    "archive_old_apks archive": 1793435650852,
-    "delete_disabled_builds": 1793435647892,
-    "index.make archive": 1793435650854,
-    "index.make repo": 1793435654209,
-    "prepare_apps archive": 1793435650854,
-    "prepare_apps repo": 1793435654208,
-    "process_apks": 1793435647892,
-    "read_added_date_from_all_apks": 1793435650852,
-    "remove_apks": 1793435650643,
-    "scan_repo_files": 1793435650643
+    "archive_old_apks archive": 1793453067763,
+    "delete_disabled_builds": 1793453064883,
+    "index.make archive": 1793453067764,
+    "index.make repo": 1793453070194,
+    "prepare_apps archive": 1793453067764,
+    "prepare_apps repo": 1793453070194,
+    "process_apks": 1793453064883,
+    "read_added_date_from_all_apks": 1793453067763,
+    "remove_apks": 1793453067492,
+    "scan_repo_files": 1793453067491
   },
-  "startTimestamp": 1793435647000,
+  "startTimestamp": 1793453064000,
   "subcommand": "update"
 }

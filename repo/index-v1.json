@@ -1,6 +1,6 @@
 {
   "repo": {
-    "timestamp": 1793435654000,
+    "timestamp": 1793453070000,
     "version": 20002,
     "name": "App personali",
     "icon": "icon.png",
@@ -15,18 +15,18 @@
     {
       "authorName": "Michele",
       "categories": [
-        "Security"
+        "Security",
+        "System"
       ],
-      "suggestedVersionCode": "140",
-      "description": "App per uso personale: registra quali app usano posizione, fotocamera, microfono,\ncontatti, SMS e altri permessi, segnala i comportamenti insoliti, d\u00e0 un punteggio\ndi rischio alle app installate e controlla i file scaricati e le app appena installate.\n\nRichiede il permesso GET_APP_OPS_STATS concesso una volta via ADB. Shizuku \u00e8 facoltativo.",
+      "suggestedVersionCode": "143",
       "issueTracker": "https://github.com/thamichele/antidroidvirus/issues",
       "license": "Unknown",
       "name": "AntiDroidVirus",
       "sourceCode": "https://github.com/thamichele/antidroidvirus",
-      "summary": "Registra e segnala l'uso dei permessi e le app sospette",
+      "webSite": "https://github.com/thamichele/antidroidvirus",
       "added": 1793433161000,
       "packageName": "dev.antidroidvirus",
-      "lastUpdated": 1793433161000
+      "lastUpdated": 1793453065000
     },
     {
       "authorName": "Michele",
@@ -34,7 +34,7 @@
         "System",
         "Multimedia"
       ],
-      "suggestedVersionCode": "1001001",
+      "suggestedVersionCode": "1002000",
       "description": "File manager veloce e pulito per il NAS di casa: parla direttamente SMB 2/3, solo in rete locale.\nNiente cloud, niente relay, niente porte aperte su Internet. Funziona con qualunque NAS o computer\nche condivida cartelle via SMB.\n\nFile\n* Solo le cartelle che scegli tu, comprese quelle condivise nascoste.\n* Miniature generate una volta e tenute in cache, visualizzatore di foto a piena risoluzione e video in streaming.\n* Modifica sicura: il file si apre con l'app che preferisci e torna sul NAS solo se \u00e8 cambiato, con controllo dei conflitti.\n* Copia e sposta tra cartelle del NAS, Salva sul NAS dalle altre app, widget per la schermata Home.\n* Ogni trasferimento \u00e8 verificato con l'impronta SHA-256.\n\nBackup delle foto\n* Automatico, solo sul Wi-Fi di casa, diviso per anno e mese; non cancella mai nulla dal telefono da solo.\n* Libera spazio: elimina dal telefono solo le foto la cui copia sul NAS risulta identica.\n\nGalleria\n* Mostra solo la cartella del backup, con qualunque struttura di sottocartelle, a griglia, a mosaico o a elenco.\n* Pulizia rapida per scegliere cosa tenere, cestino e ricerca dei duplicati.\n\nPassword cifrata con l'Android Keystore, traffico SMB sempre firmato e, con SMB 3, cifrato.",
       "issueTracker": "https://github.com/thamichele/SMBCommander/issues",
       "license": "Proprietary",
@@ -43,7 +43,7 @@
       "summary": "File manager SMB per il NAS di casa, con backup delle foto e galleria",
       "added": 1793433162000,
       "packageName": "io.github.thamichele.smbcommander",
-      "lastUpdated": 1793434967000
+      "lastUpdated": 1793453066000
     },
     {
       "authorName": "Michele",
@@ -102,6 +102,76 @@
   ],
   "packages": {
     "dev.antidroidvirus": [
+      {
+        "added": 1793453065000,
+        "apkName": "dev.antidroidvirus_143.apk",
+        "hash": "a829ab7d02bface23a3b40cc3df251d01effc13dec93efccedcfea13344fb605",
+        "hashType": "sha256",
+        "minSdkVersion": 30,
+        "nativecode": [
+          "arm64-v8a",
+          "armeabi-v7a",
+          "x86",
+          "x86_64"
+        ],
+        "packageName": "dev.antidroidvirus",
+        "sig": "416dbd272844efda19db2dbc9d74cb35",
+        "signer": "52c6192939571634951b82ee34424660f5055be2efb8c50280f0dfa772eae9eb",
+        "size": 2264557,
+        "targetSdkVersion": 36,
+        "uses-permission": [
+          [
+            "android.permission.GET_APP_OPS_STATS",
+            null
+          ],
+          [
+            "android.permission.PACKAGE_USAGE_STATS",
+            null
+          ],
+          [
+            "android.permission.QUERY_ALL_PACKAGES",
+            null
+          ],
+          [
+            "android.permission.POST_NOTIFICATIONS",
+            null
+          ],
+          [
+            "android.permission.MANAGE_EXTERNAL_STORAGE",
+            null
+          ],
+          [
+            "android.permission.REQUEST_DELETE_PACKAGES",
+            null
+          ],
+          [
+            "android.permission.FOREGROUND_SERVICE",
+            null
+          ],
+          [
+            "android.permission.FOREGROUND_SERVICE_SPECIAL_USE",
+            null
+          ],
+          [
+            "android.permission.RECEIVE_BOOT_COMPLETED",
+            null
+          ],
+          [
+            "android.permission.HIDE_OVERLAY_WINDOWS",
+            null
+          ],
+          [
+            "moe.shizuku.manager.permission.API_V23",
+            null
+          ],
+          [
+            "dev.antidroidvirus.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION",
+            null
+          ]
+        ],
+        "versionCode": 143,
+        "versionName": "0.6.2"
+      },
       {
         "added": 1793433161000,
         "apkName": "dev.antidroidvirus_140.apk",
@@ -174,6 +244,76 @@
       }
     ],
     "io.github.thamichele.smbcommander": [
+      {
+        "added": 1793453066000,
+        "apkName": "io.github.thamichele.smbcommander_1002000.apk",
+        "hash": "0143419146d8cfa77ccc05b7bd832c7f9435a9d5791f8f36735e5b29f62b4f76",
+        "hashType": "sha256",
+        "minSdkVersion": 26,
+        "nativecode": [
+          "arm64-v8a",
+          "armeabi-v7a",
+          "x86",
+          "x86_64"
+        ],
+        "packageName": "io.github.thamichele.smbcommander",
+        "sig": "85ea845c54d1f71da43bdec9d4cafdab",
+        "signer": "3b92a1bacd13aa6c05b651eb0a2489c8032f62b4f7c6834835cae72e23d9028c",
+        "size": 16632062,
+        "targetSdkVersion": 37,
+        "uses-permission": [
+          [
+            "android.permission.INTERNET",
+            null
+          ],
+          [
+            "android.permission.READ_MEDIA_IMAGES",
+            null
+          ],
+          [
+            "android.permission.READ_MEDIA_VIDEO",
+            null
+          ],
+          [
+            "android.permission.READ_EXTERNAL_STORAGE",
+            32
+          ],
+          [
+            "android.permission.ACCESS_MEDIA_LOCATION",
+            null
+          ],
+          [
+            "android.permission.POST_NOTIFICATIONS",
+            null
+          ],
+          [
+            "android.permission.FOREGROUND_SERVICE",
+            null
+          ],
+          [
+            "android.permission.FOREGROUND_SERVICE_DATA_SYNC",
+            null
+          ],
+          [
+            "android.permission.WAKE_LOCK",
+            null
+          ],
+          [
+            "android.permission.ACCESS_NETWORK_STATE",
+            null
+          ],
+          [
+            "android.permission.RECEIVE_BOOT_COMPLETED",
+            null
+          ],
+          [
+            "io.github.thamichele.smbcommander.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION",
+            null
+          ]
+        ],
+        "versionCode": 1002000,
+        "versionName": "1.2.0"
+      },
       {
         "added": 1793434967000,
         "apkName": "io.github.thamichele.smbcommander_1001001.apk",
