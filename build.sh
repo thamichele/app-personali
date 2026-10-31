@@ -41,7 +41,8 @@ if [ ! -f "$KEYSTORE" ]; then
   keytool -genkeypair -keystore "$KEYSTORE" -storepass "$KS_PASS" -keypass "$KS_PASS" -alias "$APP" \
     -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=$NAME"
 fi
-apksigner sign --ks "$KEYSTORE" --ks-pass "pass:$KS_PASS" --v2-signing-enabled true \
+# KS_ALIAS sceglie la chiave quando il keystore ne contiene più d'una (in CI: "app" e "repo" per F-Droid)
+apksigner sign --ks "$KEYSTORE" --ks-pass "pass:$KS_PASS" ${KS_ALIAS:+--ks-key-alias "$KS_ALIAS"} --v2-signing-enabled true \
   --out "$OUT/$APP-$VERSION_NAME.apk" "$OUT/aligned.apk"
 apksigner verify "$OUT/$APP-$VERSION_NAME.apk"
 echo "APK: $OUT/$APP-$VERSION_NAME.apk"

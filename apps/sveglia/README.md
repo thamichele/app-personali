@@ -4,10 +4,14 @@ sistema oppure avviare un'app musicale.
 
 ## Come suona
 1. All'orario la notifica a schermo intero accende lo schermo e apre la sveglia, anche col telefono bloccato.
-2. Con un'app musicale la sveglia imposta il volume musica (Impostazioni ⋮, 0 = lascia quello attuale) e apre l'app:
-   - **WebRadioDroid**: usa la sua azione "avvia ultima stazione", la radio parte da sola;
-   - **Qobuz e le altre app**: l'app viene aperta e dopo 4 secondi riceve il tasto Play multimediale,
-     che riprende l'ultimo brano o playlist.
+2. Con un'app musicale la sveglia imposta il volume musica (Impostazioni ⋮, 0 = lascia quello attuale) e apre l'app.
+   In "Cosa riprodurre" si sceglie cosa far partire:
+   - **Ultima riproduzione**: WebRadioDroid riprende l'ultima stazione, le altre app ricevono il tasto Play;
+   - **un elemento del catalogo** (stazione, playlist, brano): il catalogo è lo stesso di Android Auto e si filtra
+     scrivendo. WebRadioDroid mostra tutte le stazioni; alcune app (es. Qobuz) lo aprono solo ad Android Auto;
+   - **una ricerca**: il testo viene chiesto all'app quando suona. Con le app che non aprono il catalogo serve
+     l'accesso alle notifiche (facoltativo, la sveglia lo propone): permette solo di comandare la riproduzione
+     dell'app, le notifiche non vengono lette. Se la ricerca non parte, dopo 15 secondi viene premuto Play.
 3. Se dopo 20 secondi non suona niente (app che non riparte, nessuna rete, telefono non ancora sbloccato dopo un
    riavvio) parte la suoneria di sistema: la sveglia suona comunque.
 4. **Posticipa** e **Ferma** sono sulla schermata e nella notifica; mettono in pausa la musica e ripristinano il

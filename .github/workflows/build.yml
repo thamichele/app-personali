@@ -48,3 +48,88 @@ jobs:
           name: ${{ matrix.app }}-test-apk
           path: build/${{ matrix.app }}/${{ matrix.app }}-*.apk
           if-no-files-found: error
+
+  # Pubblica le app nuove: release GitHub firmata + repository F-Droid unico (ramo "fdroid", servito da
+  # https://raw.githubusercontent.com/thamichele/app-personali/fdroid/repo). Un'app viene pubblicata quando la
+  # versione in apps/<app>/app.conf non ha ancora una release "<app>-vX.Y.Z".
+  # Richiede i secret RELEASE_KEYSTORE_BASE64 (keystore PKCS12 con le chiavi "app" e "repo") e
+  # RELEASE_KEYSTORE_PASSWORD; senza di essi il job non fa nulla.
+  publish:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    env:
+      RELEASE_KEYSTORE_BASE64: ${{ secrets.RELEASE_KEYSTORE_BASE64 }}
+      RELEASE_KEYSTORE_PASSWORD: ${{ secrets.RELEASE_KEYSTORE_PASSWORD }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Check signing secrets
+        id: secrets
+        run: |
+          if [ -z "$RELEASE_KEYSTORE_BASE64" ] || [ -z "$RELEASE_KEYSTORE_PASSWORD" ]; then
+            echo "::notice::Secret di firma assenti: niente da pubblicare"
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Install build tools
+        if: steps.secrets.outputs.ready == 'true'
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q aapt dalvik-exchange zipalign apksigner
+          python3 -m venv "$RUNNER_TEMP/venv"
+          "$RUNNER_TEMP/venv/bin/pip" install --quiet fdroidserver
+          echo "$RUNNER_TEMP/venv/bin" >> "$GITHUB_PATH"
+
+      - name: Download Android API jars
+        if: steps.secrets.outputs.ready == 'true'
+        run: |
+          cd "$RUNNER_TEMP"
+          curl -sSfLO https://repo1.maven.org/maven2/org/robolectric/android-all/15-robolectric-13954326/android-all-15-robolectric-13954326.jar
+          curl -sSfLO https://repo1.maven.org/maven2/org/robolectric/android-all/13-robolectric-9030017/android-all-13-robolectric-9030017.jar
+          unzip -q android-all-13-robolectric-9030017.jar resources.arsc AndroidManifest.xml
+          zip -q android-res-33.zip resources.arsc AndroidManifest.xml
+
+      - name: Build and release new versions
+        if: steps.secrets.outputs.ready == 'true'
+        run: |
+          export ANDROID_CLASSES="$RUNNER_TEMP/android-all-15-robolectric-13954326.jar"
+          export ANDROID_RES="$RUNNER_TEMP/android-res-33.zip"
+          export KEYSTORE="$RUNNER_TEMP/release.p12" KS_PASS="$RELEASE_KEYSTORE_PASSWORD" KS_ALIAS=app
+          echo "$RELEASE_KEYSTORE_BASE64" | base64 -d > "$KEYSTORE"
+          : > "$RUNNER_TEMP/apks"
+          for conf in apps/*/app.conf; do
+            APP=$(basename "$(dirname "$conf")")
+            VERSION=$(sed -n 's/^VERSION_NAME=//p' "$conf")
+            if gh release view "$APP-v$VERSION" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+              echo "$APP $VERSION già pubblicata"
+              continue
+            fi
+            ./build.sh "$APP"
+            gh release create "$APP-v$VERSION" "build/$APP/$APP-$VERSION.apk" --title "$APP $VERSION" \
+              --notes "APK firmato. Aggiornamenti anche dal repository F-Droid https://raw.githubusercontent.com/thamichele/app-personali/fdroid/repo"
+            echo "build/$APP/$APP-$VERSION.apk" >> "$RUNNER_TEMP/apks"
+          done
+
+      # aggiorna l'indice anche senza app nuove, così le app esterne restano aggiornate
+      - name: Update F-Droid repository
+        if: steps.secrets.outputs.ready == 'true'
+        run: |
+          # la versione di fdroid.sh senza app esterne richiede almeno un APK
+          if [ ! -s "$RUNNER_TEMP/apks" ] && [ ! -f fdroid/esterne.py ]; then echo "Niente da pubblicare"; exit 0; fi
+          FDROID_KEYSTORE="$RUNNER_TEMP/release.p12" FDROID_PASS="$RELEASE_KEYSTORE_PASSWORD" \
+            ./fdroid.sh $(cat "$RUNNER_TEMP/apks")
+          cd build/fdroid
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A repo metadata $( [ -d archive ] && echo archive )
+          git diff --cached --quiet && { echo "Nessuna modifica"; exit 0; }
+          git commit -q -m "F-Droid: aggiornamento ${GITHUB_RUN_NUMBER}"
+          git push -q "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:fdroid
+          echo "== impronta del repository F-Droid"
+          keytool -list -v -storetype pkcs12 -keystore "$RUNNER_TEMP/release.p12" -storepass "$RELEASE_KEYSTORE_PASSWORD" -alias repo | grep "SHA256:"
