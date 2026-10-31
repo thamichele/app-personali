@@ -1,0 +1,15 @@
+Categories:
+  - Time
+  - Multimedia
+License: Proprietary
+AuthorName: Michele
+SourceCode: https://github.com/thamichele/app-personali/tree/main/apps/sveglia
+IssueTracker: https://github.com/thamichele/app-personali/issues
+
+Name: Sveglia
+Summary: Sveglie multiple che suonano con la tua app musicale preferita
+Description: |-
+  Sveglie multiple con giorni della settimana, nome e posticipo, con un aspetto ispirato all'orologio Samsung.
+
+  Ogni sveglia può suonare con la suoneria di sistema oppure avviare un'app musicale, per esempio
+  WebRadioDroid (riprende l'ultima stazione) o Qobuz. Se l'app non parte, suona la suoneria di sistema.
