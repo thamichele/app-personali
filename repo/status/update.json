@@ -8,16 +8,16 @@
     "--pretty"
   ],
   "disabled": [],
-  "endTimestamp": 1793434083945,
+  "endTimestamp": 1793434601334,
   "failedBuilds": {},
   "fdroiddata": {
-    "commitId": "4ad9c777f0a69a02706e0b63999409c82eee2326",
+    "commitId": "96a4f7d47eca97bebcbb3841570012fdba79bbdd",
     "isDirty": false,
     "modifiedFiles": [],
     "untrackedFiles": [
       "config.yml",
       "icon.png",
-      "repo/sveglia-1.1.0.apk"
+      "repo/sveglia-1.1.1.apk"
     ]
   },
   "jarsigner": "/usr/bin/jarsigner",
@@ -44,17 +44,17 @@
     "it.michele.wgswitch"
   ],
   "stages": {
-    "archive_old_apks archive": 1793434078772,
-    "delete_disabled_builds": 1793434077290,
-    "index.make archive": 1793434078774,
-    "index.make repo": 1793434081516,
-    "prepare_apps archive": 1793434078773,
-    "prepare_apps repo": 1793434081515,
-    "process_apks": 1793434077291,
-    "read_added_date_from_all_apks": 1793434078772,
-    "remove_apks": 1793434078771,
-    "scan_repo_files": 1793434078771
+    "archive_old_apks archive": 1793434595050,
+    "delete_disabled_builds": 1793434593083,
+    "index.make archive": 1793434595052,
+    "index.make repo": 1793434598196,
+    "prepare_apps archive": 1793434595051,
+    "prepare_apps repo": 1793434598194,
+    "process_apks": 1793434593083,
+    "read_added_date_from_all_apks": 1793434595050,
+    "remove_apks": 1793434595049,
+    "scan_repo_files": 1793434595048
   },
-  "startTimestamp": 1793434077000,
+  "startTimestamp": 1793434592000,
   "subcommand": "update"
 }
