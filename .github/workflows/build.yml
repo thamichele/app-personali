@@ -5,6 +5,9 @@ on:
     branches: [ main ]
   pull_request:
   workflow_dispatch:
+  # ogni notte, per portare nel repository F-Droid le nuove versioni delle app esterne
+  schedule:
+    - cron: "17 3 * * *"
 
 permissions:
   contents: read
@@ -120,8 +123,6 @@ jobs:
       - name: Update F-Droid repository
         if: steps.secrets.outputs.ready == 'true'
         run: |
-          # la versione di fdroid.sh senza app esterne richiede almeno un APK
-          if [ ! -s "$RUNNER_TEMP/apks" ] && [ ! -f fdroid/esterne.py ]; then echo "Niente da pubblicare"; exit 0; fi
           FDROID_KEYSTORE="$RUNNER_TEMP/release.p12" FDROID_PASS="$RELEASE_KEYSTORE_PASSWORD" \
             ./fdroid.sh $(cat "$RUNNER_TEMP/apks")
           cd build/fdroid
