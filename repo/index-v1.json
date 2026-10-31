@@ -1,6 +1,6 @@
 {
   "repo": {
-    "timestamp": 1793434598000,
+    "timestamp": 1793434972000,
     "version": 20002,
     "name": "App personali",
     "icon": "icon.png",
@@ -29,15 +29,21 @@
       "lastUpdated": 1793433161000
     },
     {
+      "authorName": "Michele",
       "categories": [
-        "fdroid-repo"
+        "System",
+        "Multimedia"
       ],
-      "suggestedVersionCode": "1001000",
-      "license": "Unknown",
+      "suggestedVersionCode": "1001001",
+      "description": "File manager veloce e pulito per il NAS di casa: parla direttamente SMB 2/3, solo in rete locale.\nNiente cloud, niente relay, niente porte aperte su Internet. Funziona con qualunque NAS o computer\nche condivida cartelle via SMB.\n\nFile\n* Solo le cartelle che scegli tu, comprese quelle condivise nascoste.\n* Miniature generate una volta e tenute in cache, visualizzatore di foto a piena risoluzione e video in streaming.\n* Modifica sicura: il file si apre con l'app che preferisci e torna sul NAS solo se \u00e8 cambiato, con controllo dei conflitti.\n* Copia e sposta tra cartelle del NAS, Salva sul NAS dalle altre app, widget per la schermata Home.\n* Ogni trasferimento \u00e8 verificato con l'impronta SHA-256.\n\nBackup delle foto\n* Automatico, solo sul Wi-Fi di casa, diviso per anno e mese; non cancella mai nulla dal telefono da solo.\n* Libera spazio: elimina dal telefono solo le foto la cui copia sul NAS risulta identica.\n\nGalleria\n* Mostra solo la cartella del backup, con qualunque struttura di sottocartelle, a griglia, a mosaico o a elenco.\n* Pulizia rapida per scegliere cosa tenere, cestino e ricerca dei duplicati.\n\nPassword cifrata con l'Android Keystore, traffico SMB sempre firmato e, con SMB 3, cifrato.",
+      "issueTracker": "https://github.com/thamichele/SMBCommander/issues",
+      "license": "Proprietary",
       "name": "SMBCommander",
+      "sourceCode": "https://github.com/thamichele/SMBCommander",
+      "summary": "File manager SMB per il NAS di casa, con backup delle foto e galleria",
       "added": 1793433162000,
       "packageName": "io.github.thamichele.smbcommander",
-      "lastUpdated": 1793433162000
+      "lastUpdated": 1793434967000
     },
     {
       "authorName": "Michele",
@@ -45,7 +51,7 @@
         "Time",
         "Multimedia"
       ],
-      "suggestedVersionCode": "10101",
+      "suggestedVersionCode": "10102",
       "description": "Sveglie multiple con giorni della settimana, nome e posticipo, con un aspetto ispirato all'orologio Samsung.\n\nOgni sveglia pu\u00f2 suonare con la suoneria di sistema oppure avviare un'app musicale, per esempio\nWebRadioDroid (riprende l'ultima stazione) o Qobuz. Se l'app non parte, suona la suoneria di sistema.",
       "issueTracker": "https://github.com/thamichele/app-personali/issues",
       "license": "Proprietary",
@@ -53,9 +59,9 @@
       "sourceCode": "https://github.com/thamichele/app-personali/tree/main/apps/sveglia",
       "summary": "Sveglie multiple che suonano con la tua app musicale preferita",
       "added": 1793433059000,
-      "icon": "it.michele.sveglia.10101.png",
+      "icon": "it.michele.sveglia.10102.png",
       "packageName": "it.michele.sveglia",
-      "lastUpdated": 1793434595000
+      "lastUpdated": 1793434969000
     },
     {
       "authorName": "Michele",
@@ -168,6 +174,76 @@
       }
     ],
     "io.github.thamichele.smbcommander": [
+      {
+        "added": 1793434967000,
+        "apkName": "io.github.thamichele.smbcommander_1001001.apk",
+        "hash": "31e135c40d04967eff78a90ed6c57c9fd2c2b6048a0910031bbe2581134f49bb",
+        "hashType": "sha256",
+        "minSdkVersion": 26,
+        "nativecode": [
+          "arm64-v8a",
+          "armeabi-v7a",
+          "x86",
+          "x86_64"
+        ],
+        "packageName": "io.github.thamichele.smbcommander",
+        "sig": "85ea845c54d1f71da43bdec9d4cafdab",
+        "signer": "3b92a1bacd13aa6c05b651eb0a2489c8032f62b4f7c6834835cae72e23d9028c",
+        "size": 16599258,
+        "targetSdkVersion": 37,
+        "uses-permission": [
+          [
+            "android.permission.INTERNET",
+            null
+          ],
+          [
+            "android.permission.READ_MEDIA_IMAGES",
+            null
+          ],
+          [
+            "android.permission.READ_MEDIA_VIDEO",
+            null
+          ],
+          [
+            "android.permission.READ_EXTERNAL_STORAGE",
+            32
+          ],
+          [
+            "android.permission.ACCESS_MEDIA_LOCATION",
+            null
+          ],
+          [
+            "android.permission.POST_NOTIFICATIONS",
+            null
+          ],
+          [
+            "android.permission.FOREGROUND_SERVICE",
+            null
+          ],
+          [
+            "android.permission.FOREGROUND_SERVICE_DATA_SYNC",
+            null
+          ],
+          [
+            "android.permission.WAKE_LOCK",
+            null
+          ],
+          [
+            "android.permission.ACCESS_NETWORK_STATE",
+            null
+          ],
+          [
+            "android.permission.RECEIVE_BOOT_COMPLETED",
+            null
+          ],
+          [
+            "io.github.thamichele.smbcommander.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION",
+            null
+          ]
+        ],
+        "versionCode": 1001001,
+        "versionName": "1.1.1"
+      },
       {
         "added": 1793433162000,
         "apkName": "io.github.thamichele.smbcommander_1001000.apk",
@@ -303,6 +379,50 @@
     ],
     "it.michele.sveglia": [
       {
+        "added": 1793434969000,
+        "apkName": "sveglia-1.1.2.apk",
+        "hash": "ed220fce9f7342313057c63f87b9ba187c7eba866d69b0ae5d78b35f4e7c87bf",
+        "hashType": "sha256",
+        "minSdkVersion": 33,
+        "packageName": "it.michele.sveglia",
+        "sig": "ad6d05dea4be9ea1eb58f3f6ddd6b951",
+        "signer": "be7bf46d0327ed4ffa40d81b7e484c98201dcd50cee414b8fffe1080e401f82e",
+        "size": 70764,
+        "targetSdkVersion": 34,
+        "uses-permission": [
+          [
+            "android.permission.USE_EXACT_ALARM",
+            null
+          ],
+          [
+            "android.permission.POST_NOTIFICATIONS",
+            null
+          ],
+          [
+            "android.permission.USE_FULL_SCREEN_INTENT",
+            null
+          ],
+          [
+            "android.permission.FOREGROUND_SERVICE",
+            null
+          ],
+          [
+            "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK",
+            null
+          ],
+          [
+            "android.permission.RECEIVE_BOOT_COMPLETED",
+            null
+          ],
+          [
+            "android.permission.WAKE_LOCK",
+            null
+          ]
+        ],
+        "versionCode": 10102,
+        "versionName": "1.1.2"
+      },
+      {
         "added": 1793434595000,
         "apkName": "sveglia-1.1.1.apk",
         "hash": "af2c94cd73d1dba17b7ff9ab46460df6033a0cba3f939d6df12cbb061186bb2a",
@@ -389,50 +509,6 @@
         ],
         "versionCode": 10100,
         "versionName": "1.1.0"
-      },
-      {
-        "added": 1793433059000,
-        "apkName": "sveglia-1.0.0.apk",
-        "hash": "e5b098cdee4148434bca74f27ca5f41daa7d3f573e056baf4d2a5d98ce7a91b2",
-        "hashType": "sha256",
-        "minSdkVersion": 33,
-        "packageName": "it.michele.sveglia",
-        "sig": "ad6d05dea4be9ea1eb58f3f6ddd6b951",
-        "signer": "be7bf46d0327ed4ffa40d81b7e484c98201dcd50cee414b8fffe1080e401f82e",
-        "size": 66668,
-        "targetSdkVersion": 34,
-        "uses-permission": [
-          [
-            "android.permission.USE_EXACT_ALARM",
-            null
-          ],
-          [
-            "android.permission.POST_NOTIFICATIONS",
-            null
-          ],
-          [
-            "android.permission.USE_FULL_SCREEN_INTENT",
-            null
-          ],
-          [
-            "android.permission.FOREGROUND_SERVICE",
-            null
-          ],
-          [
-            "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK",
-            null
-          ],
-          [
-            "android.permission.RECEIVE_BOOT_COMPLETED",
-            null
-          ],
-          [
-            "android.permission.WAKE_LOCK",
-            null
-          ]
-        ],
-        "versionCode": 10000,
-        "versionName": "1.0.0"
       }
     ],
     "it.michele.wgswitch": [

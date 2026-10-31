@@ -14,7 +14,7 @@
       }
     },
     "address": "https://raw.githubusercontent.com/thamichele/app-personali/fdroid/repo",
-    "timestamp": 1793434598000,
+    "timestamp": 1793434972000,
     "categories": {
       "Connectivity": {
         "name": {
@@ -44,11 +44,6 @@
       "Time": {
         "name": {
           "en-US": "Time"
-        }
-      },
-      "fdroid-repo": {
-        "name": {
-          "en-US": "fdroid-repo"
         }
       }
     }
@@ -147,15 +142,92 @@
       "metadata": {
         "added": 1793433162000,
         "categories": [
-          "fdroid-repo"
+          "System",
+          "Multimedia"
         ],
-        "lastUpdated": 1793433162000,
+        "issueTracker": "https://github.com/thamichele/SMBCommander/issues",
+        "lastUpdated": 1793434967000,
+        "license": "Proprietary",
+        "sourceCode": "https://github.com/thamichele/SMBCommander",
+        "authorName": "Michele",
         "name": {
           "en-US": "SMBCommander"
+        },
+        "summary": {
+          "en-US": "File manager SMB per il NAS di casa, con backup delle foto e galleria"
+        },
+        "description": {
+          "en-US": "File manager veloce e pulito per il NAS di casa: parla direttamente SMB 2/3, solo in rete locale.\nNiente cloud, niente relay, niente porte aperte su Internet. Funziona con qualunque NAS o computer\nche condivida cartelle via SMB.\n\nFile\n* Solo le cartelle che scegli tu, comprese quelle condivise nascoste.\n* Miniature generate una volta e tenute in cache, visualizzatore di foto a piena risoluzione e video in streaming.\n* Modifica sicura: il file si apre con l'app che preferisci e torna sul NAS solo se è cambiato, con controllo dei conflitti.\n* Copia e sposta tra cartelle del NAS, Salva sul NAS dalle altre app, widget per la schermata Home.\n* Ogni trasferimento è verificato con l'impronta SHA-256.\n\nBackup delle foto\n* Automatico, solo sul Wi-Fi di casa, diviso per anno e mese; non cancella mai nulla dal telefono da solo.\n* Libera spazio: elimina dal telefono solo le foto la cui copia sul NAS risulta identica.\n\nGalleria\n* Mostra solo la cartella del backup, con qualunque struttura di sottocartelle, a griglia, a mosaico o a elenco.\n* Pulizia rapida per scegliere cosa tenere, cestino e ricerca dei duplicati.\n\nPassword cifrata con l'Android Keystore, traffico SMB sempre firmato e, con SMB 3, cifrato."
         },
         "preferredSigner": "3b92a1bacd13aa6c05b651eb0a2489c8032f62b4f7c6834835cae72e23d9028c"
       },
       "versions": {
+        "31e135c40d04967eff78a90ed6c57c9fd2c2b6048a0910031bbe2581134f49bb": {
+          "added": 1793434967000,
+          "file": {
+            "name": "/io.github.thamichele.smbcommander_1001001.apk",
+            "sha256": "31e135c40d04967eff78a90ed6c57c9fd2c2b6048a0910031bbe2581134f49bb",
+            "size": 16599258
+          },
+          "manifest": {
+            "nativecode": [
+              "arm64-v8a",
+              "armeabi-v7a",
+              "x86",
+              "x86_64"
+            ],
+            "versionName": "1.1.1",
+            "versionCode": 1001001,
+            "usesSdk": {
+              "minSdkVersion": 26,
+              "targetSdkVersion": 37
+            },
+            "signer": {
+              "sha256": [
+                "3b92a1bacd13aa6c05b651eb0a2489c8032f62b4f7c6834835cae72e23d9028c"
+              ]
+            },
+            "usesPermission": [
+              {
+                "name": "android.permission.INTERNET"
+              },
+              {
+                "name": "android.permission.READ_MEDIA_IMAGES"
+              },
+              {
+                "name": "android.permission.READ_MEDIA_VIDEO"
+              },
+              {
+                "name": "android.permission.READ_EXTERNAL_STORAGE",
+                "maxSdkVersion": 32
+              },
+              {
+                "name": "android.permission.ACCESS_MEDIA_LOCATION"
+              },
+              {
+                "name": "android.permission.POST_NOTIFICATIONS"
+              },
+              {
+                "name": "android.permission.FOREGROUND_SERVICE"
+              },
+              {
+                "name": "android.permission.FOREGROUND_SERVICE_DATA_SYNC"
+              },
+              {
+                "name": "android.permission.WAKE_LOCK"
+              },
+              {
+                "name": "android.permission.ACCESS_NETWORK_STATE"
+              },
+              {
+                "name": "android.permission.RECEIVE_BOOT_COMPLETED"
+              },
+              {
+                "name": "io.github.thamichele.smbcommander.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+              }
+            ]
+          }
+        },
         "91d5d211a5fbe65d7cea497c8511a942e1ff074d88451cb502f7aa0ca5e93a58": {
           "added": 1793433162000,
           "file": {
@@ -315,7 +387,7 @@
           "Multimedia"
         ],
         "issueTracker": "https://github.com/thamichele/app-personali/issues",
-        "lastUpdated": 1793434595000,
+        "lastUpdated": 1793434969000,
         "license": "Proprietary",
         "sourceCode": "https://github.com/thamichele/app-personali/tree/main/apps/sveglia",
         "authorName": "Michele",
@@ -330,7 +402,7 @@
         },
         "icon": {
           "en-US": {
-            "name": "/icons/it.michele.sveglia.10101.png",
+            "name": "/icons/it.michele.sveglia.10102.png",
             "sha256": "c6b87530aa106f687148caff7b3285231c207320c8b963fe0520e76be808a4ac",
             "size": 1771
           }
@@ -338,6 +410,50 @@
         "preferredSigner": "be7bf46d0327ed4ffa40d81b7e484c98201dcd50cee414b8fffe1080e401f82e"
       },
       "versions": {
+        "ed220fce9f7342313057c63f87b9ba187c7eba866d69b0ae5d78b35f4e7c87bf": {
+          "added": 1793434969000,
+          "file": {
+            "name": "/sveglia-1.1.2.apk",
+            "sha256": "ed220fce9f7342313057c63f87b9ba187c7eba866d69b0ae5d78b35f4e7c87bf",
+            "size": 70764
+          },
+          "manifest": {
+            "versionName": "1.1.2",
+            "versionCode": 10102,
+            "usesSdk": {
+              "minSdkVersion": 33,
+              "targetSdkVersion": 34
+            },
+            "signer": {
+              "sha256": [
+                "be7bf46d0327ed4ffa40d81b7e484c98201dcd50cee414b8fffe1080e401f82e"
+              ]
+            },
+            "usesPermission": [
+              {
+                "name": "android.permission.USE_EXACT_ALARM"
+              },
+              {
+                "name": "android.permission.POST_NOTIFICATIONS"
+              },
+              {
+                "name": "android.permission.USE_FULL_SCREEN_INTENT"
+              },
+              {
+                "name": "android.permission.FOREGROUND_SERVICE"
+              },
+              {
+                "name": "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"
+              },
+              {
+                "name": "android.permission.RECEIVE_BOOT_COMPLETED"
+              },
+              {
+                "name": "android.permission.WAKE_LOCK"
+              }
+            ]
+          }
+        },
         "af2c94cd73d1dba17b7ff9ab46460df6033a0cba3f939d6df12cbb061186bb2a": {
           "added": 1793434595000,
           "file": {
@@ -392,50 +508,6 @@
           "manifest": {
             "versionName": "1.1.0",
             "versionCode": 10100,
-            "usesSdk": {
-              "minSdkVersion": 33,
-              "targetSdkVersion": 34
-            },
-            "signer": {
-              "sha256": [
-                "be7bf46d0327ed4ffa40d81b7e484c98201dcd50cee414b8fffe1080e401f82e"
-              ]
-            },
-            "usesPermission": [
-              {
-                "name": "android.permission.USE_EXACT_ALARM"
-              },
-              {
-                "name": "android.permission.POST_NOTIFICATIONS"
-              },
-              {
-                "name": "android.permission.USE_FULL_SCREEN_INTENT"
-              },
-              {
-                "name": "android.permission.FOREGROUND_SERVICE"
-              },
-              {
-                "name": "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"
-              },
-              {
-                "name": "android.permission.RECEIVE_BOOT_COMPLETED"
-              },
-              {
-                "name": "android.permission.WAKE_LOCK"
-              }
-            ]
-          }
-        },
-        "e5b098cdee4148434bca74f27ca5f41daa7d3f573e056baf4d2a5d98ce7a91b2": {
-          "added": 1793433059000,
-          "file": {
-            "name": "/sveglia-1.0.0.apk",
-            "sha256": "e5b098cdee4148434bca74f27ca5f41daa7d3f573e056baf4d2a5d98ce7a91b2",
-            "size": 66668
-          },
-          "manifest": {
-            "versionName": "1.0.0",
-            "versionCode": 10000,
             "usesSdk": {
               "minSdkVersion": 33,
               "targetSdkVersion": 34
