@@ -18,6 +18,7 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.os.PowerManager;
 import android.provider.Settings;
+import android.view.KeyEvent;
 
 /**
  * Sveglia che suona. La notifica a schermo intero apre RingActivity, che avvia l'app musicale
@@ -86,7 +87,11 @@ public class RingService extends Service {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (current == a && !getSystemService(AudioManager.class).isMusicActive()) Music.command(RingService.this, a, false);
+                // alcune app (es. Qobuz) ignorano i comandi del catalogo: tasto Play inviato solo a quell'app
+                if (current == a && !getSystemService(AudioManager.class).isMusicActive()) {
+                    new Store(RingService.this).log("ancora silenzio: tasto Play all'app");
+                    Music.pressApp(RingService.this, a.app, KeyEvent.KEYCODE_MEDIA_PLAY);
+                }
             }
         }, PLAY_RETRY_MS / 2);
     }

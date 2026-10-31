@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.media.AudioManager;
 import android.media.browse.MediaBrowser;
 import android.media.session.MediaController;
 import android.media.session.MediaSessionManager;
@@ -199,9 +200,23 @@ final class Music {
         return null;
     }
 
-    /** Tasto multimediale inviato solo all'app indicata (al suo ricevitore dei tasti multimediali). */
+    /**
+     * Tasto multimediale solo per l'app indicata. Se la sua sessione è la prima per il sistema (serve l'accesso
+     * alle notifiche per saperlo) passa dal sistema, come un tasto delle cuffie; altrimenti va direttamente al
+     * ricevitore dei tasti multimediali dell'app.
+     */
     static void pressApp(Context c, String pkg, int keyCode) {
         long t = SystemClock.uptimeMillis();
+        if (sessionAccess(c)) {
+            List<MediaController> sessions = c.getSystemService(MediaSessionManager.class)
+                    .getActiveSessions(new ComponentName(c, MediaListener.class));
+            if (!sessions.isEmpty() && sessions.get(0).getPackageName().equals(pkg)) {
+                AudioManager am = c.getSystemService(AudioManager.class);
+                am.dispatchMediaKeyEvent(new KeyEvent(t, t, KeyEvent.ACTION_DOWN, keyCode, 0));
+                am.dispatchMediaKeyEvent(new KeyEvent(t, t, KeyEvent.ACTION_UP, keyCode, 0));
+                return;
+            }
+        }
         for (int action : new int[]{KeyEvent.ACTION_DOWN, KeyEvent.ACTION_UP}) {
             c.sendBroadcast(new Intent(Intent.ACTION_MEDIA_BUTTON).setPackage(pkg)
                     .putExtra(Intent.EXTRA_KEY_EVENT, new KeyEvent(t, t, action, keyCode, 0)));
