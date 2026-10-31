@@ -72,6 +72,7 @@ public class RingActivity extends Activity {
         } catch (RuntimeException e) {
             return; // niente musica: dopo l'attesa il servizio suona la suoneria di riserva
         }
+        new Store(this).log(Music.launchPlays(this, a) ? "app aperta con la richiesta" : "app aperta");
         RingService.musicLaunched = true;
         RingService.musicStarted(this);
         handler.postDelayed(new Runnable() {

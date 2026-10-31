@@ -11,6 +11,7 @@ import android.media.AudioManager;
 import android.media.browse.MediaBrowser;
 import android.media.session.MediaController;
 import android.media.session.MediaSessionManager;
+import android.media.session.PlaybackState;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
@@ -130,26 +131,38 @@ final class Music {
      * l'accesso alle notifiche è concesso (funziona anche con le app che non aprono il catalogo, es. Qobuz),
      * altrimenti tramite il catalogo. Se nessuna delle due strade è disponibile non fa nulla.
      */
-    static void playChoice(final Context c, final Alarm a) {
+    static boolean playChoice(final Context c, final Alarm a) {
+        final Store store = new Store(c);
         MediaController session = session(c, a.app);
         if (session != null) {
+            PlaybackState st = session.getPlaybackState();
+            long actions = st == null ? 0 : st.getActions();
+            long needed = a.media.isEmpty() ? PlaybackState.ACTION_PLAY_FROM_SEARCH : PlaybackState.ACTION_PLAY_FROM_MEDIA_ID;
+            store.log("sessione trovata, " + (a.media.isEmpty() ? "ricerca" : "riproduzione per id")
+                    + ((actions & needed) != 0 ? " dichiarata" : " NON dichiarata") + " dall'app: invio");
             send(session.getTransportControls(), a);
-            return;
+            return true;
         }
+        store.log(sessionAccess(c) ? "nessuna sessione attiva dell'app" : "accesso alle notifiche non concesso");
         ComponentName service = browserService(c, a.app);
-        if (service == null) return;
+        if (service == null) return false;
         final MediaBrowser[] holder = new MediaBrowser[1];
         holder[0] = new MediaBrowser(c, service, new MediaBrowser.ConnectionCallback() {
             @Override
             public void onConnected() {
+                store.log("catalogo collegato: invio");
                 send(new MediaController(c, holder[0].getSessionToken()).getTransportControls(), a);
                 new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                     @Override
                     public void run() { holder[0].disconnect(); }
                 }, 5_000);
             }
+
+            @Override
+            public void onConnectionFailed() { store.log("catalogo rifiutato dall'app"); }
         }, null);
         holder[0].connect();
+        return false;
     }
 
     private static void send(MediaController.TransportControls tc, Alarm a) {

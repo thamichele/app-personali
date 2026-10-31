@@ -248,14 +248,25 @@ public class MainActivity extends Activity {
         });
         box.addView(volume, matchWrap(Ui.dp(this, 8)));
 
+        box.addView(Ui.text(this, "Registro", 15, Ui.TEXT, false), matchWrap(Ui.dp(this, 16)));
+        TextView log = Ui.text(this, store.log().isEmpty() ? "Nessun evento" : store.log(), 11, Ui.OFF, false);
+        log.setTypeface(android.graphics.Typeface.MONOSPACE);
+        log.setTextIsSelectable(true);
+        box.addView(log, matchWrap(Ui.dp(this, 4)));
+        ScrollView scroll = new ScrollView(this);
+        scroll.addView(box);
+
         new AlertDialog.Builder(this)
                 .setTitle("Impostazioni")
-                .setView(box)
+                .setView(scroll)
                 .setPositiveButton("Salva", new DialogInterface.OnClickListener() { @Override public void onClick(DialogInterface d, int w) {
                     store.setSnoozeMinutes(snooze.getValue());
                     store.setMusicVolume(volume.getProgress());
                 }})
                 .setNegativeButton("Annulla", null)
+                .setNeutralButton("Svuota registro", new DialogInterface.OnClickListener() { @Override public void onClick(DialogInterface d, int w) {
+                    store.clearLog();
+                }})
                 .show();
     }
 
