@@ -248,6 +248,16 @@ public class MainActivity extends Activity {
         });
         box.addView(volume, matchWrap(Ui.dp(this, 8)));
 
+        boolean access = Music.sessionAccess(this);
+        TextView accessView = Ui.text(this, "Accesso alle notifiche (per comandare Qobuz e le altre app musicali): "
+                + (access ? "concesso" : "non concesso, tocca per concederlo"), 14, access ? Ui.OFF : Ui.TEXT, false);
+        if (!access) accessView.setBackground(Ui.rounded(0xFF5A1A10, Ui.dp(this, 16)));
+        accessView.setPadding(Ui.dp(this, 12), Ui.dp(this, 8), Ui.dp(this, 12), Ui.dp(this, 8));
+        accessView.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) {
+            startActivity(new Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS));
+        }});
+        box.addView(accessView, matchWrap(Ui.dp(this, 16)));
+
         box.addView(Ui.text(this, "Registro", 15, Ui.TEXT, false), matchWrap(Ui.dp(this, 16)));
         TextView log = Ui.text(this, store.log().isEmpty() ? "Nessun evento" : store.log(), 11, Ui.OFF, false);
         log.setTypeface(android.graphics.Typeface.MONOSPACE);

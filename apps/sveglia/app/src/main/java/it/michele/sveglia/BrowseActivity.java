@@ -39,7 +39,7 @@ public class BrowseActivity extends Activity {
     private EditText search;
     private TextView status;
     private TextView access;
-    private boolean noCatalog;
+    private String pkg = "";
 
     private static final Object LAST = new Object();
     private static final Object QUERY = new Object();
@@ -61,8 +61,8 @@ public class BrowseActivity extends Activity {
         super.onCreate(savedInstanceState);
         getWindow().setStatusBarColor(Ui.BG);
         getWindow().setNavigationBarColor(Ui.BG);
-        String pkg = getIntent().getStringExtra(EXTRA_PKG);
-        if (pkg == null) pkg = "";
+        String extra = getIntent().getStringExtra(EXTRA_PKG);
+        pkg = extra == null ? "" : extra;
 
         LinearLayout root = new LinearLayout(this);
         root.setOrientation(LinearLayout.VERTICAL);
@@ -117,7 +117,6 @@ public class BrowseActivity extends Activity {
         ComponentName service = Music.browserService(this, pkg);
         if (service == null) {
             status.setText("L'app non ha un catalogo da sfogliare: scrivi cosa cercare, verrà chiesto all'app quando suona.");
-            noCatalog = true;
         } else {
             browser = new MediaBrowser(this, service, new MediaBrowser.ConnectionCallback() {
                 @Override
@@ -127,8 +126,7 @@ public class BrowseActivity extends Activity {
                 public void onConnectionFailed() {
                     status.setText("L'app non permette di sfogliare il suo catalogo: scrivi cosa cercare, "
                             + "verrà chiesto all'app quando suona.");
-                    noCatalog = true;
-                    refreshAccess();
+                            refreshAccess();
                 }
             }, null);
             browser.connect();
@@ -144,9 +142,10 @@ public class BrowseActivity extends Activity {
 
     /** Senza catalogo la ricerca passa dalla sessione multimediale dell'app, che richiede l'accesso alle notifiche. */
     private void refreshAccess() {
-        boolean needed = noCatalog && !Music.sessionAccess(this);
+        // WebRadioDroid si comanda già con la sua azione di avvio; le altre app spesso ignorano il catalogo
+        boolean needed = !Music.isWebRadio(pkg) && !Music.sessionAccess(this);
         access.setVisibility(needed ? View.VISIBLE : View.GONE);
-        access.setText("Perché la ricerca funzioni con questa app consenti a Sveglia l'accesso alle notifiche "
+        access.setText("Per comandare questa app consenti a Sveglia l'accesso alle notifiche "
                 + "(serve solo a comandare la riproduzione, le notifiche non vengono lette). Tocca qui.");
     }
 
