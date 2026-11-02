@@ -14,6 +14,8 @@ sistema oppure avviare un'app musicale.
      dell'app, le notifiche non vengono lette. Se la ricerca non parte, dopo 15 secondi viene premuto Play.
 3. Se dopo 20 secondi non suona niente (app che non riparte, nessuna rete, telefono non ancora sbloccato dopo un
    riavvio) parte la suoneria di sistema: la sveglia suona comunque.
+   **Dissolvenza in ingresso** (Impostazioni ⋮, predefinita 30 secondi, 0 = no): musica e suoneria partono piano e
+   salgono fino al volume impostato; per la musica il tempo conta da quando l'app inizia davvero a suonare.
 4. **Posticipa** e **Ferma** sono sulla schermata e nella notifica; mettono in pausa la musica e ripristinano il
    volume. Dopo 10 minuti la sveglia si ferma da sola.
 
