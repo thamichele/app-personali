@@ -14,7 +14,7 @@
       }
     },
     "address": "https://raw.githubusercontent.com/thamichele/app-personali/fdroid/repo",
-    "timestamp": 1793528770000,
+    "timestamp": 1793599726000,
     "categories": {
       "Connectivity": {
         "name": {
@@ -514,7 +514,7 @@
           "Multimedia"
         ],
         "issueTracker": "https://github.com/thamichele/app-personali/issues",
-        "lastUpdated": 1793435650000,
+        "lastUpdated": 1793599722000,
         "license": "Proprietary",
         "sourceCode": "https://github.com/thamichele/app-personali/tree/main/apps/sveglia",
         "authorName": "Michele",
@@ -529,7 +529,7 @@
         },
         "icon": {
           "en-US": {
-            "name": "/icons/it.michele.sveglia.10200.png",
+            "name": "/icons/it.michele.sveglia.10300.png",
             "sha256": "c6b87530aa106f687148caff7b3285231c207320c8b963fe0520e76be808a4ac",
             "size": 1771
           }
@@ -537,6 +537,50 @@
         "preferredSigner": "be7bf46d0327ed4ffa40d81b7e484c98201dcd50cee414b8fffe1080e401f82e"
       },
       "versions": {
+        "148635cf4de97b2fc2e4ed8cc888c7172fb26303c9b5cb87b985802d292f9e96": {
+          "added": 1793599722000,
+          "file": {
+            "name": "/sveglia-1.3.0.apk",
+            "sha256": "148635cf4de97b2fc2e4ed8cc888c7172fb26303c9b5cb87b985802d292f9e96",
+            "size": 70764
+          },
+          "manifest": {
+            "versionName": "1.3.0",
+            "versionCode": 10300,
+            "usesSdk": {
+              "minSdkVersion": 33,
+              "targetSdkVersion": 34
+            },
+            "signer": {
+              "sha256": [
+                "be7bf46d0327ed4ffa40d81b7e484c98201dcd50cee414b8fffe1080e401f82e"
+              ]
+            },
+            "usesPermission": [
+              {
+                "name": "android.permission.USE_EXACT_ALARM"
+              },
+              {
+                "name": "android.permission.POST_NOTIFICATIONS"
+              },
+              {
+                "name": "android.permission.USE_FULL_SCREEN_INTENT"
+              },
+              {
+                "name": "android.permission.FOREGROUND_SERVICE"
+              },
+              {
+                "name": "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"
+              },
+              {
+                "name": "android.permission.RECEIVE_BOOT_COMPLETED"
+              },
+              {
+                "name": "android.permission.WAKE_LOCK"
+              }
+            ]
+          }
+        },
         "bd6b3d7ce1b9eeb57ed1038f18707586f92514dbe7b6a8661a592d3381064ef9": {
           "added": 1793435650000,
           "file": {
@@ -591,50 +635,6 @@
           "manifest": {
             "versionName": "1.1.2",
             "versionCode": 10102,
-            "usesSdk": {
-              "minSdkVersion": 33,
-              "targetSdkVersion": 34
-            },
-            "signer": {
-              "sha256": [
-                "be7bf46d0327ed4ffa40d81b7e484c98201dcd50cee414b8fffe1080e401f82e"
-              ]
-            },
-            "usesPermission": [
-              {
-                "name": "android.permission.USE_EXACT_ALARM"
-              },
-              {
-                "name": "android.permission.POST_NOTIFICATIONS"
-              },
-              {
-                "name": "android.permission.USE_FULL_SCREEN_INTENT"
-              },
-              {
-                "name": "android.permission.FOREGROUND_SERVICE"
-              },
-              {
-                "name": "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"
-              },
-              {
-                "name": "android.permission.RECEIVE_BOOT_COMPLETED"
-              },
-              {
-                "name": "android.permission.WAKE_LOCK"
-              }
-            ]
-          }
-        },
-        "af2c94cd73d1dba17b7ff9ab46460df6033a0cba3f939d6df12cbb061186bb2a": {
-          "added": 1793434595000,
-          "file": {
-            "name": "/sveglia-1.1.1.apk",
-            "sha256": "af2c94cd73d1dba17b7ff9ab46460df6033a0cba3f939d6df12cbb061186bb2a",
-            "size": 70764
-          },
-          "manifest": {
-            "versionName": "1.1.1",
-            "versionCode": 10101,
             "usesSdk": {
               "minSdkVersion": 33,
               "targetSdkVersion": 34
