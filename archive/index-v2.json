@@ -14,7 +14,7 @@
       }
     },
     "address": "https://raw.githubusercontent.com/thamichele/app-personali/fdroid/archive",
-    "timestamp": 1793617244000,
+    "timestamp": 1793649179000,
     "categories": {
       "Multimedia": {
         "name": {
@@ -42,7 +42,7 @@
           "Multimedia"
         ],
         "issueTracker": "https://github.com/thamichele/SMBCommander/issues",
-        "lastUpdated": 1793475598000,
+        "lastUpdated": 1793649177000,
         "license": "Proprietary",
         "sourceCode": "https://github.com/thamichele/SMBCommander",
         "authorName": "Michele",
@@ -58,6 +58,72 @@
         "preferredSigner": "3b92a1bacd13aa6c05b651eb0a2489c8032f62b4f7c6834835cae72e23d9028c"
       },
       "versions": {
+        "0143419146d8cfa77ccc05b7bd832c7f9435a9d5791f8f36735e5b29f62b4f76": {
+          "added": 1793453066000,
+          "file": {
+            "name": "/io.github.thamichele.smbcommander_1002000.apk",
+            "sha256": "0143419146d8cfa77ccc05b7bd832c7f9435a9d5791f8f36735e5b29f62b4f76",
+            "size": 16632062
+          },
+          "manifest": {
+            "nativecode": [
+              "arm64-v8a",
+              "armeabi-v7a",
+              "x86",
+              "x86_64"
+            ],
+            "versionName": "1.2.0",
+            "versionCode": 1002000,
+            "usesSdk": {
+              "minSdkVersion": 26,
+              "targetSdkVersion": 37
+            },
+            "signer": {
+              "sha256": [
+                "3b92a1bacd13aa6c05b651eb0a2489c8032f62b4f7c6834835cae72e23d9028c"
+              ]
+            },
+            "usesPermission": [
+              {
+                "name": "android.permission.INTERNET"
+              },
+              {
+                "name": "android.permission.READ_MEDIA_IMAGES"
+              },
+              {
+                "name": "android.permission.READ_MEDIA_VIDEO"
+              },
+              {
+                "name": "android.permission.READ_EXTERNAL_STORAGE",
+                "maxSdkVersion": 32
+              },
+              {
+                "name": "android.permission.ACCESS_MEDIA_LOCATION"
+              },
+              {
+                "name": "android.permission.POST_NOTIFICATIONS"
+              },
+              {
+                "name": "android.permission.FOREGROUND_SERVICE"
+              },
+              {
+                "name": "android.permission.FOREGROUND_SERVICE_DATA_SYNC"
+              },
+              {
+                "name": "android.permission.WAKE_LOCK"
+              },
+              {
+                "name": "android.permission.ACCESS_NETWORK_STATE"
+              },
+              {
+                "name": "android.permission.RECEIVE_BOOT_COMPLETED"
+              },
+              {
+                "name": "io.github.thamichele.smbcommander.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+              }
+            ]
+          }
+        },
         "31e135c40d04967eff78a90ed6c57c9fd2c2b6048a0910031bbe2581134f49bb": {
           "added": 1793434967000,
           "file": {
