@@ -8,16 +8,16 @@
     "--pretty"
   ],
   "disabled": [],
-  "endTimestamp": 1793649184269,
+  "endTimestamp": 1793651205769,
   "failedBuilds": {},
   "fdroiddata": {
-    "commitId": "7e62470a8e3a22f9f083f91606cc245e98e27fcf",
+    "commitId": "212b0dc7d9c130e099aeeb6d4c8eba36c647f8ba",
     "isDirty": false,
     "modifiedFiles": [],
     "untrackedFiles": [
       "config.yml",
       "icon.png",
-      "repo/io.github.thamichele.smbcommander_1005000.apk"
+      "repo/io.github.thamichele.smbcommander_1006000.apk"
     ]
   },
   "jarsigner": "/usr/bin/jarsigner",
@@ -44,17 +44,17 @@
     "it.michele.wgswitch"
   ],
   "stages": {
-    "archive_old_apks archive": 1793649179301,
-    "delete_disabled_builds": 1793649174445,
-    "index.make archive": 1793649179302,
-    "index.make repo": 1793649182042,
-    "prepare_apps archive": 1793649179302,
-    "prepare_apps repo": 1793649182041,
-    "process_apks": 1793649174445,
-    "read_added_date_from_all_apks": 1793649179301,
-    "remove_apks": 1793649178305,
-    "scan_repo_files": 1793649178304
+    "archive_old_apks archive": 1793651198869,
+    "delete_disabled_builds": 1793651192582,
+    "index.make archive": 1793651198871,
+    "index.make repo": 1793651202630,
+    "prepare_apps archive": 1793651198870,
+    "prepare_apps repo": 1793651202629,
+    "process_apks": 1793651192582,
+    "read_added_date_from_all_apks": 1793651198868,
+    "remove_apks": 1793651196935,
+    "scan_repo_files": 1793651196934
   },
-  "startTimestamp": 1793649174000,
+  "startTimestamp": 1793651191000,
   "subcommand": "update"
 }
