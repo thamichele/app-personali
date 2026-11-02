@@ -18,6 +18,7 @@ import java.util.List;
 final class Store {
     private static final String KEY_ALARMS = "alarms";
     private static final String KEY_SNOOZE = "snooze_min";
+    private static final String KEY_FADE = "fade_seconds";
     private static final String KEY_VOLUME = "music_volume";
     private static final String KEY_LOG = "log";
     private static final int MAX_LOG_LINES = 40;
@@ -85,6 +86,11 @@ final class Store {
     /** Volume musica in percentuale impostato quando suona la sveglia; 0 = lascia quello attuale. */
     int musicVolume() { return sp.getInt(KEY_VOLUME, 50); }
     void setMusicVolume(int v) { sp.edit().putInt(KEY_VOLUME, Math.max(0, Math.min(v, 100))).apply(); }
+
+    /** Secondi in cui il volume sale dal minimo a quello impostato; 0 = subito al volume pieno. */
+    int fadeSeconds() { return sp.getInt(KEY_FADE, 30); }
+    void setFadeSeconds(int v) { sp.edit().putInt(KEY_FADE, Math.max(0, Math.min(v, MAX_FADE))).apply(); }
+    static final int MAX_FADE = 120;
 
     /** Registro di cosa è successo quando la sveglia ha suonato, per capire perché una ricerca non parte. */
     String log() { return sp.getString(KEY_LOG, ""); }

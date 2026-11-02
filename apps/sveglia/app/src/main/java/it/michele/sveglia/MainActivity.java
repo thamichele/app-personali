@@ -248,6 +248,19 @@ public class MainActivity extends Activity {
         });
         box.addView(volume, matchWrap(Ui.dp(this, 8)));
 
+        final TextView fadeLabel = Ui.text(this, "", 15, Ui.TEXT, false);
+        box.addView(fadeLabel, matchWrap(Ui.dp(this, 16)));
+        final SeekBar fade = new SeekBar(this);
+        fade.setMax(Store.MAX_FADE / 5);
+        fade.setProgress(store.fadeSeconds() / 5);
+        fadeLabel.setText(fadeText(fade.getProgress() * 5));
+        fade.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override public void onProgressChanged(SeekBar s, int p, boolean user) { fadeLabel.setText(fadeText(p * 5)); }
+            @Override public void onStartTrackingTouch(SeekBar s) {}
+            @Override public void onStopTrackingTouch(SeekBar s) {}
+        });
+        box.addView(fade, matchWrap(Ui.dp(this, 8)));
+
         boolean access = Music.sessionAccess(this);
         TextView accessView = Ui.text(this, "Accesso alle notifiche (per comandare Qobuz e le altre app musicali): "
                 + (access ? "concesso" : "non concesso, tocca per concederlo"), 14, access ? Ui.OFF : Ui.TEXT, false);
@@ -272,6 +285,7 @@ public class MainActivity extends Activity {
                 .setPositiveButton("Salva", new DialogInterface.OnClickListener() { @Override public void onClick(DialogInterface d, int w) {
                     store.setSnoozeMinutes(snooze.getValue());
                     store.setMusicVolume(volume.getProgress());
+                    store.setFadeSeconds(fade.getProgress() * 5);
                 }})
                 .setNegativeButton("Annulla", null)
                 .setNeutralButton("Svuota registro", new DialogInterface.OnClickListener() { @Override public void onClick(DialogInterface d, int w) {
@@ -282,6 +296,10 @@ public class MainActivity extends Activity {
 
     private static String volumeText(int p) {
         return p == 0 ? "Volume app musicale: lascia quello attuale" : "Volume app musicale: " + p + "%";
+    }
+
+    private static String fadeText(int s) {
+        return s == 0 ? "Dissolvenza in ingresso: no" : "Dissolvenza in ingresso: " + s + " secondi";
     }
 
     private static String time(long millis) {

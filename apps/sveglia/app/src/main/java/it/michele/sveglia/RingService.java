@@ -48,6 +48,41 @@ public class RingService extends Service {
     private MediaPlayer player;
     private PowerManager.WakeLock wakeLock;
     private int savedVolume = -1;
+    /** Dissolvenza in ingresso: livello attuale e finale del volume musica, millisecondi fra un gradino e l'altro. */
+    private int fadeLevel, fadeTarget;
+    private long fadeStepMs;
+    /** Dissolvenza della suoneria di sistema: gradino attuale su FADE_STEPS. */
+    private int toneStep;
+    private static final int FADE_STEPS = 40;
+
+    /**
+     * Alza il volume musica di un gradino alla volta, ma solo mentre l'app suona davvero:
+     * il tempo di apertura dell'app non consuma la dissolvenza.
+     */
+    private final Runnable fadeMusic = new Runnable() {
+        @Override
+        public void run() {
+            AudioManager am = getSystemService(AudioManager.class);
+            if (!am.isMusicActive()) {
+                handler.postDelayed(this, 500);
+                return;
+            }
+            fadeLevel++;
+            am.setStreamVolume(AudioManager.STREAM_MUSIC, fadeLevel, 0);
+            if (fadeLevel < fadeTarget) handler.postDelayed(this, fadeStepMs);
+        }
+    };
+    /** Alza il volume della suoneria di sistema (curva quadratica, più naturale all'orecchio). */
+    private final Runnable fadeTone = new Runnable() {
+        @Override
+        public void run() {
+            if (player == null) return;
+            toneStep++;
+            float v = (float) toneStep / FADE_STEPS;
+            player.setVolume(v * v, v * v);
+            if (toneStep < FADE_STEPS) handler.postDelayed(this, new Store(RingService.this).fadeSeconds() * 1000L / FADE_STEPS);
+        }
+    };
 
     private final Runnable fallback = new Runnable() {
         @Override
@@ -194,13 +229,27 @@ public class RingService extends Service {
         }
     }
 
+    /** Porta il volume musica a quello impostato, partendo dal minimo se c'è la dissolvenza. */
     private void setMusicVolume() {
-        int percent = new Store(this).musicVolume();
-        if (percent == 0) return;
+        Store store = new Store(this);
+        int percent = store.musicVolume();
+        int fade = store.fadeSeconds();
         AudioManager am = getSystemService(AudioManager.class);
-        if (savedVolume < 0) savedVolume = am.getStreamVolume(AudioManager.STREAM_MUSIC);
+        int current = am.getStreamVolume(AudioManager.STREAM_MUSIC);
         int max = am.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-        am.setStreamVolume(AudioManager.STREAM_MUSIC, Math.max(1, Math.round(max * percent / 100f)), 0);
+        int target = percent == 0 ? current : Math.max(1, Math.round(max * percent / 100f));
+        if (fade > 0 && target > 1) {
+            if (savedVolume < 0) savedVolume = current;
+            fadeLevel = 1;
+            fadeTarget = target;
+            fadeStepMs = fade * 1000L / (target - 1);
+            am.setStreamVolume(AudioManager.STREAM_MUSIC, 1, 0);
+            store.log("dissolvenza " + fade + " s fino al volume " + target + "/" + max);
+            handler.post(fadeMusic);
+        } else if (percent != 0) {
+            if (savedVolume < 0) savedVolume = current;
+            am.setStreamVolume(AudioManager.STREAM_MUSIC, target, 0);
+        }
     }
 
     /** Suoneria di sistema in loop sul canale sveglia (rispetta il volume sveglia del telefono). */
@@ -218,6 +267,11 @@ public class RingService extends Service {
                 p.setDataSource(this, uri);
                 p.setLooping(true);
                 p.prepare();
+                if (new Store(this).fadeSeconds() > 0) {
+                    toneStep = 0;
+                    p.setVolume(0, 0);
+                    handler.post(fadeTone);
+                }
                 p.start();
                 player = p;
                 return;
