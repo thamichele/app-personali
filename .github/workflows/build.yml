@@ -15,6 +15,8 @@ permissions:
 
 jobs:
   build:
+    # il giro orario serve solo a ripubblicare l'indice F-Droid: niente build di prova
+    if: github.event_name != 'schedule'
     runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
@@ -59,7 +61,8 @@ jobs:
   # Richiede i secret RELEASE_KEYSTORE_BASE64 (keystore PKCS12 con le chiavi "app" e "repo") e
   # RELEASE_KEYSTORE_PASSWORD; senza di essi il job non fa nulla.
   publish:
-    if: github.event_name != 'pull_request'
+    # parte anche quando la build di prova è saltata (giro orario), non quando è fallita
+    if: github.event_name != 'pull_request' && !failure() && !cancelled()
     needs: build
     runs-on: ubuntu-24.04
     permissions:
