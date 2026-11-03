@@ -9,12 +9,12 @@
     "icon": {
       "en-US": {
         "name": "/icons/icon.png",
-        "sha256": "f22af8003048a5ba4b4dbd53ee27d657aeec2883e93213c1d09b8f40cac1b107",
-        "size": 20157
+        "sha256": "21e0e5ccd1c09c496cabee013560e2961859acc7ddb72cfc8b4be075feff79b6",
+        "size": 14294
       }
     },
     "address": "https://raw.githubusercontent.com/thamichele/app-personali/fdroid/repo",
-    "timestamp": 1793695874000,
+    "timestamp": 1793697325000,
     "categories": {
       "Connectivity": {
         "name": {
