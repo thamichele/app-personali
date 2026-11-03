@@ -1,6 +1,6 @@
 {
   "repo": {
-    "timestamp": 1793701299000,
+    "timestamp": 1793726695000,
     "version": 20002,
     "name": "App personali",
     "icon": "icon.png",
@@ -34,7 +34,7 @@
         "System",
         "Multimedia"
       ],
-      "suggestedVersionCode": "1006000",
+      "suggestedVersionCode": "1007000",
       "description": "File manager veloce e pulito per il NAS di casa: parla direttamente SMB 2/3, solo in rete locale.\nNiente cloud, niente relay, niente porte aperte su Internet. Funziona con qualunque NAS o computer\nche condivida cartelle via SMB.\n\nFile\n* Solo le cartelle che scegli tu, comprese quelle condivise nascoste.\n* Miniature generate una volta e tenute in cache, visualizzatore di foto a piena risoluzione e video in streaming.\n* Modifica sicura: il file si apre con l'app che preferisci e torna sul NAS solo se \u00e8 cambiato, con controllo dei conflitti.\n* Copia e sposta tra cartelle del NAS, Salva sul NAS dalle altre app, widget per la schermata Home.\n* Ogni trasferimento \u00e8 verificato con l'impronta SHA-256.\n\nBackup delle foto\n* Automatico, solo sul Wi-Fi di casa, diviso per anno e mese; non cancella mai nulla dal telefono da solo.\n* Libera spazio: elimina dal telefono solo le foto la cui copia sul NAS risulta identica.\n\nGalleria\n* Mostra solo la cartella del backup, con qualunque struttura di sottocartelle, a griglia, a mosaico o a elenco.\n* Pulizia rapida per scegliere cosa tenere, cestino e ricerca dei duplicati.\n\nPassword cifrata con l'Android Keystore, traffico SMB sempre firmato e, con SMB 3, cifrato.",
       "issueTracker": "https://github.com/thamichele/SMBCommander/issues",
       "license": "Proprietary",
@@ -43,7 +43,7 @@
       "summary": "File manager SMB per il NAS di casa, con backup delle foto e galleria",
       "added": 1793433162000,
       "packageName": "io.github.thamichele.smbcommander",
-      "lastUpdated": 1793651195000
+      "lastUpdated": 1793726688000
     },
     {
       "authorName": "Michele",
@@ -69,7 +69,7 @@
         "Multimedia",
         "Internet"
       ],
-      "suggestedVersionCode": "2200000",
+      "suggestedVersionCode": "2201000",
       "description": "Ascolta le tue webradio dal telefono e in auto con Android Auto. WebRadioDroid nasce da Transistor\n(Y20K, licenza MIT) e aggiunge loghi delle stazioni in Android Auto, preferiti, nomi personalizzati\ne un timer di spegnimento pi\u00f9 comodo.\n\nFunzioni principali:\n* ricerca delle stazioni nell'archivio radio-browser.info oppure aggiunta di un link di streaming\n* loghi delle stazioni cercati in automatico sul web quando mancano\n* tieni premuto su una stazione per fissarla in cima ai preferiti o darle un nome a tuo piacere\n* timer di spegnimento con scelta rapida della durata: allo scadere l'app si chiude del tutto, per risparmiare batteria\n* notifica con barra di avanzamento per ogni brano e cambio stazione con i tasti avanti e indietro\n* tema arancione\n\nNessuna pubblicit\u00e0 e nessun tracciamento.",
       "issueTracker": "https://github.com/thamichele/webradiodroid/issues",
       "license": "MIT",
@@ -79,7 +79,7 @@
       "webSite": "https://github.com/thamichele/webradiodroid",
       "added": 1793433162000,
       "packageName": "io.github.thamichele.webradiodroid",
-      "lastUpdated": 1793433162000
+      "lastUpdated": 1793726689000
     },
     {
       "authorName": "Michele",
@@ -315,6 +315,76 @@
     ],
     "io.github.thamichele.smbcommander": [
       {
+        "added": 1793726688000,
+        "apkName": "io.github.thamichele.smbcommander_1007000.apk",
+        "hash": "fc8d15e4380ca802c8e1ffd046e709748b12e305f7493470a8ec724653d72a4e",
+        "hashType": "sha256",
+        "minSdkVersion": 26,
+        "nativecode": [
+          "arm64-v8a",
+          "armeabi-v7a",
+          "x86",
+          "x86_64"
+        ],
+        "packageName": "io.github.thamichele.smbcommander",
+        "sig": "85ea845c54d1f71da43bdec9d4cafdab",
+        "signer": "3b92a1bacd13aa6c05b651eb0a2489c8032f62b4f7c6834835cae72e23d9028c",
+        "size": 16648470,
+        "targetSdkVersion": 37,
+        "uses-permission": [
+          [
+            "android.permission.INTERNET",
+            null
+          ],
+          [
+            "android.permission.READ_MEDIA_IMAGES",
+            null
+          ],
+          [
+            "android.permission.READ_MEDIA_VIDEO",
+            null
+          ],
+          [
+            "android.permission.READ_EXTERNAL_STORAGE",
+            32
+          ],
+          [
+            "android.permission.ACCESS_MEDIA_LOCATION",
+            null
+          ],
+          [
+            "android.permission.POST_NOTIFICATIONS",
+            null
+          ],
+          [
+            "android.permission.FOREGROUND_SERVICE",
+            null
+          ],
+          [
+            "android.permission.FOREGROUND_SERVICE_DATA_SYNC",
+            null
+          ],
+          [
+            "android.permission.WAKE_LOCK",
+            null
+          ],
+          [
+            "android.permission.ACCESS_NETWORK_STATE",
+            null
+          ],
+          [
+            "android.permission.RECEIVE_BOOT_COMPLETED",
+            null
+          ],
+          [
+            "io.github.thamichele.smbcommander.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION",
+            null
+          ]
+        ],
+        "versionCode": 1007000,
+        "versionName": "1.7.0"
+      },
+      {
         "added": 1793651195000,
         "apkName": "io.github.thamichele.smbcommander_1006000.apk",
         "hash": "d67dca6d47b675b1c19ba4d4aef1238a7c22a5fdba2d5aaeea466db05786f0b6",
@@ -453,55 +523,31 @@
         ],
         "versionCode": 1005000,
         "versionName": "1.5.0"
-      },
+      }
+    ],
+    "io.github.thamichele.webradiodroid": [
       {
-        "added": 1793475598000,
-        "apkName": "io.github.thamichele.smbcommander_1004000.apk",
-        "hash": "7cd31ddc318a350c1e1fd05138a7a9d1a4381ceeff29fcbc88f39588337c09d2",
+        "added": 1793726689000,
+        "apkName": "io.github.thamichele.webradiodroid_2201000.apk",
+        "hash": "2afe23d6d35f7c9e23b02307b96de2b824f20f57542b5a148010bf365a766367",
         "hashType": "sha256",
-        "minSdkVersion": 26,
-        "nativecode": [
-          "arm64-v8a",
-          "armeabi-v7a",
-          "x86",
-          "x86_64"
-        ],
-        "packageName": "io.github.thamichele.smbcommander",
-        "sig": "85ea845c54d1f71da43bdec9d4cafdab",
-        "signer": "3b92a1bacd13aa6c05b651eb0a2489c8032f62b4f7c6834835cae72e23d9028c",
-        "size": 16632062,
+        "minSdkVersion": 25,
+        "packageName": "io.github.thamichele.webradiodroid",
+        "sig": "f5c6313cad11625467121d0206ed111a",
+        "signer": "6f57e29c9299491823e19da5e688175f622ae14a404b7fbb2f429042214005b0",
+        "size": 3589282,
         "targetSdkVersion": 37,
         "uses-permission": [
-          [
-            "android.permission.INTERNET",
-            null
-          ],
-          [
-            "android.permission.READ_MEDIA_IMAGES",
-            null
-          ],
-          [
-            "android.permission.READ_MEDIA_VIDEO",
-            null
-          ],
-          [
-            "android.permission.READ_EXTERNAL_STORAGE",
-            32
-          ],
-          [
-            "android.permission.ACCESS_MEDIA_LOCATION",
-            null
-          ],
-          [
-            "android.permission.POST_NOTIFICATIONS",
-            null
-          ],
           [
             "android.permission.FOREGROUND_SERVICE",
             null
           ],
           [
-            "android.permission.FOREGROUND_SERVICE_DATA_SYNC",
+            "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK",
+            null
+          ],
+          [
+            "android.permission.INTERNET",
             null
           ],
           [
@@ -509,7 +555,23 @@
             null
           ],
           [
+            "android.permission.ACCESS_WIFI_STATE",
+            null
+          ],
+          [
             "android.permission.ACCESS_NETWORK_STATE",
+            null
+          ],
+          [
+            "android.permission.READ_EXTERNAL_STORAGE",
+            null
+          ],
+          [
+            "android.permission.VIBRATE",
+            null
+          ],
+          [
+            "androidx.car.app.MEDIA_TEMPLATES",
             null
           ],
           [
@@ -517,15 +579,13 @@
             null
           ],
           [
-            "io.github.thamichele.smbcommander.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION",
+            "io.github.thamichele.webradiodroid.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION",
             null
           ]
         ],
-        "versionCode": 1004000,
-        "versionName": "1.4.0"
-      }
-    ],
-    "io.github.thamichele.webradiodroid": [
+        "versionCode": 2201000,
+        "versionName": "2.1.0"
+      },
       {
         "added": 1793433162000,
         "apkName": "io.github.thamichele.webradiodroid_2200000.apk",

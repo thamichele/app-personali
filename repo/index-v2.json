@@ -14,7 +14,7 @@
       }
     },
     "address": "https://raw.githubusercontent.com/thamichele/app-personali/fdroid/repo",
-    "timestamp": 1793701299000,
+    "timestamp": 1793726695000,
     "categories": {
       "Connectivity": {
         "name": {
@@ -272,7 +272,7 @@
           "Multimedia"
         ],
         "issueTracker": "https://github.com/thamichele/SMBCommander/issues",
-        "lastUpdated": 1793651195000,
+        "lastUpdated": 1793726688000,
         "license": "Proprietary",
         "sourceCode": "https://github.com/thamichele/SMBCommander",
         "authorName": "Michele",
@@ -288,6 +288,72 @@
         "preferredSigner": "3b92a1bacd13aa6c05b651eb0a2489c8032f62b4f7c6834835cae72e23d9028c"
       },
       "versions": {
+        "fc8d15e4380ca802c8e1ffd046e709748b12e305f7493470a8ec724653d72a4e": {
+          "added": 1793726688000,
+          "file": {
+            "name": "/io.github.thamichele.smbcommander_1007000.apk",
+            "sha256": "fc8d15e4380ca802c8e1ffd046e709748b12e305f7493470a8ec724653d72a4e",
+            "size": 16648470
+          },
+          "manifest": {
+            "nativecode": [
+              "arm64-v8a",
+              "armeabi-v7a",
+              "x86",
+              "x86_64"
+            ],
+            "versionName": "1.7.0",
+            "versionCode": 1007000,
+            "usesSdk": {
+              "minSdkVersion": 26,
+              "targetSdkVersion": 37
+            },
+            "signer": {
+              "sha256": [
+                "3b92a1bacd13aa6c05b651eb0a2489c8032f62b4f7c6834835cae72e23d9028c"
+              ]
+            },
+            "usesPermission": [
+              {
+                "name": "android.permission.INTERNET"
+              },
+              {
+                "name": "android.permission.READ_MEDIA_IMAGES"
+              },
+              {
+                "name": "android.permission.READ_MEDIA_VIDEO"
+              },
+              {
+                "name": "android.permission.READ_EXTERNAL_STORAGE",
+                "maxSdkVersion": 32
+              },
+              {
+                "name": "android.permission.ACCESS_MEDIA_LOCATION"
+              },
+              {
+                "name": "android.permission.POST_NOTIFICATIONS"
+              },
+              {
+                "name": "android.permission.FOREGROUND_SERVICE"
+              },
+              {
+                "name": "android.permission.FOREGROUND_SERVICE_DATA_SYNC"
+              },
+              {
+                "name": "android.permission.WAKE_LOCK"
+              },
+              {
+                "name": "android.permission.ACCESS_NETWORK_STATE"
+              },
+              {
+                "name": "android.permission.RECEIVE_BOOT_COMPLETED"
+              },
+              {
+                "name": "io.github.thamichele.smbcommander.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+              }
+            ]
+          }
+        },
         "d67dca6d47b675b1c19ba4d4aef1238a7c22a5fdba2d5aaeea466db05786f0b6": {
           "added": 1793651195000,
           "file": {
@@ -419,72 +485,6 @@
               }
             ]
           }
-        },
-        "7cd31ddc318a350c1e1fd05138a7a9d1a4381ceeff29fcbc88f39588337c09d2": {
-          "added": 1793475598000,
-          "file": {
-            "name": "/io.github.thamichele.smbcommander_1004000.apk",
-            "sha256": "7cd31ddc318a350c1e1fd05138a7a9d1a4381ceeff29fcbc88f39588337c09d2",
-            "size": 16632062
-          },
-          "manifest": {
-            "nativecode": [
-              "arm64-v8a",
-              "armeabi-v7a",
-              "x86",
-              "x86_64"
-            ],
-            "versionName": "1.4.0",
-            "versionCode": 1004000,
-            "usesSdk": {
-              "minSdkVersion": 26,
-              "targetSdkVersion": 37
-            },
-            "signer": {
-              "sha256": [
-                "3b92a1bacd13aa6c05b651eb0a2489c8032f62b4f7c6834835cae72e23d9028c"
-              ]
-            },
-            "usesPermission": [
-              {
-                "name": "android.permission.INTERNET"
-              },
-              {
-                "name": "android.permission.READ_MEDIA_IMAGES"
-              },
-              {
-                "name": "android.permission.READ_MEDIA_VIDEO"
-              },
-              {
-                "name": "android.permission.READ_EXTERNAL_STORAGE",
-                "maxSdkVersion": 32
-              },
-              {
-                "name": "android.permission.ACCESS_MEDIA_LOCATION"
-              },
-              {
-                "name": "android.permission.POST_NOTIFICATIONS"
-              },
-              {
-                "name": "android.permission.FOREGROUND_SERVICE"
-              },
-              {
-                "name": "android.permission.FOREGROUND_SERVICE_DATA_SYNC"
-              },
-              {
-                "name": "android.permission.WAKE_LOCK"
-              },
-              {
-                "name": "android.permission.ACCESS_NETWORK_STATE"
-              },
-              {
-                "name": "android.permission.RECEIVE_BOOT_COMPLETED"
-              },
-              {
-                "name": "io.github.thamichele.smbcommander.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
-              }
-            ]
-          }
         }
       }
     },
@@ -496,7 +496,7 @@
           "Internet"
         ],
         "issueTracker": "https://github.com/thamichele/webradiodroid/issues",
-        "lastUpdated": 1793433162000,
+        "lastUpdated": 1793726689000,
         "license": "MIT",
         "sourceCode": "https://github.com/thamichele/webradiodroid",
         "webSite": "https://github.com/thamichele/webradiodroid",
@@ -513,6 +513,62 @@
         "preferredSigner": "6f57e29c9299491823e19da5e688175f622ae14a404b7fbb2f429042214005b0"
       },
       "versions": {
+        "2afe23d6d35f7c9e23b02307b96de2b824f20f57542b5a148010bf365a766367": {
+          "added": 1793726689000,
+          "file": {
+            "name": "/io.github.thamichele.webradiodroid_2201000.apk",
+            "sha256": "2afe23d6d35f7c9e23b02307b96de2b824f20f57542b5a148010bf365a766367",
+            "size": 3589282
+          },
+          "manifest": {
+            "versionName": "2.1.0",
+            "versionCode": 2201000,
+            "usesSdk": {
+              "minSdkVersion": 25,
+              "targetSdkVersion": 37
+            },
+            "signer": {
+              "sha256": [
+                "6f57e29c9299491823e19da5e688175f622ae14a404b7fbb2f429042214005b0"
+              ]
+            },
+            "usesPermission": [
+              {
+                "name": "android.permission.FOREGROUND_SERVICE"
+              },
+              {
+                "name": "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"
+              },
+              {
+                "name": "android.permission.INTERNET"
+              },
+              {
+                "name": "android.permission.WAKE_LOCK"
+              },
+              {
+                "name": "android.permission.ACCESS_WIFI_STATE"
+              },
+              {
+                "name": "android.permission.ACCESS_NETWORK_STATE"
+              },
+              {
+                "name": "android.permission.READ_EXTERNAL_STORAGE"
+              },
+              {
+                "name": "android.permission.VIBRATE"
+              },
+              {
+                "name": "androidx.car.app.MEDIA_TEMPLATES"
+              },
+              {
+                "name": "android.permission.RECEIVE_BOOT_COMPLETED"
+              },
+              {
+                "name": "io.github.thamichele.webradiodroid.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+              }
+            ]
+          }
+        },
         "b6ccf360ad562935a38774ba767b30be2f5104c565c94a40c5cde6577abb04c4": {
           "added": 1793433162000,
           "file": {
