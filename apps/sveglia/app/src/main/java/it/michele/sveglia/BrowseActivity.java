@@ -100,7 +100,7 @@ public class BrowseActivity extends Activity {
         setContentView(root);
 
         access = Ui.text(this, "", 14, Ui.TEXT, false);
-        access.setBackground(Ui.rounded(0xFF5A1A10, Ui.dp(this, 16)));
+        access.setBackground(Ui.rounded(Ui.ACCENT_BG, Ui.dp(this, 16)));
         access.setPadding(Ui.dp(this, 16), Ui.dp(this, 10), Ui.dp(this, 16), Ui.dp(this, 10));
         access.setVisibility(View.GONE);
         access.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) {

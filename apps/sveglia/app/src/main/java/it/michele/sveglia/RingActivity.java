@@ -55,7 +55,7 @@ public class RingActivity extends Activity {
         TextView snoozeBtn = Ui.pill(this, "Posticipa " + snooze + " min", Ui.PILL, Ui.TEXT);
         snoozeBtn.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { send(RingService.ACTION_SNOOZE); }});
         root.addView(snoozeBtn, wide());
-        TextView stop = Ui.pill(this, "Ferma", Ui.ACCENT, Ui.TEXT);
+        TextView stop = Ui.pill(this, "Ferma", Ui.ACCENT, Ui.BG);
         stop.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { send(RingService.ACTION_STOP); }});
         LinearLayout.LayoutParams lp = wide();
         lp.topMargin = Ui.dp(this, 16);
