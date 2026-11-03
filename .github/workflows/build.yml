@@ -5,9 +5,10 @@ on:
     branches: [ main ]
   pull_request:
   workflow_dispatch:
-  # ogni notte, per portare nel repository F-Droid le nuove versioni delle app esterne
+  # ogni ora, per portare nel repository F-Droid le nuove versioni delle app esterne (es. AntiDroidVirus,
+  # che pubblica a ogni merge nel suo repository): arrivano qui entro un'ora
   schedule:
-    - cron: "17 3 * * *"
+    - cron: "17 * * * *"
 
 permissions:
   contents: read
