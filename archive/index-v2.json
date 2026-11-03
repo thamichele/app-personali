@@ -9,12 +9,12 @@
     "icon": {
       "en-US": {
         "name": "/icons/icon.png",
-        "sha256": "05c3ab8756b2cc81cba5c9a1d91cc5607ed56b4cc7a8b582039f19c7c9504c43",
-        "size": 21337
+        "sha256": "f22af8003048a5ba4b4dbd53ee27d657aeec2883e93213c1d09b8f40cac1b107",
+        "size": 20157
       }
     },
     "address": "https://raw.githubusercontent.com/thamichele/app-personali/fdroid/archive",
-    "timestamp": 1793651198000,
+    "timestamp": 1793695871000,
     "categories": {
       "Multimedia": {
         "name": {
@@ -332,7 +332,7 @@
           "Multimedia"
         ],
         "issueTracker": "https://github.com/thamichele/app-personali/issues",
-        "lastUpdated": 1793599722000,
+        "lastUpdated": 1793695868000,
         "license": "Proprietary",
         "sourceCode": "https://github.com/thamichele/app-personali/tree/main/apps/sveglia",
         "authorName": "Michele",
@@ -347,7 +347,7 @@
         },
         "icon": {
           "en-US": {
-            "name": "/icons/it.michele.sveglia.10101.png",
+            "name": "/icons/it.michele.sveglia.10102.png",
             "sha256": "c6b87530aa106f687148caff7b3285231c207320c8b963fe0520e76be808a4ac",
             "size": 1771
           }
@@ -355,6 +355,50 @@
         "preferredSigner": "be7bf46d0327ed4ffa40d81b7e484c98201dcd50cee414b8fffe1080e401f82e"
       },
       "versions": {
+        "ed220fce9f7342313057c63f87b9ba187c7eba866d69b0ae5d78b35f4e7c87bf": {
+          "added": 1793434969000,
+          "file": {
+            "name": "/sveglia-1.1.2.apk",
+            "sha256": "ed220fce9f7342313057c63f87b9ba187c7eba866d69b0ae5d78b35f4e7c87bf",
+            "size": 70764
+          },
+          "manifest": {
+            "versionName": "1.1.2",
+            "versionCode": 10102,
+            "usesSdk": {
+              "minSdkVersion": 33,
+              "targetSdkVersion": 34
+            },
+            "signer": {
+              "sha256": [
+                "be7bf46d0327ed4ffa40d81b7e484c98201dcd50cee414b8fffe1080e401f82e"
+              ]
+            },
+            "usesPermission": [
+              {
+                "name": "android.permission.USE_EXACT_ALARM"
+              },
+              {
+                "name": "android.permission.POST_NOTIFICATIONS"
+              },
+              {
+                "name": "android.permission.USE_FULL_SCREEN_INTENT"
+              },
+              {
+                "name": "android.permission.FOREGROUND_SERVICE"
+              },
+              {
+                "name": "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"
+              },
+              {
+                "name": "android.permission.RECEIVE_BOOT_COMPLETED"
+              },
+              {
+                "name": "android.permission.WAKE_LOCK"
+              }
+            ]
+          }
+        },
         "af2c94cd73d1dba17b7ff9ab46460df6033a0cba3f939d6df12cbb061186bb2a": {
           "added": 1793434595000,
           "file": {

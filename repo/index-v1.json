@@ -1,6 +1,6 @@
 {
   "repo": {
-    "timestamp": 1793651202000,
+    "timestamp": 1793695874000,
     "version": 20002,
     "name": "App personali",
     "icon": "icon.png",
@@ -18,7 +18,7 @@
         "Security",
         "System"
       ],
-      "suggestedVersionCode": "143",
+      "suggestedVersionCode": "146",
       "issueTracker": "https://github.com/thamichele/antidroidvirus/issues",
       "license": "Unknown",
       "name": "AntiDroidVirus",
@@ -26,7 +26,7 @@
       "webSite": "https://github.com/thamichele/antidroidvirus",
       "added": 1793433161000,
       "packageName": "dev.antidroidvirus",
-      "lastUpdated": 1793453065000
+      "lastUpdated": 1793695865000
     },
     {
       "authorName": "Michele",
@@ -51,7 +51,7 @@
         "Time",
         "Multimedia"
       ],
-      "suggestedVersionCode": "10300",
+      "suggestedVersionCode": "10301",
       "description": "Sveglie multiple con giorni della settimana, nome e posticipo, con un aspetto ispirato all'orologio Samsung.\n\nOgni sveglia pu\u00f2 suonare con la suoneria di sistema oppure avviare un'app musicale, per esempio\nWebRadioDroid (riprende l'ultima stazione) o Qobuz. Se l'app non parte, suona la suoneria di sistema.",
       "issueTracker": "https://github.com/thamichele/app-personali/issues",
       "license": "Proprietary",
@@ -59,9 +59,9 @@
       "sourceCode": "https://github.com/thamichele/app-personali/tree/main/apps/sveglia",
       "summary": "Sveglie multiple che suonano con la tua app musicale preferita",
       "added": 1793433059000,
-      "icon": "it.michele.sveglia.10300.png",
+      "icon": "it.michele.sveglia.10301.png",
       "packageName": "it.michele.sveglia",
-      "lastUpdated": 1793599722000
+      "lastUpdated": 1793695868000
     },
     {
       "authorName": "Michele",
@@ -87,7 +87,7 @@
         "Connectivity",
         "System"
       ],
-      "suggestedVersionCode": "20000",
+      "suggestedVersionCode": "20100",
       "description": "Controlla un tunnel dell'app WireGuard ufficiale: lo spegne quando sei collegato a una delle reti WiFi\no dei dispositivi Bluetooth scelti, oppure ad Android Auto, e lo riaccende negli altri casi.\n\nRichiede l'app WireGuard con l'opzione \"Consenti app di controllo remoto\" attiva.",
       "issueTracker": "https://github.com/thamichele/wgswitch/issues",
       "license": "Proprietary",
@@ -95,13 +95,83 @@
       "sourceCode": "https://github.com/thamichele/wgswitch",
       "summary": "Spegne e riaccende il tunnel WireGuard in base a WiFi, Bluetooth e Android Auto",
       "added": 1793433163000,
-      "icon": "it.michele.wgswitch.20000.png",
+      "icon": "it.michele.wgswitch.20100.png",
       "packageName": "it.michele.wgswitch",
-      "lastUpdated": 1793433163000
+      "lastUpdated": 1793695868000
     }
   ],
   "packages": {
     "dev.antidroidvirus": [
+      {
+        "added": 1793695865000,
+        "apkName": "dev.antidroidvirus_146.apk",
+        "hash": "fe27c6b5201127e3458bb555fc9e9ca6f3387d5cac17fce34b354d50a6f8e091",
+        "hashType": "sha256",
+        "minSdkVersion": 30,
+        "nativecode": [
+          "arm64-v8a",
+          "armeabi-v7a",
+          "x86",
+          "x86_64"
+        ],
+        "packageName": "dev.antidroidvirus",
+        "sig": "416dbd272844efda19db2dbc9d74cb35",
+        "signer": "52c6192939571634951b82ee34424660f5055be2efb8c50280f0dfa772eae9eb",
+        "size": 2379233,
+        "targetSdkVersion": 36,
+        "uses-permission": [
+          [
+            "android.permission.GET_APP_OPS_STATS",
+            null
+          ],
+          [
+            "android.permission.PACKAGE_USAGE_STATS",
+            null
+          ],
+          [
+            "android.permission.QUERY_ALL_PACKAGES",
+            null
+          ],
+          [
+            "android.permission.POST_NOTIFICATIONS",
+            null
+          ],
+          [
+            "android.permission.MANAGE_EXTERNAL_STORAGE",
+            null
+          ],
+          [
+            "android.permission.REQUEST_DELETE_PACKAGES",
+            null
+          ],
+          [
+            "android.permission.FOREGROUND_SERVICE",
+            null
+          ],
+          [
+            "android.permission.FOREGROUND_SERVICE_SPECIAL_USE",
+            null
+          ],
+          [
+            "android.permission.RECEIVE_BOOT_COMPLETED",
+            null
+          ],
+          [
+            "android.permission.HIDE_OVERLAY_WINDOWS",
+            null
+          ],
+          [
+            "moe.shizuku.manager.permission.API_V23",
+            null
+          ],
+          [
+            "dev.antidroidvirus.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION",
+            null
+          ]
+        ],
+        "versionCode": 146,
+        "versionName": "0.7"
+      },
       {
         "added": 1793453065000,
         "apkName": "dev.antidroidvirus_143.apk",
@@ -519,6 +589,50 @@
     ],
     "it.michele.sveglia": [
       {
+        "added": 1793695868000,
+        "apkName": "sveglia-1.3.1.apk",
+        "hash": "89d9ca18503cf9d5f956a8703e65b92ebb30e159e0c4ded70599d4c668fafba0",
+        "hashType": "sha256",
+        "minSdkVersion": 33,
+        "packageName": "it.michele.sveglia",
+        "sig": "ad6d05dea4be9ea1eb58f3f6ddd6b951",
+        "signer": "be7bf46d0327ed4ffa40d81b7e484c98201dcd50cee414b8fffe1080e401f82e",
+        "size": 70764,
+        "targetSdkVersion": 34,
+        "uses-permission": [
+          [
+            "android.permission.USE_EXACT_ALARM",
+            null
+          ],
+          [
+            "android.permission.POST_NOTIFICATIONS",
+            null
+          ],
+          [
+            "android.permission.USE_FULL_SCREEN_INTENT",
+            null
+          ],
+          [
+            "android.permission.FOREGROUND_SERVICE",
+            null
+          ],
+          [
+            "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK",
+            null
+          ],
+          [
+            "android.permission.RECEIVE_BOOT_COMPLETED",
+            null
+          ],
+          [
+            "android.permission.WAKE_LOCK",
+            null
+          ]
+        ],
+        "versionCode": 10301,
+        "versionName": "1.3.1"
+      },
+      {
         "added": 1793599722000,
         "apkName": "sveglia-1.3.0.apk",
         "hash": "148635cf4de97b2fc2e4ed8cc888c7172fb26303c9b5cb87b985802d292f9e96",
@@ -605,29 +719,43 @@
         ],
         "versionCode": 10200,
         "versionName": "1.2.0"
-      },
+      }
+    ],
+    "it.michele.wgswitch": [
       {
-        "added": 1793434969000,
-        "apkName": "sveglia-1.1.2.apk",
-        "hash": "ed220fce9f7342313057c63f87b9ba187c7eba866d69b0ae5d78b35f4e7c87bf",
+        "added": 1793695868000,
+        "apkName": "it.michele.wgswitch_20100.apk",
+        "hash": "b435d646c51e0fc217097d11dae3e3f0952daf0acba33de94552b0af66417f10",
         "hashType": "sha256",
         "minSdkVersion": 33,
-        "packageName": "it.michele.sveglia",
-        "sig": "ad6d05dea4be9ea1eb58f3f6ddd6b951",
-        "signer": "be7bf46d0327ed4ffa40d81b7e484c98201dcd50cee414b8fffe1080e401f82e",
-        "size": 70764,
+        "packageName": "it.michele.wgswitch",
+        "sig": "5b915cafe721845fa834569b132dbc07",
+        "signer": "23234767bec703550d705d3cd819d578832a2a1c7f9cebef15784125dac5caa0",
+        "size": 54230,
         "targetSdkVersion": 34,
         "uses-permission": [
           [
-            "android.permission.USE_EXACT_ALARM",
+            "android.permission.ACCESS_NETWORK_STATE",
             null
           ],
           [
-            "android.permission.POST_NOTIFICATIONS",
+            "android.permission.ACCESS_WIFI_STATE",
             null
           ],
           [
-            "android.permission.USE_FULL_SCREEN_INTENT",
+            "android.permission.ACCESS_COARSE_LOCATION",
+            null
+          ],
+          [
+            "android.permission.ACCESS_FINE_LOCATION",
+            null
+          ],
+          [
+            "android.permission.ACCESS_BACKGROUND_LOCATION",
+            null
+          ],
+          [
+            "android.permission.BLUETOOTH_CONNECT",
             null
           ],
           [
@@ -635,7 +763,11 @@
             null
           ],
           [
-            "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK",
+            "android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE",
+            null
+          ],
+          [
+            "android.permission.POST_NOTIFICATIONS",
             null
           ],
           [
@@ -643,15 +775,17 @@
             null
           ],
           [
-            "android.permission.WAKE_LOCK",
+            "android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS",
+            null
+          ],
+          [
+            "com.wireguard.android.permission.CONTROL_TUNNELS",
             null
           ]
         ],
-        "versionCode": 10102,
-        "versionName": "1.1.2"
-      }
-    ],
-    "it.michele.wgswitch": [
+        "versionCode": 20100,
+        "versionName": "2.1.0"
+      },
       {
         "added": 1793433163000,
         "apkName": "it.michele.wgswitch_20000.apk",
