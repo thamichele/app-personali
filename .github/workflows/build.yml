@@ -5,15 +5,18 @@ on:
     branches: [ main ]
   pull_request:
   workflow_dispatch:
-  # ogni notte, per portare nel repository F-Droid le nuove versioni delle app esterne
+  # ogni ora, per portare nel repository F-Droid le nuove versioni delle app esterne (es. AntiDroidVirus,
+  # che pubblica a ogni merge nel suo repository): arrivano qui entro un'ora
   schedule:
-    - cron: "17 3 * * *"
+    - cron: "17 * * * *"
 
 permissions:
   contents: read
 
 jobs:
   build:
+    # il giro orario serve solo a ripubblicare l'indice F-Droid: niente build di prova
+    if: github.event_name != 'schedule'
     runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
@@ -58,7 +61,8 @@ jobs:
   # Richiede i secret RELEASE_KEYSTORE_BASE64 (keystore PKCS12 con le chiavi "app" e "repo") e
   # RELEASE_KEYSTORE_PASSWORD; senza di essi il job non fa nulla.
   publish:
-    if: github.event_name != 'pull_request'
+    # parte anche quando la build di prova è saltata (giro orario), non quando è fallita
+    if: github.event_name != 'pull_request' && !failure() && !cancelled()
     needs: build
     runs-on: ubuntu-24.04
     permissions:

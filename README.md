@@ -38,5 +38,5 @@ https://raw.githubusercontent.com/thamichele/app-personali/fdroid/repo?fingerpri
 2. Unisci in `main`: GitHub Actions compila con la chiave vera (secret `RELEASE_KEYSTORE_BASE64` e
    `RELEASE_KEYSTORE_PASSWORD`), crea la release `<app>-vX.Y.Z` e aggiorna il ramo `fdroid`.
 
-Le nuove versioni delle app esterne arrivano nel repository unico entro un giorno: il workflow gira anche ogni
-notte. A mano: `FDROID_KEYSTORE=... FDROID_PASS=... ./fdroid.sh [APK...]`, poi il push del ramo `fdroid`.
+Le nuove versioni delle app esterne arrivano nel repository unico entro un'ora: il workflow gira anche ogni
+ora. A mano: `FDROID_KEYSTORE=... FDROID_PASS=... ./fdroid.sh [APK...]`, poi il push del ramo `fdroid`.
