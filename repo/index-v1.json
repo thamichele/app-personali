@@ -1,6 +1,6 @@
 {
   "repo": {
-    "timestamp": 1793726695000,
+    "timestamp": 1793727569000,
     "version": 20002,
     "name": "App personali",
     "icon": "icon.png",
@@ -34,7 +34,7 @@
         "System",
         "Multimedia"
       ],
-      "suggestedVersionCode": "1007000",
+      "suggestedVersionCode": "1008000",
       "description": "File manager veloce e pulito per il NAS di casa: parla direttamente SMB 2/3, solo in rete locale.\nNiente cloud, niente relay, niente porte aperte su Internet. Funziona con qualunque NAS o computer\nche condivida cartelle via SMB.\n\nFile\n* Solo le cartelle che scegli tu, comprese quelle condivise nascoste.\n* Miniature generate una volta e tenute in cache, visualizzatore di foto a piena risoluzione e video in streaming.\n* Modifica sicura: il file si apre con l'app che preferisci e torna sul NAS solo se \u00e8 cambiato, con controllo dei conflitti.\n* Copia e sposta tra cartelle del NAS, Salva sul NAS dalle altre app, widget per la schermata Home.\n* Ogni trasferimento \u00e8 verificato con l'impronta SHA-256.\n\nBackup delle foto\n* Automatico, solo sul Wi-Fi di casa, diviso per anno e mese; non cancella mai nulla dal telefono da solo.\n* Libera spazio: elimina dal telefono solo le foto la cui copia sul NAS risulta identica.\n\nGalleria\n* Mostra solo la cartella del backup, con qualunque struttura di sottocartelle, a griglia, a mosaico o a elenco.\n* Pulizia rapida per scegliere cosa tenere, cestino e ricerca dei duplicati.\n\nPassword cifrata con l'Android Keystore, traffico SMB sempre firmato e, con SMB 3, cifrato.",
       "issueTracker": "https://github.com/thamichele/SMBCommander/issues",
       "license": "Proprietary",
@@ -43,7 +43,7 @@
       "summary": "File manager SMB per il NAS di casa, con backup delle foto e galleria",
       "added": 1793433162000,
       "packageName": "io.github.thamichele.smbcommander",
-      "lastUpdated": 1793726688000
+      "lastUpdated": 1793727563000
     },
     {
       "authorName": "Michele",
@@ -315,6 +315,76 @@
     ],
     "io.github.thamichele.smbcommander": [
       {
+        "added": 1793727563000,
+        "apkName": "io.github.thamichele.smbcommander_1008000.apk",
+        "hash": "fe9291581a52f2198871b6f7d4975ad89b8f8bfb3907521de9ba9a7a49af845c",
+        "hashType": "sha256",
+        "minSdkVersion": 26,
+        "nativecode": [
+          "arm64-v8a",
+          "armeabi-v7a",
+          "x86",
+          "x86_64"
+        ],
+        "packageName": "io.github.thamichele.smbcommander",
+        "sig": "85ea845c54d1f71da43bdec9d4cafdab",
+        "signer": "3b92a1bacd13aa6c05b651eb0a2489c8032f62b4f7c6834835cae72e23d9028c",
+        "size": 16664854,
+        "targetSdkVersion": 37,
+        "uses-permission": [
+          [
+            "android.permission.INTERNET",
+            null
+          ],
+          [
+            "android.permission.READ_MEDIA_IMAGES",
+            null
+          ],
+          [
+            "android.permission.READ_MEDIA_VIDEO",
+            null
+          ],
+          [
+            "android.permission.READ_EXTERNAL_STORAGE",
+            32
+          ],
+          [
+            "android.permission.ACCESS_MEDIA_LOCATION",
+            null
+          ],
+          [
+            "android.permission.POST_NOTIFICATIONS",
+            null
+          ],
+          [
+            "android.permission.FOREGROUND_SERVICE",
+            null
+          ],
+          [
+            "android.permission.FOREGROUND_SERVICE_DATA_SYNC",
+            null
+          ],
+          [
+            "android.permission.WAKE_LOCK",
+            null
+          ],
+          [
+            "android.permission.ACCESS_NETWORK_STATE",
+            null
+          ],
+          [
+            "android.permission.RECEIVE_BOOT_COMPLETED",
+            null
+          ],
+          [
+            "io.github.thamichele.smbcommander.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION",
+            null
+          ]
+        ],
+        "versionCode": 1008000,
+        "versionName": "1.8.0"
+      },
+      {
         "added": 1793726688000,
         "apkName": "io.github.thamichele.smbcommander_1007000.apk",
         "hash": "fc8d15e4380ca802c8e1ffd046e709748b12e305f7493470a8ec724653d72a4e",
@@ -453,76 +523,6 @@
         ],
         "versionCode": 1006000,
         "versionName": "1.6.0"
-      },
-      {
-        "added": 1793649177000,
-        "apkName": "io.github.thamichele.smbcommander_1005000.apk",
-        "hash": "3c50fb6a91a193512f15aa6a450211694f1f16a17ed3658f3a9e9d18474305d7",
-        "hashType": "sha256",
-        "minSdkVersion": 26,
-        "nativecode": [
-          "arm64-v8a",
-          "armeabi-v7a",
-          "x86",
-          "x86_64"
-        ],
-        "packageName": "io.github.thamichele.smbcommander",
-        "sig": "85ea845c54d1f71da43bdec9d4cafdab",
-        "signer": "3b92a1bacd13aa6c05b651eb0a2489c8032f62b4f7c6834835cae72e23d9028c",
-        "size": 16648470,
-        "targetSdkVersion": 37,
-        "uses-permission": [
-          [
-            "android.permission.INTERNET",
-            null
-          ],
-          [
-            "android.permission.READ_MEDIA_IMAGES",
-            null
-          ],
-          [
-            "android.permission.READ_MEDIA_VIDEO",
-            null
-          ],
-          [
-            "android.permission.READ_EXTERNAL_STORAGE",
-            32
-          ],
-          [
-            "android.permission.ACCESS_MEDIA_LOCATION",
-            null
-          ],
-          [
-            "android.permission.POST_NOTIFICATIONS",
-            null
-          ],
-          [
-            "android.permission.FOREGROUND_SERVICE",
-            null
-          ],
-          [
-            "android.permission.FOREGROUND_SERVICE_DATA_SYNC",
-            null
-          ],
-          [
-            "android.permission.WAKE_LOCK",
-            null
-          ],
-          [
-            "android.permission.ACCESS_NETWORK_STATE",
-            null
-          ],
-          [
-            "android.permission.RECEIVE_BOOT_COMPLETED",
-            null
-          ],
-          [
-            "io.github.thamichele.smbcommander.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION",
-            null
-          ]
-        ],
-        "versionCode": 1005000,
-        "versionName": "1.5.0"
       }
     ],
     "io.github.thamichele.webradiodroid": [

@@ -8,17 +8,16 @@
     "--pretty"
   ],
   "disabled": [],
-  "endTimestamp": 1793726698484,
+  "endTimestamp": 1793727571915,
   "failedBuilds": {},
   "fdroiddata": {
-    "commitId": "4be84e302a27f58a0b8e1ebbb2b5086a4faa9006",
+    "commitId": "14de5c0ffb65600ab774d4001bf31ef2eccd2e92",
     "isDirty": false,
     "modifiedFiles": [],
     "untrackedFiles": [
       "config.yml",
       "icon.png",
-      "repo/io.github.thamichele.smbcommander_1007000.apk",
-      "repo/io.github.thamichele.webradiodroid_2201000.apk"
+      "repo/io.github.thamichele.smbcommander_1008000.apk"
     ]
   },
   "jarsigner": "/usr/bin/jarsigner",
@@ -45,17 +44,17 @@
     "it.michele.wgswitch"
   ],
   "stages": {
-    "archive_old_apks archive": 1793726692797,
-    "delete_disabled_builds": 1793726686546,
-    "index.make archive": 1793726692798,
-    "index.make repo": 1793726695844,
-    "prepare_apps archive": 1793726692798,
-    "prepare_apps repo": 1793726695843,
-    "process_apks": 1793726686546,
-    "read_added_date_from_all_apks": 1793726692796,
-    "remove_apks": 1793726690465,
-    "scan_repo_files": 1793726690464
+    "archive_old_apks archive": 1793727567348,
+    "delete_disabled_builds": 1793727561909,
+    "index.make archive": 1793727567349,
+    "index.make repo": 1793727569686,
+    "prepare_apps archive": 1793727567349,
+    "prepare_apps repo": 1793727569685,
+    "process_apks": 1793727561912,
+    "read_added_date_from_all_apks": 1793727567348,
+    "remove_apks": 1793727565082,
+    "scan_repo_files": 1793727565082
   },
-  "startTimestamp": 1793726685000,
+  "startTimestamp": 1793727561000,
   "subcommand": "update"
 }
