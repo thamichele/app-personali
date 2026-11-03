@@ -14,11 +14,16 @@
       }
     },
     "address": "https://raw.githubusercontent.com/thamichele/app-personali/fdroid/archive",
-    "timestamp": 1793697322000,
+    "timestamp": 1793701182000,
     "categories": {
       "Multimedia": {
         "name": {
           "en-US": "Multimedia"
+        }
+      },
+      "Security": {
+        "name": {
+          "en-US": "Security"
         }
       },
       "System": {
@@ -34,6 +39,91 @@
     }
   },
   "packages": {
+    "dev.antidroidvirus": {
+      "metadata": {
+        "added": 1793433161000,
+        "categories": [
+          "Security",
+          "System"
+        ],
+        "issueTracker": "https://github.com/thamichele/antidroidvirus/issues",
+        "lastUpdated": 1793701177000,
+        "sourceCode": "https://github.com/thamichele/antidroidvirus",
+        "webSite": "https://github.com/thamichele/antidroidvirus",
+        "authorName": "Michele",
+        "name": {
+          "en-US": "AntiDroidVirus"
+        },
+        "preferredSigner": "52c6192939571634951b82ee34424660f5055be2efb8c50280f0dfa772eae9eb"
+      },
+      "versions": {
+        "4e139c24e620490be9724c37acefe0402839bb68b23fa06ba2deaa4db3e4f6e0": {
+          "added": 1793433161000,
+          "file": {
+            "name": "/dev.antidroidvirus_140.apk",
+            "sha256": "4e139c24e620490be9724c37acefe0402839bb68b23fa06ba2deaa4db3e4f6e0",
+            "size": 2264553
+          },
+          "manifest": {
+            "nativecode": [
+              "arm64-v8a",
+              "armeabi-v7a",
+              "x86",
+              "x86_64"
+            ],
+            "versionName": "0.6.2",
+            "versionCode": 140,
+            "usesSdk": {
+              "minSdkVersion": 30,
+              "targetSdkVersion": 36
+            },
+            "signer": {
+              "sha256": [
+                "52c6192939571634951b82ee34424660f5055be2efb8c50280f0dfa772eae9eb"
+              ]
+            },
+            "usesPermission": [
+              {
+                "name": "android.permission.GET_APP_OPS_STATS"
+              },
+              {
+                "name": "android.permission.PACKAGE_USAGE_STATS"
+              },
+              {
+                "name": "android.permission.QUERY_ALL_PACKAGES"
+              },
+              {
+                "name": "android.permission.POST_NOTIFICATIONS"
+              },
+              {
+                "name": "android.permission.MANAGE_EXTERNAL_STORAGE"
+              },
+              {
+                "name": "android.permission.REQUEST_DELETE_PACKAGES"
+              },
+              {
+                "name": "android.permission.FOREGROUND_SERVICE"
+              },
+              {
+                "name": "android.permission.FOREGROUND_SERVICE_SPECIAL_USE"
+              },
+              {
+                "name": "android.permission.RECEIVE_BOOT_COMPLETED"
+              },
+              {
+                "name": "android.permission.HIDE_OVERLAY_WINDOWS"
+              },
+              {
+                "name": "moe.shizuku.manager.permission.API_V23"
+              },
+              {
+                "name": "dev.antidroidvirus.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+              }
+            ]
+          }
+        }
+      }
+    },
     "io.github.thamichele.smbcommander": {
       "metadata": {
         "added": 1793433162000,

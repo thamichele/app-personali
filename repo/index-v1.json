@@ -1,6 +1,6 @@
 {
   "repo": {
-    "timestamp": 1793697325000,
+    "timestamp": 1793701185000,
     "version": 20002,
     "name": "App personali",
     "icon": "icon.png",
@@ -18,7 +18,7 @@
         "Security",
         "System"
       ],
-      "suggestedVersionCode": "146",
+      "suggestedVersionCode": "149",
       "issueTracker": "https://github.com/thamichele/antidroidvirus/issues",
       "license": "Unknown",
       "name": "AntiDroidVirus",
@@ -26,7 +26,7 @@
       "webSite": "https://github.com/thamichele/antidroidvirus",
       "added": 1793433161000,
       "packageName": "dev.antidroidvirus",
-      "lastUpdated": 1793695865000
+      "lastUpdated": 1793701177000
     },
     {
       "authorName": "Michele",
@@ -102,6 +102,76 @@
   ],
   "packages": {
     "dev.antidroidvirus": [
+      {
+        "added": 1793701177000,
+        "apkName": "dev.antidroidvirus_149.apk",
+        "hash": "ff44776dfbaaeceac1213c798d90b56dfadfa6b0b3126ef2ccfbf5eb4bed33d8",
+        "hashType": "sha256",
+        "minSdkVersion": 30,
+        "nativecode": [
+          "arm64-v8a",
+          "armeabi-v7a",
+          "x86",
+          "x86_64"
+        ],
+        "packageName": "dev.antidroidvirus",
+        "sig": "416dbd272844efda19db2dbc9d74cb35",
+        "signer": "52c6192939571634951b82ee34424660f5055be2efb8c50280f0dfa772eae9eb",
+        "size": 2395625,
+        "targetSdkVersion": 36,
+        "uses-permission": [
+          [
+            "android.permission.GET_APP_OPS_STATS",
+            null
+          ],
+          [
+            "android.permission.PACKAGE_USAGE_STATS",
+            null
+          ],
+          [
+            "android.permission.QUERY_ALL_PACKAGES",
+            null
+          ],
+          [
+            "android.permission.POST_NOTIFICATIONS",
+            null
+          ],
+          [
+            "android.permission.MANAGE_EXTERNAL_STORAGE",
+            null
+          ],
+          [
+            "android.permission.REQUEST_DELETE_PACKAGES",
+            null
+          ],
+          [
+            "android.permission.FOREGROUND_SERVICE",
+            null
+          ],
+          [
+            "android.permission.FOREGROUND_SERVICE_SPECIAL_USE",
+            null
+          ],
+          [
+            "android.permission.RECEIVE_BOOT_COMPLETED",
+            null
+          ],
+          [
+            "android.permission.HIDE_OVERLAY_WINDOWS",
+            null
+          ],
+          [
+            "moe.shizuku.manager.permission.API_V23",
+            null
+          ],
+          [
+            "dev.antidroidvirus.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION",
+            null
+          ]
+        ],
+        "versionCode": 149,
+        "versionName": "0.7.1"
+      },
       {
         "added": 1793695865000,
         "apkName": "dev.antidroidvirus_146.apk",
@@ -240,76 +310,6 @@
           ]
         ],
         "versionCode": 143,
-        "versionName": "0.6.2"
-      },
-      {
-        "added": 1793433161000,
-        "apkName": "dev.antidroidvirus_140.apk",
-        "hash": "4e139c24e620490be9724c37acefe0402839bb68b23fa06ba2deaa4db3e4f6e0",
-        "hashType": "sha256",
-        "minSdkVersion": 30,
-        "nativecode": [
-          "arm64-v8a",
-          "armeabi-v7a",
-          "x86",
-          "x86_64"
-        ],
-        "packageName": "dev.antidroidvirus",
-        "sig": "416dbd272844efda19db2dbc9d74cb35",
-        "signer": "52c6192939571634951b82ee34424660f5055be2efb8c50280f0dfa772eae9eb",
-        "size": 2264553,
-        "targetSdkVersion": 36,
-        "uses-permission": [
-          [
-            "android.permission.GET_APP_OPS_STATS",
-            null
-          ],
-          [
-            "android.permission.PACKAGE_USAGE_STATS",
-            null
-          ],
-          [
-            "android.permission.QUERY_ALL_PACKAGES",
-            null
-          ],
-          [
-            "android.permission.POST_NOTIFICATIONS",
-            null
-          ],
-          [
-            "android.permission.MANAGE_EXTERNAL_STORAGE",
-            null
-          ],
-          [
-            "android.permission.REQUEST_DELETE_PACKAGES",
-            null
-          ],
-          [
-            "android.permission.FOREGROUND_SERVICE",
-            null
-          ],
-          [
-            "android.permission.FOREGROUND_SERVICE_SPECIAL_USE",
-            null
-          ],
-          [
-            "android.permission.RECEIVE_BOOT_COMPLETED",
-            null
-          ],
-          [
-            "android.permission.HIDE_OVERLAY_WINDOWS",
-            null
-          ],
-          [
-            "moe.shizuku.manager.permission.API_V23",
-            null
-          ],
-          [
-            "dev.antidroidvirus.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION",
-            null
-          ]
-        ],
-        "versionCode": 140,
         "versionName": "0.6.2"
       }
     ],
