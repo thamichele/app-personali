@@ -22,7 +22,7 @@ mkdir -p "$WORK/repo/icons" "$WORK/metadata"
 cp apps/*/fdroid/metadata/*.yml "$WORK/metadata/"
 python3 fdroid/esterne.py fdroid/esterne.txt "$WORK"
 # fdroid cerca repo_icon nella cartella di lavoro e lo copia in repo/icons/
-cp apps/sveglia/assets/icon-512.png "$WORK/icon.png"
+cp fdroid/icon-512.png "$WORK/icon.png"
 cat > "$WORK/config.yml" <<CONFIG
 repo_url: $REPO_URL
 repo_name: App personali
