@@ -108,7 +108,7 @@ public class EditActivity extends Activity {
         LinearLayout buttons = new LinearLayout(this);
         TextView cancel = Ui.pill(this, "Annulla", Ui.PILL, Ui.TEXT);
         cancel.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { finish(); }});
-        TextView save = Ui.pill(this, "Salva", Ui.ACCENT, Ui.TEXT);
+        TextView save = Ui.pill(this, "Salva", Ui.ACCENT, Ui.BG);
         save.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) {
             save();
             toast(Ui.until(alarm.next(System.currentTimeMillis())));
@@ -142,7 +142,7 @@ public class EditActivity extends Activity {
         for (int i = 0; i < 7; i++) {
             boolean on = alarm.hasDay(i);
             dayViews[i].setTextColor(on ? Ui.DAY_ON : Ui.TEXT);
-            dayViews[i].setBackground(on ? Ui.rounded(0xFF3A1410, Ui.dp(this, 20)) : null);
+            dayViews[i].setBackground(on ? Ui.rounded(Ui.ACCENT_BG, Ui.dp(this, 20)) : null);
         }
     }
 

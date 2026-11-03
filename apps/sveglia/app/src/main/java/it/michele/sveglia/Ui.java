@@ -13,15 +13,19 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-/** Colori e costruttori di viste condivisi, in stile orologio Samsung (tema scuro). */
+/** Colori e costruttori di viste condivisi. Palette scura comune alle mie app: grigi caldi e arancio smorzato. */
 final class Ui {
-    static final int BG = 0xFF000000;
-    static final int CARD = 0xFF161616;
-    static final int PILL = 0xFF2A2A2A;
-    static final int TEXT = 0xFFFFFFFF;
-    static final int OFF = 0xFF6E6E6E;
-    static final int ACCENT = 0xFFFF4A1C;
-    static final int DAY_ON = 0xFFF0261B;
+    static final int BG = 0xFF1C1B1A;
+    static final int CARD = 0xFF252422;
+    static final int PILL = 0xFF2E2C2A;
+    static final int TEXT = 0xFFEDEAE3;
+    static final int OFF = 0xFFA39E95;
+    static final int ACCENT = 0xFFE3845A;
+    static final int DAY_ON = 0xFFEC976F;
+    /** sfondo arancio tenue: giorni scelti e avvisi */
+    static final int ACCENT_BG = 0xFF33261F;
+    /** traccia degli interruttori spenti */
+    static final int TRACK_OFF = 0xFF45413D;
 
     private Ui() {}
 
@@ -56,8 +60,8 @@ final class Ui {
 
     static void tint(Switch s) {
         int[][] states = {{android.R.attr.state_checked}, {}};
-        s.setThumbTintList(new ColorStateList(states, new int[]{TEXT, 0xFF1A1A1A}));
-        s.setTrackTintList(new ColorStateList(states, new int[]{ACCENT, 0xFF9A9A9A}));
+        s.setThumbTintList(new ColorStateList(states, new int[]{BG, OFF}));
+        s.setTrackTintList(new ColorStateList(states, new int[]{ACCENT, TRACK_OFF}));
     }
 
     static LinearLayout.LayoutParams weight(Context c, int marginDp) {
