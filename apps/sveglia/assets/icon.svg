@@ -1,6 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 24 24">
-  <rect width="24" height="24" rx="5.5" fill="#D96D00"/>
-  <g transform="translate(3 3) scale(0.75)" fill="none" stroke="#1C1B1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 50 50">
+  <!-- specifica "Icone delle app": fondo #1C1B1A, raggio 12%, disegno a tratto #D96D00 nel 76% centrale (38 su 50) -->
+  <rect width="50" height="50" rx="6" fill="#1C1B1A"/>
+  <svg x="6" y="6" width="38" height="38" viewBox="2 2 20 20" fill="none" stroke="#D96D00" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
     <path d="M12 6a7 7 0 1 0 0 14a7 7 0 1 0 0-14zM12 9.5V13l2.5 1.5M4 6.5L7 4M20 6.5L17 4M7 19l-1.5 1.5M17 19l1.5 1.5"/>
-  </g>
+  </svg>
 </svg>

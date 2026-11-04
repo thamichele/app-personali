@@ -33,4 +33,5 @@ sistema oppure avviare un'app musicale.
 ## Aspetto
 Segue il kit "Arancio UI" comune alle mie app: grigi caldi, carattere JetBrains Mono (licenza OFL, in
 `assets/JetBrainsMono-OFL.txt`, incluso ridotto ai caratteri latini), pulsanti con raggio 4, card con raggio 12 e
-icone a tratto. Il colore principale (arancio, viola, rosso, giallo, blu, verde) si sceglie nelle Impostazioni.
+icone a tratto. Icona dell'app secondo la specifica "Icone delle app": fondo scuro #1C1B1A, sveglia a tratto
+arancio nel 76% centrale (72% nell'icona adattiva, con variante monocromatica per le icone a tema). Il colore principale (arancio, viola, rosso, giallo, blu, verde) si sceglie nelle Impostazioni.
