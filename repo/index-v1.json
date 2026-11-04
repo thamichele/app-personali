@@ -1,6 +1,6 @@
 {
   "repo": {
-    "timestamp": 1793815095000,
+    "timestamp": 1793820279000,
     "version": 20002,
     "name": "App personali",
     "icon": "icon.png",
@@ -18,7 +18,7 @@
         "Security",
         "System"
       ],
-      "suggestedVersionCode": "149",
+      "suggestedVersionCode": "153",
       "issueTracker": "https://github.com/thamichele/antidroidvirus/issues",
       "license": "Unknown",
       "name": "AntiDroidVirus",
@@ -26,7 +26,7 @@
       "webSite": "https://github.com/thamichele/antidroidvirus",
       "added": 1793433161000,
       "packageName": "dev.antidroidvirus",
-      "lastUpdated": 1793701177000
+      "lastUpdated": 1793820264000
     },
     {
       "authorName": "Michele",
@@ -69,7 +69,7 @@
         "Multimedia",
         "Internet"
       ],
-      "suggestedVersionCode": "2201000",
+      "suggestedVersionCode": "2202000",
       "description": "Ascolta le tue webradio dal telefono e in auto con Android Auto. WebRadioDroid nasce da Transistor\n(Y20K, licenza MIT) e aggiunge loghi delle stazioni in Android Auto, preferiti, nomi personalizzati\ne un timer di spegnimento pi\u00f9 comodo.\n\nFunzioni principali:\n* ricerca delle stazioni nell'archivio radio-browser.info oppure aggiunta di un link di streaming\n* loghi delle stazioni cercati in automatico sul web quando mancano\n* tieni premuto su una stazione per fissarla in cima ai preferiti o darle un nome a tuo piacere\n* timer di spegnimento con scelta rapida della durata: allo scadere l'app si chiude del tutto, per risparmiare batteria\n* notifica con barra di avanzamento per ogni brano e cambio stazione con i tasti avanti e indietro\n* tema arancione\n\nNessuna pubblicit\u00e0 e nessun tracciamento.",
       "issueTracker": "https://github.com/thamichele/webradiodroid/issues",
       "license": "MIT",
@@ -79,7 +79,7 @@
       "webSite": "https://github.com/thamichele/webradiodroid",
       "added": 1793433162000,
       "packageName": "io.github.thamichele.webradiodroid",
-      "lastUpdated": 1793726689000
+      "lastUpdated": 1793820266000
     },
     {
       "authorName": "Michele",
@@ -102,6 +102,76 @@
   ],
   "packages": {
     "dev.antidroidvirus": [
+      {
+        "added": 1793820264000,
+        "apkName": "dev.antidroidvirus_153.apk",
+        "hash": "369305c0d066d9f23cbc901004e025a8e7f4ec1e69cb3ac39065eca1be144241",
+        "hashType": "sha256",
+        "minSdkVersion": 30,
+        "nativecode": [
+          "arm64-v8a",
+          "armeabi-v7a",
+          "x86",
+          "x86_64"
+        ],
+        "packageName": "dev.antidroidvirus",
+        "sig": "416dbd272844efda19db2dbc9d74cb35",
+        "signer": "52c6192939571634951b82ee34424660f5055be2efb8c50280f0dfa772eae9eb",
+        "size": 2653197,
+        "targetSdkVersion": 36,
+        "uses-permission": [
+          [
+            "android.permission.GET_APP_OPS_STATS",
+            null
+          ],
+          [
+            "android.permission.PACKAGE_USAGE_STATS",
+            null
+          ],
+          [
+            "android.permission.QUERY_ALL_PACKAGES",
+            null
+          ],
+          [
+            "android.permission.POST_NOTIFICATIONS",
+            null
+          ],
+          [
+            "android.permission.MANAGE_EXTERNAL_STORAGE",
+            null
+          ],
+          [
+            "android.permission.REQUEST_DELETE_PACKAGES",
+            null
+          ],
+          [
+            "android.permission.FOREGROUND_SERVICE",
+            null
+          ],
+          [
+            "android.permission.FOREGROUND_SERVICE_SPECIAL_USE",
+            null
+          ],
+          [
+            "android.permission.RECEIVE_BOOT_COMPLETED",
+            null
+          ],
+          [
+            "android.permission.HIDE_OVERLAY_WINDOWS",
+            null
+          ],
+          [
+            "moe.shizuku.manager.permission.API_V23",
+            null
+          ],
+          [
+            "dev.antidroidvirus.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION",
+            null
+          ]
+        ],
+        "versionCode": 153,
+        "versionName": "0.8"
+      },
       {
         "added": 1793701177000,
         "apkName": "dev.antidroidvirus_149.apk",
@@ -241,76 +311,6 @@
         ],
         "versionCode": 146,
         "versionName": "0.7"
-      },
-      {
-        "added": 1793453065000,
-        "apkName": "dev.antidroidvirus_143.apk",
-        "hash": "a829ab7d02bface23a3b40cc3df251d01effc13dec93efccedcfea13344fb605",
-        "hashType": "sha256",
-        "minSdkVersion": 30,
-        "nativecode": [
-          "arm64-v8a",
-          "armeabi-v7a",
-          "x86",
-          "x86_64"
-        ],
-        "packageName": "dev.antidroidvirus",
-        "sig": "416dbd272844efda19db2dbc9d74cb35",
-        "signer": "52c6192939571634951b82ee34424660f5055be2efb8c50280f0dfa772eae9eb",
-        "size": 2264557,
-        "targetSdkVersion": 36,
-        "uses-permission": [
-          [
-            "android.permission.GET_APP_OPS_STATS",
-            null
-          ],
-          [
-            "android.permission.PACKAGE_USAGE_STATS",
-            null
-          ],
-          [
-            "android.permission.QUERY_ALL_PACKAGES",
-            null
-          ],
-          [
-            "android.permission.POST_NOTIFICATIONS",
-            null
-          ],
-          [
-            "android.permission.MANAGE_EXTERNAL_STORAGE",
-            null
-          ],
-          [
-            "android.permission.REQUEST_DELETE_PACKAGES",
-            null
-          ],
-          [
-            "android.permission.FOREGROUND_SERVICE",
-            null
-          ],
-          [
-            "android.permission.FOREGROUND_SERVICE_SPECIAL_USE",
-            null
-          ],
-          [
-            "android.permission.RECEIVE_BOOT_COMPLETED",
-            null
-          ],
-          [
-            "android.permission.HIDE_OVERLAY_WINDOWS",
-            null
-          ],
-          [
-            "moe.shizuku.manager.permission.API_V23",
-            null
-          ],
-          [
-            "dev.antidroidvirus.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION",
-            null
-          ]
-        ],
-        "versionCode": 143,
-        "versionName": "0.6.2"
       }
     ],
     "io.github.thamichele.smbcommander": [
@@ -526,6 +526,66 @@
       }
     ],
     "io.github.thamichele.webradiodroid": [
+      {
+        "added": 1793820266000,
+        "apkName": "io.github.thamichele.webradiodroid_2202000.apk",
+        "hash": "4036494e1675f7f49298211480fa633805bd82aa1334c6a9b4259428a738d364",
+        "hashType": "sha256",
+        "minSdkVersion": 25,
+        "packageName": "io.github.thamichele.webradiodroid",
+        "sig": "f5c6313cad11625467121d0206ed111a",
+        "signer": "6f57e29c9299491823e19da5e688175f622ae14a404b7fbb2f429042214005b0",
+        "size": 4254222,
+        "targetSdkVersion": 37,
+        "uses-permission": [
+          [
+            "android.permission.FOREGROUND_SERVICE",
+            null
+          ],
+          [
+            "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK",
+            null
+          ],
+          [
+            "android.permission.INTERNET",
+            null
+          ],
+          [
+            "android.permission.WAKE_LOCK",
+            null
+          ],
+          [
+            "android.permission.ACCESS_WIFI_STATE",
+            null
+          ],
+          [
+            "android.permission.ACCESS_NETWORK_STATE",
+            null
+          ],
+          [
+            "android.permission.READ_EXTERNAL_STORAGE",
+            null
+          ],
+          [
+            "android.permission.VIBRATE",
+            null
+          ],
+          [
+            "androidx.car.app.MEDIA_TEMPLATES",
+            null
+          ],
+          [
+            "android.permission.RECEIVE_BOOT_COMPLETED",
+            null
+          ],
+          [
+            "io.github.thamichele.webradiodroid.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION",
+            null
+          ]
+        ],
+        "versionCode": 2202000,
+        "versionName": "2.2.0"
+      },
       {
         "added": 1793726689000,
         "apkName": "io.github.thamichele.webradiodroid_2201000.apk",

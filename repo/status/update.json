@@ -8,16 +8,17 @@
     "--pretty"
   ],
   "disabled": [],
-  "endTimestamp": 1793815098346,
+  "endTimestamp": 1793820281934,
   "failedBuilds": {},
   "fdroiddata": {
-    "commitId": "b171db5d1a2d3ac5d1f0bcf734f00186be20ac95",
+    "commitId": "1c6f6f1700d01b888a45ad3c9552480fafcdba05",
     "isDirty": false,
     "modifiedFiles": [],
     "untrackedFiles": [
       "config.yml",
       "icon.png",
-      "repo/io.github.thamichele.smbcommander_1012000.apk"
+      "repo/dev.antidroidvirus_153.apk",
+      "repo/io.github.thamichele.webradiodroid_2202000.apk"
     ]
   },
   "jarsigner": "/usr/bin/jarsigner",
@@ -44,17 +45,17 @@
     "it.michele.wgswitch"
   ],
   "stages": {
-    "archive_old_apks archive": 1793815090860,
-    "delete_disabled_builds": 1793815076778,
-    "index.make archive": 1793815090862,
-    "index.make repo": 1793815095005,
-    "prepare_apps archive": 1793815090862,
-    "prepare_apps repo": 1793815095003,
-    "process_apks": 1793815076778,
-    "read_added_date_from_all_apks": 1793815090860,
-    "remove_apks": 1793815084276,
-    "scan_repo_files": 1793815084275
+    "archive_old_apks archive": 1793820273743,
+    "delete_disabled_builds": 1793820261519,
+    "index.make archive": 1793820273812,
+    "index.make repo": 1793820279400,
+    "prepare_apps archive": 1793820273745,
+    "prepare_apps repo": 1793820279399,
+    "process_apks": 1793820261519,
+    "read_added_date_from_all_apks": 1793820273743,
+    "remove_apks": 1793820268127,
+    "scan_repo_files": 1793820268127
   },
-  "startTimestamp": 1793815075000,
+  "startTimestamp": 1793820260000,
   "subcommand": "update"
 }
