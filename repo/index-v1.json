@@ -1,6 +1,6 @@
 {
   "repo": {
-    "timestamp": 1793805753000,
+    "timestamp": 1793805969000,
     "version": 20002,
     "name": "App personali",
     "icon": "icon.png",
@@ -51,7 +51,7 @@
         "Time",
         "Multimedia"
       ],
-      "suggestedVersionCode": "10301",
+      "suggestedVersionCode": "10400",
       "description": "Sveglie multiple con giorni della settimana, nome e posticipo, con un aspetto ispirato all'orologio Samsung.\n\nOgni sveglia pu\u00f2 suonare con la suoneria di sistema oppure avviare un'app musicale, per esempio\nWebRadioDroid (riprende l'ultima stazione) o Qobuz. Se l'app non parte, suona la suoneria di sistema.",
       "issueTracker": "https://github.com/thamichele/app-personali/issues",
       "license": "Proprietary",
@@ -59,9 +59,9 @@
       "sourceCode": "https://github.com/thamichele/app-personali/tree/main/apps/sveglia",
       "summary": "Sveglie multiple che suonano con la tua app musicale preferita",
       "added": 1793433059000,
-      "icon": "it.michele.sveglia.10301.png",
+      "icon": "it.michele.sveglia.10400.png",
       "packageName": "it.michele.sveglia",
-      "lastUpdated": 1793695868000
+      "lastUpdated": 1793805962000
     },
     {
       "authorName": "Michele",
@@ -649,6 +649,50 @@
     ],
     "it.michele.sveglia": [
       {
+        "added": 1793805962000,
+        "apkName": "sveglia-1.4.0.apk",
+        "hash": "de08df53096cb845531a77fde921043fe04f21de7e4c8f4b0b198930c6c8cf4f",
+        "hashType": "sha256",
+        "minSdkVersion": 33,
+        "packageName": "it.michele.sveglia",
+        "sig": "ad6d05dea4be9ea1eb58f3f6ddd6b951",
+        "signer": "be7bf46d0327ed4ffa40d81b7e484c98201dcd50cee414b8fffe1080e401f82e",
+        "size": 108685,
+        "targetSdkVersion": 34,
+        "uses-permission": [
+          [
+            "android.permission.USE_EXACT_ALARM",
+            null
+          ],
+          [
+            "android.permission.POST_NOTIFICATIONS",
+            null
+          ],
+          [
+            "android.permission.USE_FULL_SCREEN_INTENT",
+            null
+          ],
+          [
+            "android.permission.FOREGROUND_SERVICE",
+            null
+          ],
+          [
+            "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK",
+            null
+          ],
+          [
+            "android.permission.RECEIVE_BOOT_COMPLETED",
+            null
+          ],
+          [
+            "android.permission.WAKE_LOCK",
+            null
+          ]
+        ],
+        "versionCode": 10400,
+        "versionName": "1.4.0"
+      },
+      {
         "added": 1793695868000,
         "apkName": "sveglia-1.3.1.apk",
         "hash": "89d9ca18503cf9d5f956a8703e65b92ebb30e159e0c4ded70599d4c668fafba0",
@@ -735,50 +779,6 @@
         ],
         "versionCode": 10300,
         "versionName": "1.3.0"
-      },
-      {
-        "added": 1793435650000,
-        "apkName": "sveglia-1.2.0.apk",
-        "hash": "bd6b3d7ce1b9eeb57ed1038f18707586f92514dbe7b6a8661a592d3381064ef9",
-        "hashType": "sha256",
-        "minSdkVersion": 33,
-        "packageName": "it.michele.sveglia",
-        "sig": "ad6d05dea4be9ea1eb58f3f6ddd6b951",
-        "signer": "be7bf46d0327ed4ffa40d81b7e484c98201dcd50cee414b8fffe1080e401f82e",
-        "size": 70764,
-        "targetSdkVersion": 34,
-        "uses-permission": [
-          [
-            "android.permission.USE_EXACT_ALARM",
-            null
-          ],
-          [
-            "android.permission.POST_NOTIFICATIONS",
-            null
-          ],
-          [
-            "android.permission.USE_FULL_SCREEN_INTENT",
-            null
-          ],
-          [
-            "android.permission.FOREGROUND_SERVICE",
-            null
-          ],
-          [
-            "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK",
-            null
-          ],
-          [
-            "android.permission.RECEIVE_BOOT_COMPLETED",
-            null
-          ],
-          [
-            "android.permission.WAKE_LOCK",
-            null
-          ]
-        ],
-        "versionCode": 10200,
-        "versionName": "1.2.0"
       }
     ],
     "it.michele.wgswitch": [
