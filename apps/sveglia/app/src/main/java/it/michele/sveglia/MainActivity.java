@@ -3,9 +3,7 @@ package it.michele.sveglia;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlarmManager;
-import android.app.AlertDialog;
 import android.app.NotificationManager;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -16,11 +14,12 @@ import android.os.Looper;
 import android.provider.Settings;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.NumberPicker;
 import android.widget.ScrollView;
-import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +30,7 @@ import java.util.List;
 public class MainActivity extends Activity {
     private Store store;
     private LinearLayout root;
+    private int theme;
     private final Handler handler = new Handler(Looper.getMainLooper());
     private final Runnable tick = new Runnable() {
         @Override
@@ -44,22 +44,37 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         store = new Store(this);
-        getWindow().setStatusBarColor(Ui.BG);
-        getWindow().setNavigationBarColor(Ui.BG);
+        Ui.apply(this);
+        theme = store.theme();
+        FrameLayout frame = new FrameLayout(this);
+        frame.setFitsSystemWindows(true);
+        frame.setBackgroundColor(Ui.BG);
         ScrollView scroll = new ScrollView(this);
-        scroll.setFitsSystemWindows(true);
-        scroll.setBackgroundColor(Ui.BG);
         root = new LinearLayout(this);
         root.setOrientation(LinearLayout.VERTICAL);
         int pad = Ui.dp(this, 16);
-        root.setPadding(pad, pad, pad, pad * 2);
+        root.setPadding(pad, Ui.dp(this, 12), pad, Ui.dp(this, 104));
         scroll.addView(root);
-        setContentView(scroll);
+        frame.addView(scroll);
+
+        ImageView add = Ui.iconButton(this, R.drawable.ic_add, "Aggiungi sveglia", true);
+        add.setElevation(Ui.dp(this, 6));
+        add.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) {
+            startActivity(new Intent(MainActivity.this, EditActivity.class));
+        }});
+        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(Ui.dp(this, 56), Ui.dp(this, 56), Gravity.BOTTOM | Gravity.END);
+        lp.setMargins(pad, pad, pad, Ui.dp(this, 24));
+        frame.addView(add, lp);
+        setContentView(frame);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        if (store.theme() != theme) {
+            recreate(); // colore principale cambiato nelle impostazioni
+            return;
+        }
         if (checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, 1);
         }
@@ -81,73 +96,66 @@ public class MainActivity extends Activity {
 
     private void build() {
         root.removeAllViews();
-        buildTopBar();
+        LinearLayout header = Ui.header(this, "Sveglie", false);
+        ImageView settings = Ui.iconButton(this, R.drawable.ic_settings, "Impostazioni", false);
+        settings.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) {
+            startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+        }});
+        LinearLayout.LayoutParams slp = new LinearLayout.LayoutParams(Ui.dp(this, 44), Ui.dp(this, 44));
+        slp.rightMargin = -Ui.dp(this, 10);
+        header.addView(settings, slp);
+        root.addView(header);
 
         long next = Scheduler.nextAny(this);
-        TextView head = Ui.text(this, next == 0 ? "Tutte le sveglie\nsono disattivate" : Ui.until(next), 26, Ui.TEXT, false);
-        head.setGravity(Gravity.CENTER);
-        root.addView(head, matchWrap(Ui.dp(this, 48)));
-        TextView sub = Ui.text(this, next == 0 ? "" : Ui.date(next) + ", " + time(next), 15, Ui.OFF, false);
-        sub.setGravity(Gravity.CENTER);
-        root.addView(sub, matchWrap(Ui.dp(this, 6)));
+        root.addView(Ui.text(this, next == 0 ? "Tutte le sveglie sono disattivate" : Ui.until(next), 17, Ui.TEXT, false),
+                Ui.matchWrap(this, 8));
+        if (next != 0) root.addView(Ui.text(this, Ui.date(next) + " · " + Ui.time(next), 13, Ui.OFF, false), Ui.matchWrap(this, 2));
 
         buildWarnings();
 
         List<Alarm> alarms = store.alarms();
         if (alarms.isEmpty()) {
-            TextView empty = Ui.text(this, "Nessuna sveglia. Tocca + per aggiungerne una.", 15, Ui.OFF, false);
-            empty.setGravity(Gravity.CENTER);
-            root.addView(empty, matchWrap(Ui.dp(this, 64)));
+            LinearLayout empty = Ui.card(this);
+            empty.setGravity(Gravity.CENTER_HORIZONTAL);
+            empty.setPadding(Ui.dp(this, 16), Ui.dp(this, 32), Ui.dp(this, 16), Ui.dp(this, 32));
+            empty.addView(Ui.text(this, "Nessuna sveglia", 15, Ui.TEXT, true));
+            empty.addView(Ui.text(this, "Tocca + per aggiungerne una.", 13, Ui.OFF, false), Ui.matchWrap(this, 4));
+            for (int i = 0; i < empty.getChildCount(); i++) ((TextView) empty.getChildAt(i)).setGravity(Gravity.CENTER);
+            root.addView(empty, Ui.matchWrap(this, 24));
             return;
         }
-        LinearLayout card = new LinearLayout(this);
-        card.setOrientation(LinearLayout.VERTICAL);
-        card.setBackground(Ui.rounded(Ui.CARD, Ui.dp(this, 32)));
-        card.setPadding(Ui.dp(this, 24), Ui.dp(this, 12), Ui.dp(this, 20), Ui.dp(this, 12));
-        for (Alarm a : alarms) card.addView(row(a));
-        root.addView(card, matchWrap(Ui.dp(this, 40)));
-    }
-
-    /** Pillola in alto a destra con "+" e menu, come nell'orologio Samsung. */
-    private void buildTopBar() {
-        LinearLayout bar = new LinearLayout(this);
-        bar.setGravity(Gravity.END);
-        LinearLayout pill = new LinearLayout(this);
-        pill.setBackground(Ui.rounded(Ui.PILL, Ui.dp(this, 28)));
-        pill.setPadding(Ui.dp(this, 8), 0, Ui.dp(this, 8), 0);
-        TextView add = Ui.text(this, "+", 30, Ui.TEXT, false);
-        add.setPadding(Ui.dp(this, 14), Ui.dp(this, 2), Ui.dp(this, 14), Ui.dp(this, 4));
-        add.setContentDescription("Aggiungi sveglia");
-        add.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) {
-            startActivity(new Intent(MainActivity.this, EditActivity.class));
-        }});
-        TextView menu = Ui.text(this, "⋮", 26, Ui.TEXT, true);
-        menu.setPadding(Ui.dp(this, 14), Ui.dp(this, 4), Ui.dp(this, 14), Ui.dp(this, 4));
-        menu.setContentDescription("Impostazioni");
-        menu.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { settings(); }});
-        pill.addView(add);
-        pill.addView(menu);
-        bar.addView(pill);
-        root.addView(bar);
+        root.addView(Ui.section(this, alarms.size() == 1 ? "1 sveglia" : alarms.size() + " sveglie"), Ui.matchWrap(this, 24));
+        for (Alarm a : alarms) root.addView(row(a), Ui.matchWrap(this, 8));
     }
 
     private View row(final Alarm a) {
         LinearLayout row = new LinearLayout(this);
         row.setGravity(Gravity.CENTER_VERTICAL);
-        row.setPadding(0, Ui.dp(this, 14), 0, Ui.dp(this, 14));
+        row.setBackground(Ui.touch(this, Ui.box(this, Ui.PANEL, Ui.BORDER, 12), 12));
+        row.setPadding(Ui.dp(this, 16), Ui.dp(this, 14), Ui.dp(this, 12), Ui.dp(this, 14));
         LinearLayout left = new LinearLayout(this);
         left.setOrientation(LinearLayout.VERTICAL);
         int color = a.enabled ? Ui.TEXT : Ui.OFF;
-        if (!a.label.isEmpty()) left.addView(Ui.text(this, a.label, 16, color, false));
-        left.addView(Ui.text(this, a.time(), 52, color, true));
-        left.addView(days(a));
-        if (!a.app.isEmpty()) left.addView(Ui.text(this, "♪ " + Music.label(this, a.app) + " · " + a.what(), 14, Ui.OFF, false));
-        row.addView(left, new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+        if (!a.label.isEmpty()) left.addView(Ui.text(this, a.label, 13, Ui.OFF, false));
+        TextView time = Ui.text(this, a.time(), 44, color, true);
+        time.setLetterSpacing(-0.02f);
+        time.setIncludeFontPadding(false);
+        left.addView(time, Ui.matchWrap(this, 2));
+        left.addView(days(a), Ui.matchWrap(this, 6));
+        if (!a.app.isEmpty()) {
+            TextView music = Ui.text(this, Music.label(this, a.app) + " · " + a.what(), 13, Ui.OFF, false);
+            music.setSingleLine();
+            music.setEllipsize(android.text.TextUtils.TruncateAt.END);
+            Ui.leading(music, R.drawable.ic_music, Ui.OFF, 16);
+            left.addView(music, Ui.matchWrap(this, 6));
+        }
+        row.addView(left, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
 
         Switch on = new Switch(this);
         on.setChecked(a.enabled);
-        on.setScaleX(1.3f);
-        on.setScaleY(1.3f);
+        on.setScaleX(1.2f);
+        on.setScaleY(1.2f);
+        on.setContentDescription("Attiva sveglia delle " + a.time());
         Ui.tint(on);
         on.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() { @Override public void onCheckedChanged(CompoundButton b, boolean checked) {
             a.enabled = checked;
@@ -163,30 +171,32 @@ public class MainActivity extends Activity {
             startActivity(new Intent(MainActivity.this, EditActivity.class).putExtra(AlarmReceiver.EXTRA_ID, a.id));
         }});
         row.setOnLongClickListener(new View.OnLongClickListener() { @Override public boolean onLongClick(View v) {
-            new AlertDialog.Builder(MainActivity.this)
-                    .setMessage("Eliminare la sveglia delle " + a.time() + "?")
-                    .setPositiveButton("Elimina", new DialogInterface.OnClickListener() { @Override public void onClick(DialogInterface d, int w) {
-                        Scheduler.cancel(MainActivity.this, a.id);
-                        store.delete(a.id);
-                        build();
-                    }})
-                    .setNegativeButton("Annulla", null)
-                    .show();
+            confirmDelete(a);
             return true;
         }});
         return row;
     }
 
-    /** "L M M G V S D" con i giorni attivi in rosso, oppure la data per le sveglie singole. */
+    private void confirmDelete(final Alarm a) {
+        Ui.confirm(this, "Eliminare la sveglia?", "La sveglia delle " + a.time() + " verrà eliminata.", "Elimina",
+                new Runnable() { @Override public void run() {
+                    Scheduler.cancel(MainActivity.this, a.id);
+                    store.delete(a.id);
+                    build();
+                }});
+    }
+
+    /** "L M M G V S D" con i giorni attivi nel colore principale, oppure la data per le sveglie singole. */
     private View days(Alarm a) {
         if (!a.repeats()) {
-            return Ui.text(this, Ui.date(a.next(System.currentTimeMillis())), 16, Ui.OFF, true);
+            return Ui.text(this, Ui.date(a.next(System.currentTimeMillis())), 13, Ui.OFF, false);
         }
         LinearLayout row = new LinearLayout(this);
         for (int i = 0; i < 7; i++) {
-            int color = a.hasDay(i) ? (a.enabled ? Ui.DAY_ON : Ui.OFF) : (a.enabled ? Ui.TEXT : Ui.OFF);
-            TextView d = Ui.text(this, Alarm.DAY_LETTERS[i], 16, color, a.hasDay(i));
-            d.setPadding(0, 0, Ui.dp(this, 8), 0);
+            boolean on = a.hasDay(i);
+            int color = on ? (a.enabled ? Ui.ACCENT_TEXT : Ui.TEXT) : 0xFF77726A;
+            TextView d = Ui.text(this, Alarm.DAY_LETTERS[i], 13, color, on);
+            d.setPadding(0, 0, Ui.dp(this, 10), 0);
             row.addView(d);
         }
         return row;
@@ -196,21 +206,20 @@ public class MainActivity extends Activity {
     private void buildWarnings() {
         NotificationManager nm = getSystemService(NotificationManager.class);
         if (!nm.areNotificationsEnabled()) {
-            warning("Notifiche disattivate: la sveglia non può mostrarsi.", Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+            warning("Notifiche disattivate", "La sveglia non può mostrarsi.", Settings.ACTION_APP_NOTIFICATION_SETTINGS);
         } else if (Build.VERSION.SDK_INT >= 34 && !nm.canUseFullScreenIntent()) {
-            warning("Consenti le notifiche a schermo intero, altrimenti la sveglia non accende lo schermo.",
+            warning("Notifiche a schermo intero", "Consentile, altrimenti la sveglia non accende lo schermo.",
                     Settings.ACTION_MANAGE_APP_USE_FULL_SCREEN_INTENT);
         }
         if (!getSystemService(AlarmManager.class).canScheduleExactAlarms()) {
-            warning("Consenti \"Sveglie e promemoria\".", Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
+            warning("Sveglie e promemoria", "Consenti il permesso, altrimenti le sveglie non suonano all'ora esatta.",
+                    Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
         }
     }
 
-    private void warning(String msg, final String settingsAction) {
-        TextView t = Ui.text(this, msg + " Tocca per aprire le impostazioni.", 15, Ui.TEXT, false);
-        t.setBackground(Ui.rounded(Ui.ACCENT_BG, Ui.dp(this, 20)));
-        t.setPadding(Ui.dp(this, 20), Ui.dp(this, 14), Ui.dp(this, 20), Ui.dp(this, 14));
-        t.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) {
+    private void warning(String title, String msg, final String settingsAction) {
+        LinearLayout w = Ui.warning(this, title, msg + " Tocca per aprire le impostazioni.");
+        w.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) {
             Intent i = new Intent(settingsAction, Uri.parse("package:" + getPackageName()))
                     .putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName());
             try {
@@ -219,98 +228,7 @@ public class MainActivity extends Activity {
                 startActivity(new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:" + getPackageName())));
             }
         }});
-        root.addView(t, matchWrap(Ui.dp(this, 24)));
-    }
-
-    private void settings() {
-        LinearLayout box = new LinearLayout(this);
-        box.setOrientation(LinearLayout.VERTICAL);
-        int pad = Ui.dp(this, 24);
-        box.setPadding(pad, pad / 2, pad, 0);
-
-        box.addView(Ui.text(this, "Posticipa di (minuti)", 15, Ui.TEXT, false));
-        final NumberPicker snooze = new NumberPicker(this);
-        snooze.setMinValue(1);
-        snooze.setMaxValue(30);
-        snooze.setValue(store.snoozeMinutes());
-        box.addView(snooze);
-
-        final TextView volLabel = Ui.text(this, "", 15, Ui.TEXT, false);
-        box.addView(volLabel, matchWrap(Ui.dp(this, 16)));
-        final SeekBar volume = new SeekBar(this);
-        volume.setMax(100);
-        volume.setProgress(store.musicVolume());
-        volLabel.setText(volumeText(volume.getProgress()));
-        volume.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override public void onProgressChanged(SeekBar s, int p, boolean user) { volLabel.setText(volumeText(p)); }
-            @Override public void onStartTrackingTouch(SeekBar s) {}
-            @Override public void onStopTrackingTouch(SeekBar s) {}
-        });
-        box.addView(volume, matchWrap(Ui.dp(this, 8)));
-
-        final TextView fadeLabel = Ui.text(this, "", 15, Ui.TEXT, false);
-        box.addView(fadeLabel, matchWrap(Ui.dp(this, 16)));
-        final SeekBar fade = new SeekBar(this);
-        fade.setMax(Store.MAX_FADE / 5);
-        fade.setProgress(store.fadeSeconds() / 5);
-        fadeLabel.setText(fadeText(fade.getProgress() * 5));
-        fade.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override public void onProgressChanged(SeekBar s, int p, boolean user) { fadeLabel.setText(fadeText(p * 5)); }
-            @Override public void onStartTrackingTouch(SeekBar s) {}
-            @Override public void onStopTrackingTouch(SeekBar s) {}
-        });
-        box.addView(fade, matchWrap(Ui.dp(this, 8)));
-
-        boolean access = Music.sessionAccess(this);
-        TextView accessView = Ui.text(this, "Accesso alle notifiche (per comandare Qobuz e le altre app musicali): "
-                + (access ? "concesso" : "non concesso, tocca per concederlo"), 14, access ? Ui.OFF : Ui.TEXT, false);
-        if (!access) accessView.setBackground(Ui.rounded(Ui.ACCENT_BG, Ui.dp(this, 16)));
-        accessView.setPadding(Ui.dp(this, 12), Ui.dp(this, 8), Ui.dp(this, 12), Ui.dp(this, 8));
-        accessView.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) {
-            startActivity(new Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS));
-        }});
-        box.addView(accessView, matchWrap(Ui.dp(this, 16)));
-
-        box.addView(Ui.text(this, "Registro", 15, Ui.TEXT, false), matchWrap(Ui.dp(this, 16)));
-        TextView log = Ui.text(this, store.log().isEmpty() ? "Nessun evento" : store.log(), 11, Ui.OFF, false);
-        log.setTypeface(android.graphics.Typeface.MONOSPACE);
-        log.setTextIsSelectable(true);
-        box.addView(log, matchWrap(Ui.dp(this, 4)));
-        ScrollView scroll = new ScrollView(this);
-        scroll.addView(box);
-
-        new AlertDialog.Builder(this)
-                .setTitle("Impostazioni")
-                .setView(scroll)
-                .setPositiveButton("Salva", new DialogInterface.OnClickListener() { @Override public void onClick(DialogInterface d, int w) {
-                    store.setSnoozeMinutes(snooze.getValue());
-                    store.setMusicVolume(volume.getProgress());
-                    store.setFadeSeconds(fade.getProgress() * 5);
-                }})
-                .setNegativeButton("Annulla", null)
-                .setNeutralButton("Svuota registro", new DialogInterface.OnClickListener() { @Override public void onClick(DialogInterface d, int w) {
-                    store.clearLog();
-                }})
-                .show();
-    }
-
-    private static String volumeText(int p) {
-        return p == 0 ? "Volume app musicale: lascia quello attuale" : "Volume app musicale: " + p + "%";
-    }
-
-    private static String fadeText(int s) {
-        return s == 0 ? "Dissolvenza in ingresso: no" : "Dissolvenza in ingresso: " + s + " secondi";
-    }
-
-    private static String time(long millis) {
-        return new java.text.SimpleDateFormat("HH:mm", java.util.Locale.ITALY).format(new java.util.Date(millis));
-    }
-
-    private LinearLayout.LayoutParams matchWrap(int topMargin) {
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        lp.topMargin = topMargin;
-        return lp;
+        root.addView(w, Ui.matchWrap(this, 16));
     }
 
     private void toast(String s) {

@@ -25,8 +25,7 @@ public class RingActivity extends Activity {
         setShowWhenLocked(true);
         setTurnScreenOn(true);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        getWindow().setStatusBarColor(Ui.BG);
-        getWindow().setNavigationBarColor(Ui.BG);
+        Ui.apply(this);
         Alarm a = RingService.current;
         if (a == null) {
             finish();
@@ -43,22 +42,30 @@ public class RingActivity extends Activity {
         root.setPadding(pad, Ui.dp(this, 96), pad, pad * 2);
 
         String now = new SimpleDateFormat("HH:mm", Locale.ITALY).format(new Date());
-        root.addView(Ui.text(this, now, 88, Ui.TEXT, true));
-        root.addView(Ui.text(this, Ui.date(System.currentTimeMillis()), 20, Ui.OFF, false));
-        if (!a.label.isEmpty()) root.addView(Ui.text(this, a.label, 24, Ui.TEXT, false), top(Ui.dp(this, 32)));
-        if (!a.app.isEmpty()) root.addView(Ui.text(this, "♪ " + Music.label(this, a.app) + " · " + a.what(), 17, Ui.OFF, false), top(Ui.dp(this, 12)));
+        TextView clock = Ui.text(this, now, 88, Ui.TEXT, true);
+        clock.setLetterSpacing(-0.03f);
+        root.addView(clock);
+        root.addView(Ui.text(this, Ui.date(System.currentTimeMillis()), 15, Ui.OFF, false));
+        if (!a.label.isEmpty()) root.addView(Ui.text(this, a.label, 20, Ui.ACCENT_TEXT, true), top(Ui.dp(this, 32)));
+        if (!a.app.isEmpty()) {
+            TextView music = Ui.text(this, Music.label(this, a.app) + " · " + a.what(), 15, Ui.OFF, false);
+            Ui.leading(music, R.drawable.ic_music, Ui.OFF, 18);
+            root.addView(music, top(Ui.dp(this, 12)));
+        }
 
         View spacer = new View(this);
         root.addView(spacer, new LinearLayout.LayoutParams(1, 0, 1));
 
         int snooze = new Store(this).snoozeMinutes();
-        TextView snoozeBtn = Ui.pill(this, "Posticipa " + snooze + " min", Ui.PILL, Ui.TEXT);
+        TextView snoozeBtn = Ui.button(this, "Posticipa " + snooze + " min", Ui.SECONDARY);
+        snoozeBtn.setTextSize(18);
         snoozeBtn.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { send(RingService.ACTION_SNOOZE); }});
         root.addView(snoozeBtn, wide());
-        TextView stop = Ui.pill(this, "Ferma", Ui.ACCENT, Ui.BG);
+        TextView stop = Ui.button(this, "Ferma", Ui.PRIMARY);
+        stop.setTextSize(18);
         stop.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { send(RingService.ACTION_STOP); }});
         LinearLayout.LayoutParams lp = wide();
-        lp.topMargin = Ui.dp(this, 16);
+        lp.topMargin = Ui.dp(this, 12);
         root.addView(stop, lp);
         setContentView(root);
 

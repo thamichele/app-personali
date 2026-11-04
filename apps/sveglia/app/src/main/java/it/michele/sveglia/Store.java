@@ -21,6 +21,7 @@ final class Store {
     private static final String KEY_FADE = "fade_seconds";
     private static final String KEY_VOLUME = "music_volume";
     private static final String KEY_LOG = "log";
+    private static final String KEY_THEME = "theme";
     private static final int MAX_LOG_LINES = 40;
 
     private final SharedPreferences sp;
@@ -84,6 +85,10 @@ final class Store {
     void setSnoozeMinutes(int v) { sp.edit().putInt(KEY_SNOOZE, Math.max(1, Math.min(v, 60))).apply(); }
 
     /** Volume musica in percentuale impostato quando suona la sveglia; 0 = lascia quello attuale. */
+    /** Colore principale del kit (indice in Ui.THEME_NAMES), arancio di base. */
+    int theme() { return Math.max(0, Math.min(sp.getInt(KEY_THEME, 0), Ui.THEME_NAMES.length - 1)); }
+    void setTheme(int v) { sp.edit().putInt(KEY_THEME, v).apply(); }
+
     int musicVolume() { return sp.getInt(KEY_VOLUME, 50); }
     void setMusicVolume(int v) { sp.edit().putInt(KEY_VOLUME, Math.max(0, Math.min(v, 100))).apply(); }
 
