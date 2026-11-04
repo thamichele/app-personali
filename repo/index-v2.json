@@ -14,7 +14,7 @@
       }
     },
     "address": "https://raw.githubusercontent.com/thamichele/app-personali/fdroid/repo",
-    "timestamp": 1793787595000,
+    "timestamp": 1793802353000,
     "categories": {
       "Connectivity": {
         "name": {
@@ -272,7 +272,7 @@
           "Multimedia"
         ],
         "issueTracker": "https://github.com/thamichele/SMBCommander/issues",
-        "lastUpdated": 1793787585000,
+        "lastUpdated": 1793802343000,
         "license": "Proprietary",
         "sourceCode": "https://github.com/thamichele/SMBCommander",
         "authorName": "Michele",
@@ -288,6 +288,72 @@
         "preferredSigner": "3b92a1bacd13aa6c05b651eb0a2489c8032f62b4f7c6834835cae72e23d9028c"
       },
       "versions": {
+        "ac102c16dff2a2da693222479800bdfdaf9035b9d5cc31bede1e13175f99059d": {
+          "added": 1793802343000,
+          "file": {
+            "name": "/io.github.thamichele.smbcommander_1010002.apk",
+            "sha256": "ac102c16dff2a2da693222479800bdfdaf9035b9d5cc31bede1e13175f99059d",
+            "size": 16664986
+          },
+          "manifest": {
+            "nativecode": [
+              "arm64-v8a",
+              "armeabi-v7a",
+              "x86",
+              "x86_64"
+            ],
+            "versionName": "1.10.2",
+            "versionCode": 1010002,
+            "usesSdk": {
+              "minSdkVersion": 26,
+              "targetSdkVersion": 37
+            },
+            "signer": {
+              "sha256": [
+                "3b92a1bacd13aa6c05b651eb0a2489c8032f62b4f7c6834835cae72e23d9028c"
+              ]
+            },
+            "usesPermission": [
+              {
+                "name": "android.permission.INTERNET"
+              },
+              {
+                "name": "android.permission.READ_MEDIA_IMAGES"
+              },
+              {
+                "name": "android.permission.READ_MEDIA_VIDEO"
+              },
+              {
+                "name": "android.permission.READ_EXTERNAL_STORAGE",
+                "maxSdkVersion": 32
+              },
+              {
+                "name": "android.permission.ACCESS_MEDIA_LOCATION"
+              },
+              {
+                "name": "android.permission.POST_NOTIFICATIONS"
+              },
+              {
+                "name": "android.permission.FOREGROUND_SERVICE"
+              },
+              {
+                "name": "android.permission.FOREGROUND_SERVICE_DATA_SYNC"
+              },
+              {
+                "name": "android.permission.WAKE_LOCK"
+              },
+              {
+                "name": "android.permission.ACCESS_NETWORK_STATE"
+              },
+              {
+                "name": "android.permission.RECEIVE_BOOT_COMPLETED"
+              },
+              {
+                "name": "io.github.thamichele.smbcommander.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+              }
+            ]
+          }
+        },
         "b50a0b5b50d09c605bb0c50d39614207d648fe57a5fb4395406ccf4ac7ba743b": {
           "added": 1793787585000,
           "file": {
@@ -370,72 +436,6 @@
             ],
             "versionName": "1.9.0",
             "versionCode": 1009000,
-            "usesSdk": {
-              "minSdkVersion": 26,
-              "targetSdkVersion": 37
-            },
-            "signer": {
-              "sha256": [
-                "3b92a1bacd13aa6c05b651eb0a2489c8032f62b4f7c6834835cae72e23d9028c"
-              ]
-            },
-            "usesPermission": [
-              {
-                "name": "android.permission.INTERNET"
-              },
-              {
-                "name": "android.permission.READ_MEDIA_IMAGES"
-              },
-              {
-                "name": "android.permission.READ_MEDIA_VIDEO"
-              },
-              {
-                "name": "android.permission.READ_EXTERNAL_STORAGE",
-                "maxSdkVersion": 32
-              },
-              {
-                "name": "android.permission.ACCESS_MEDIA_LOCATION"
-              },
-              {
-                "name": "android.permission.POST_NOTIFICATIONS"
-              },
-              {
-                "name": "android.permission.FOREGROUND_SERVICE"
-              },
-              {
-                "name": "android.permission.FOREGROUND_SERVICE_DATA_SYNC"
-              },
-              {
-                "name": "android.permission.WAKE_LOCK"
-              },
-              {
-                "name": "android.permission.ACCESS_NETWORK_STATE"
-              },
-              {
-                "name": "android.permission.RECEIVE_BOOT_COMPLETED"
-              },
-              {
-                "name": "io.github.thamichele.smbcommander.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
-              }
-            ]
-          }
-        },
-        "fe9291581a52f2198871b6f7d4975ad89b8f8bfb3907521de9ba9a7a49af845c": {
-          "added": 1793727563000,
-          "file": {
-            "name": "/io.github.thamichele.smbcommander_1008000.apk",
-            "sha256": "fe9291581a52f2198871b6f7d4975ad89b8f8bfb3907521de9ba9a7a49af845c",
-            "size": 16664854
-          },
-          "manifest": {
-            "nativecode": [
-              "arm64-v8a",
-              "armeabi-v7a",
-              "x86",
-              "x86_64"
-            ],
-            "versionName": "1.8.0",
-            "versionCode": 1008000,
             "usesSdk": {
               "minSdkVersion": 26,
               "targetSdkVersion": 37
@@ -800,7 +800,7 @@
           "System"
         ],
         "issueTracker": "https://github.com/thamichele/wgswitch/issues",
-        "lastUpdated": 1793695868000,
+        "lastUpdated": 1793802345000,
         "license": "Proprietary",
         "sourceCode": "https://github.com/thamichele/wgswitch",
         "authorName": "Michele",
@@ -815,7 +815,7 @@
         },
         "icon": {
           "en-US": {
-            "name": "/icons/it.michele.wgswitch.20100.png",
+            "name": "/icons/it.michele.wgswitch.20101.png",
             "sha256": "2db6171793246ffc4cde14aafcfa0e02277f46922894d7bbc9b623a018f45bd4",
             "size": 1542
           }
@@ -823,6 +823,65 @@
         "preferredSigner": "23234767bec703550d705d3cd819d578832a2a1c7f9cebef15784125dac5caa0"
       },
       "versions": {
+        "b2a19efdd2d4ef71c3135869a391b752ed8d853eb0d76606a711fe285aac450f": {
+          "added": 1793802345000,
+          "file": {
+            "name": "/it.michele.wgswitch_20101.apk",
+            "sha256": "b2a19efdd2d4ef71c3135869a391b752ed8d853eb0d76606a711fe285aac450f",
+            "size": 58326
+          },
+          "manifest": {
+            "versionName": "2.1.1",
+            "versionCode": 20101,
+            "usesSdk": {
+              "minSdkVersion": 33,
+              "targetSdkVersion": 34
+            },
+            "signer": {
+              "sha256": [
+                "23234767bec703550d705d3cd819d578832a2a1c7f9cebef15784125dac5caa0"
+              ]
+            },
+            "usesPermission": [
+              {
+                "name": "android.permission.ACCESS_NETWORK_STATE"
+              },
+              {
+                "name": "android.permission.ACCESS_WIFI_STATE"
+              },
+              {
+                "name": "android.permission.ACCESS_COARSE_LOCATION"
+              },
+              {
+                "name": "android.permission.ACCESS_FINE_LOCATION"
+              },
+              {
+                "name": "android.permission.ACCESS_BACKGROUND_LOCATION"
+              },
+              {
+                "name": "android.permission.BLUETOOTH_CONNECT"
+              },
+              {
+                "name": "android.permission.FOREGROUND_SERVICE"
+              },
+              {
+                "name": "android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE"
+              },
+              {
+                "name": "android.permission.POST_NOTIFICATIONS"
+              },
+              {
+                "name": "android.permission.RECEIVE_BOOT_COMPLETED"
+              },
+              {
+                "name": "android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"
+              },
+              {
+                "name": "com.wireguard.android.permission.CONTROL_TUNNELS"
+              }
+            ]
+          }
+        },
         "b435d646c51e0fc217097d11dae3e3f0952daf0acba33de94552b0af66417f10": {
           "added": 1793695868000,
           "file": {
