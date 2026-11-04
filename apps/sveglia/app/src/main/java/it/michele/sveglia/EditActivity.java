@@ -1,12 +1,12 @@
 package it.michele.sveglia;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -20,6 +20,7 @@ import java.util.List;
 public class EditActivity extends Activity {
     private Store store;
     private Alarm alarm;
+    private boolean isNew;
     private TimePicker picker;
     private EditText label;
     private static final int REQ_BROWSE = 1;
@@ -32,11 +33,11 @@ public class EditActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         store = new Store(this);
+        Ui.apply(this);
         int id = getIntent().getIntExtra(AlarmReceiver.EXTRA_ID, 0);
         alarm = id == 0 ? null : store.get(id);
-        if (alarm == null) alarm = new Alarm();
-        getWindow().setStatusBarColor(Ui.BG);
-        getWindow().setNavigationBarColor(Ui.BG);
+        isNew = alarm == null;
+        if (isNew) alarm = new Alarm();
 
         ScrollView scroll = new ScrollView(this);
         scroll.setFitsSystemWindows(true);
@@ -44,88 +45,106 @@ public class EditActivity extends Activity {
         LinearLayout root = new LinearLayout(this);
         root.setOrientation(LinearLayout.VERTICAL);
         int pad = Ui.dp(this, 16);
-        root.setPadding(pad, pad, pad, pad * 2);
+        root.setPadding(pad, Ui.dp(this, 12), pad, pad * 2);
         scroll.addView(root);
         setContentView(scroll);
 
+        root.addView(Ui.header(this, isNew ? "Nuova sveglia" : "Modifica sveglia", true));
+
+        LinearLayout timeCard = Ui.card(this);
         picker = new TimePicker(this, null, 0, R.style.WheelTimePicker);
         picker.setIs24HourView(true);
         picker.setHour(alarm.hour);
         picker.setMinute(alarm.minute);
-        root.addView(picker, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        timeCard.addView(picker, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        root.addView(timeCard, Ui.matchWrap(this, 12));
 
-        LinearLayout card = new LinearLayout(this);
-        card.setOrientation(LinearLayout.VERTICAL);
-        card.setBackground(Ui.rounded(Ui.CARD, Ui.dp(this, 32)));
-        card.setPadding(Ui.dp(this, 20), Ui.dp(this, 20), Ui.dp(this, 20), Ui.dp(this, 20));
-        root.addView(card, matchWrap(Ui.dp(this, 16)));
+        LinearLayout card = Ui.card(this);
+        root.addView(card, Ui.matchWrap(this, 12));
 
-        card.addView(Ui.text(this, "Ripeti", 15, Ui.OFF, false));
+        card.addView(Ui.section(this, "Ripeti"));
         LinearLayout days = new LinearLayout(this);
-        days.setPadding(0, Ui.dp(this, 8), 0, Ui.dp(this, 8));
         for (int i = 0; i < 7; i++) {
             final int day = i;
-            TextView d = Ui.text(this, Alarm.DAY_LETTERS[i], 17, Ui.TEXT, true);
+            TextView d = Ui.text(this, Alarm.DAY_LETTERS[i], 15, Ui.TEXT, true);
             d.setGravity(Gravity.CENTER);
+            d.setContentDescription(Alarm.DAY_LETTERS[i]);
             d.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) {
                 alarm.days ^= 1 << day;
                 refreshDays();
             }});
             dayViews[i] = d;
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(Ui.dp(this, 40), Ui.dp(this, 40), 0);
-            lp.rightMargin = Ui.dp(this, 4);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, Ui.dp(this, 44), 1);
+            lp.setMargins(i == 0 ? 0 : Ui.dp(this, 3), 0, i == 6 ? 0 : Ui.dp(this, 3), 0);
             days.addView(d, lp);
         }
-        card.addView(days);
+        card.addView(days, Ui.matchWrap(this, 10));
         refreshDays();
 
-        label = new EditText(this);
-        label.setSingleLine();
-        label.setHint("Nome sveglia");
+        card.addView(fieldLabel("Nome sveglia"), Ui.matchWrap(this, 20));
+        label = Ui.field(this, "Es. Lavoro");
         label.setText(alarm.label);
-        label.setTextColor(Ui.TEXT);
-        label.setHintTextColor(Ui.OFF);
-        card.addView(label, matchWrap(Ui.dp(this, 8)));
+        card.addView(label, Ui.matchWrap(this, 6));
 
-        card.addView(Ui.text(this, "Suono sveglia", 15, Ui.OFF, false), matchWrap(Ui.dp(this, 16)));
-        sound = Ui.text(this, Music.label(this, alarm.app), 19, Ui.TEXT, false);
-        sound.setPadding(0, Ui.dp(this, 8), 0, Ui.dp(this, 8));
+        card.addView(fieldLabel("Suono sveglia"), Ui.matchWrap(this, 16));
+        sound = Ui.select(this, "");
         sound.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { chooseSound(); }});
-        card.addView(sound);
-        whatLabel = Ui.text(this, "Cosa riprodurre", 15, Ui.OFF, false);
-        card.addView(whatLabel, matchWrap(Ui.dp(this, 8)));
-        what = Ui.text(this, "", 19, Ui.TEXT, false);
-        what.setPadding(0, Ui.dp(this, 8), 0, Ui.dp(this, 8));
+        card.addView(sound, Ui.matchWrap(this, 6));
+        whatLabel = fieldLabel("Cosa riprodurre");
+        card.addView(whatLabel, Ui.matchWrap(this, 16));
+        what = Ui.select(this, "");
         what.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) {
             startActivityForResult(new Intent(EditActivity.this, BrowseActivity.class)
                     .putExtra(BrowseActivity.EXTRA_PKG, alarm.app), REQ_BROWSE);
         }});
-        card.addView(what);
+        card.addView(what, Ui.matchWrap(this, 6));
         refreshSound();
         card.addView(Ui.text(this, "Con un'app musicale la sveglia apre l'app e avvia quello che hai scelto. "
-                + "Se dopo 20 secondi non suona niente parte la suoneria di sistema.", 13, Ui.OFF, false), matchWrap(Ui.dp(this, 8)));
+                + "Se dopo 20 secondi non suona niente parte la suoneria di sistema.", 13, Ui.OFF, false), Ui.matchWrap(this, 12));
 
         LinearLayout buttons = new LinearLayout(this);
-        TextView cancel = Ui.pill(this, "Annulla", Ui.PILL, Ui.TEXT);
+        TextView cancel = Ui.button(this, "Annulla", Ui.SECONDARY);
         cancel.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { finish(); }});
-        TextView save = Ui.pill(this, "Salva", Ui.ACCENT, Ui.BG);
+        TextView save = Ui.button(this, "Salva", Ui.PRIMARY);
         save.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) {
             save();
             toast(Ui.until(alarm.next(System.currentTimeMillis())));
             finish();
         }});
-        buttons.addView(cancel, Ui.weight(this, 4));
-        buttons.addView(save, Ui.weight(this, 4));
-        root.addView(buttons, matchWrap(Ui.dp(this, 24)));
+        buttons.addView(cancel, Ui.weight(this, 0));
+        LinearLayout.LayoutParams slp = Ui.weight(this, 0);
+        slp.leftMargin = Ui.dp(this, 8);
+        buttons.addView(save, slp);
+        root.addView(buttons, Ui.matchWrap(this, 20));
 
-        TextView test = Ui.pill(this, "Salva e prova tra 10 secondi", Ui.PILL, Ui.TEXT);
+        TextView test = Ui.button(this, "Salva e prova tra 10 secondi", Ui.GHOST);
+        test.setTextColor(Ui.ACCENT_TEXT);
         test.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) {
             save();
             Scheduler.test(EditActivity.this, alarm.id, System.currentTimeMillis() + 10_000);
             toast("Suona tra 10 secondi: puoi bloccare il telefono");
             finish();
         }});
-        root.addView(test, matchWrap(Ui.dp(this, 12)));
+        root.addView(test, Ui.matchWrap(this, 8));
+
+        if (!isNew) {
+            TextView delete = Ui.button(this, "Elimina sveglia", Ui.DANGER_BTN);
+            Ui.leading(delete, R.drawable.ic_trash, Ui.DANGER, 18);
+            delete.setGravity(Gravity.CENTER);
+            delete.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) {
+                Ui.confirm(EditActivity.this, "Eliminare la sveglia?", "La sveglia delle " + alarm.time() + " verrà eliminata.",
+                        "Elimina", new Runnable() { @Override public void run() {
+                            Scheduler.cancel(EditActivity.this, alarm.id);
+                            store.delete(alarm.id);
+                            finish();
+                        }});
+            }});
+            root.addView(delete, Ui.matchWrap(this, 24));
+        }
+    }
+
+    private TextView fieldLabel(String s) {
+        return Ui.text(this, s, 13, Ui.TEXT, true);
     }
 
     private void save() {
@@ -138,30 +157,43 @@ public class EditActivity extends Activity {
         Scheduler.scheduleAll(this);
     }
 
+    /** Giorni scelti: fondo tenue, bordo e testo del colore principale. */
     private void refreshDays() {
         for (int i = 0; i < 7; i++) {
             boolean on = alarm.hasDay(i);
-            dayViews[i].setTextColor(on ? Ui.DAY_ON : Ui.TEXT);
-            dayViews[i].setBackground(on ? Ui.rounded(Ui.ACCENT_BG, Ui.dp(this, 20)) : null);
+            dayViews[i].setTextColor(on ? Ui.ACCENT_TEXT : Ui.OFF);
+            dayViews[i].setBackground(Ui.touch(this, on ? Ui.box(this, Ui.ACCENT_DEEP, Ui.ACCENT_BORDER, 4)
+                    : Ui.box(this, Ui.RAISED, Ui.CONTROL, 4), 4));
+            dayViews[i].setSelected(on);
         }
     }
 
     private void chooseSound() {
         final List<Music.App> apps = Music.musicApps(this);
-        String[] names = new String[apps.size() + 1];
-        names[0] = "Suoneria di sistema";
-        for (int i = 0; i < apps.size(); i++) names[i + 1] = apps.get(i).label;
-        new AlertDialog.Builder(this)
-                .setTitle("Suono sveglia")
-                .setItems(names, new DialogInterface.OnClickListener() { @Override public void onClick(DialogInterface d, int which) {
-                    String app = which == 0 ? "" : apps.get(which - 1).pkg;
-                    if (!app.equals(alarm.app)) {
-                        alarm.app = app;
-                        alarm.media = alarm.mediaTitle = alarm.query = "";
-                    }
-                    refreshSound();
-                }})
-                .show();
+        LinearLayout list = new LinearLayout(this);
+        list.setOrientation(LinearLayout.VERTICAL);
+        ScrollView scroll = new ScrollView(this);
+        scroll.addView(list);
+        final Dialog d = Ui.dialog(this, "Suono sveglia", scroll);
+        for (int i = 0; i <= apps.size(); i++) {
+            final String app = i == 0 ? "" : apps.get(i - 1).pkg;
+            boolean on = app.equals(alarm.app);
+            TextView t = Ui.text(this, i == 0 ? "Suoneria di sistema" : apps.get(i - 1).label, 15, on ? Ui.ACCENT_TEXT : Ui.TEXT, on);
+            t.setMinHeight(Ui.dp(this, 48));
+            t.setPadding(Ui.dp(this, 12), 0, Ui.dp(this, 12), 0);
+            Ui.leading(t, i == 0 ? R.drawable.ic_bell : R.drawable.ic_music, on ? Ui.ACCENT_TEXT : Ui.OFF, 18);
+            t.setBackground(Ui.touch(this, on ? Ui.box(this, Ui.ACCENT_DEEP, 0, 4) : new android.graphics.drawable.ColorDrawable(0), 4));
+            t.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) {
+                if (!app.equals(alarm.app)) {
+                    alarm.app = app;
+                    alarm.media = alarm.mediaTitle = alarm.query = "";
+                }
+                refreshSound();
+                d.dismiss();
+            }});
+            list.addView(t, Ui.matchWrap(this, i == 0 ? 0 : 2));
+        }
+        d.show();
     }
 
     private void refreshSound() {
@@ -183,13 +215,6 @@ public class EditActivity extends Activity {
     }
 
     private static String nonNull(String s) { return s == null ? "" : s; }
-
-    private LinearLayout.LayoutParams matchWrap(int topMargin) {
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        lp.topMargin = topMargin;
-        return lp;
-    }
 
     private void toast(String s) {
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();

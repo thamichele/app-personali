@@ -9,6 +9,7 @@ import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -35,10 +36,10 @@ public class BrowseActivity extends Activity {
     private final List<String> stack = new ArrayList<>();
     private List<MediaBrowser.MediaItem> items = new ArrayList<>();
     private final List<Object> entries = new ArrayList<>();
-    private ArrayAdapter<String> adapter;
+    private ArrayAdapter<String[]> adapter;
     private EditText search;
     private TextView status;
-    private TextView access;
+    private View access;
     private String pkg = "";
 
     private static final Object LAST = new Object();
@@ -59,8 +60,7 @@ public class BrowseActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setStatusBarColor(Ui.BG);
-        getWindow().setNavigationBarColor(Ui.BG);
+        Ui.apply(this);
         String extra = getIntent().getStringExtra(EXTRA_PKG);
         pkg = extra == null ? "" : extra;
 
@@ -69,28 +69,34 @@ public class BrowseActivity extends Activity {
         root.setBackgroundColor(Ui.BG);
         root.setFitsSystemWindows(true);
         int pad = Ui.dp(this, 16);
-        root.setPadding(pad, pad, pad, 0);
-        root.addView(Ui.text(this, "Cosa riprodurre", 26, Ui.TEXT, false));
-        root.addView(Ui.text(this, Music.label(this, pkg), 15, Ui.OFF, false));
+        root.setPadding(pad, Ui.dp(this, 12), pad, 0);
+        root.addView(Ui.header(this, "Cosa riprodurre", true));
+        root.addView(Ui.text(this, Music.label(this, pkg), 13, Ui.OFF, false));
 
-        search = new EditText(this);
-        search.setSingleLine();
-        search.setHint("Cerca, oppure incolla un link di playlist o album");
-        search.setTextColor(Ui.TEXT);
-        search.setHintTextColor(Ui.OFF);
+        search = Ui.field(this, "Cerca, o incolla un link di playlist o album");
+        Ui.leading(search, R.drawable.ic_search, Ui.OFF, 18);
+        search.setGravity(android.view.Gravity.CENTER_VERTICAL);
         search.setImeOptions(EditorInfo.IME_ACTION_DONE);
         search.addTextChangedListener(new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence s, int a, int b, int c) {}
             @Override public void onTextChanged(CharSequence s, int a, int b, int c) {}
             @Override public void afterTextChanged(Editable e) { refresh(); }
         });
-        root.addView(search, matchWrap(Ui.dp(this, 12)));
+        root.addView(search, Ui.matchWrap(this, 16));
 
-        status = Ui.text(this, "Connessione all'app...", 14, Ui.OFF, false);
-        root.addView(status, matchWrap(Ui.dp(this, 4)));
+        status = Ui.text(this, "Connessione all'app...", 13, Ui.OFF, false);
+        root.addView(status, Ui.matchWrap(this, 8));
 
         ListView list = new ListView(this);
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, new ArrayList<String>());
+        list.setDivider(new android.graphics.drawable.ColorDrawable(0));
+        list.setDividerHeight(Ui.dp(this, 8));
+        list.setSelector(new android.graphics.drawable.ColorDrawable(0));
+        list.setClipToPadding(false);
+        list.setPadding(0, Ui.dp(this, 4), 0, Ui.dp(this, 16));
+        adapter = new ArrayAdapter<String[]>(this, 0, new ArrayList<String[]>()) {
+            @Override
+            public View getView(int position, View convert, ViewGroup parent) { return row(getItem(position), convert); }
+        };
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -99,9 +105,9 @@ public class BrowseActivity extends Activity {
         root.addView(list, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 1));
         setContentView(root);
 
-        access = Ui.text(this, "", 14, Ui.TEXT, false);
-        access.setBackground(Ui.rounded(Ui.ACCENT_BG, Ui.dp(this, 16)));
-        access.setPadding(Ui.dp(this, 16), Ui.dp(this, 10), Ui.dp(this, 16), Ui.dp(this, 10));
+        access = Ui.warning(this, "Serve l'accesso alle notifiche",
+                "Per comandare questa app consenti a Sveglia l'accesso alle notifiche: serve solo a comandare "
+                + "la riproduzione, le notifiche non vengono lette. Tocca qui.");
         access.setVisibility(View.GONE);
         access.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) {
             try {
@@ -112,7 +118,7 @@ public class BrowseActivity extends Activity {
                 startActivity(new Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS));
             }
         }});
-        root.addView(access, 4, matchWrap(Ui.dp(this, 8)));
+        root.addView(access, 4, Ui.matchWrap(this, 12));
 
         ComponentName service = Music.browserService(this, pkg);
         if (service == null) {
@@ -145,8 +151,6 @@ public class BrowseActivity extends Activity {
         // WebRadioDroid si comanda già con la sua azione di avvio; le altre app spesso ignorano il catalogo
         boolean needed = !Music.isWebRadio(pkg) && !Music.sessionAccess(this);
         access.setVisibility(needed ? View.VISIBLE : View.GONE);
-        access.setText("Per comandare questa app consenti a Sveglia l'accesso alle notifiche "
-                + "(serve solo a comandare la riproduzione, le notifiche non vengono lette). Tocca qui.");
     }
 
     private void open(String parentId) {
@@ -172,24 +176,24 @@ public class BrowseActivity extends Activity {
         String q = search.getText().toString().trim();
         String filter = q.toLowerCase(Locale.ROOT);
         entries.clear();
-        List<String> labels = new ArrayList<>();
+        List<String[]> labels = new ArrayList<>();
         entries.add(LAST);
-        labels.add("▶  Ultima riproduzione");
+        labels.add(new String[]{"play", "Ultima riproduzione", null});
         if (!q.isEmpty()) {
             entries.add(QUERY);
-            labels.add(q.startsWith("https://") ? "\uD83D\uDD17  Quando suona, apri il link e premi Play"
-                    : "🔍  Quando suona, cerca “" + q + "”");
+            labels.add(q.startsWith("https://") ? new String[]{"link", "Quando suona, apri il link e premi Play", q}
+                    : new String[]{"search", "Quando suona, cerca “" + q + "”", null});
         }
         if (stack.size() > 1) {
             entries.add(UP);
-            labels.add("⬆  Indietro");
+            labels.add(new String[]{"up", "Indietro", null});
         }
         for (MediaBrowser.MediaItem item : items) {
             String title = title(item);
             if (!title.toLowerCase(Locale.ROOT).contains(filter)) continue;
             CharSequence sub = item.getDescription().getSubtitle();
             entries.add(item);
-            labels.add((item.isPlayable() ? "♪  " : "📁  ") + title + (sub == null ? "" : "\n     " + sub));
+            labels.add(new String[]{item.isPlayable() ? "music" : "folder", title, sub == null ? null : sub.toString()});
         }
         adapter.clear();
         adapter.addAll(labels);
@@ -238,10 +242,49 @@ public class BrowseActivity extends Activity {
         super.onDestroy();
     }
 
-    private LinearLayout.LayoutParams matchWrap(int topMargin) {
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        lp.topMargin = topMargin;
-        return lp;
+    /** Riga dell'elenco: icona, titolo, sottotitolo; le scelte rapide in alto sono nel colore principale. */
+    private View row(String[] e, View convert) {
+        LinearLayout row;
+        TextView title, sub;
+        android.widget.ImageView icon;
+        if (convert instanceof LinearLayout) {
+            row = (LinearLayout) convert;
+            icon = (android.widget.ImageView) row.getChildAt(0);
+            LinearLayout col = (LinearLayout) row.getChildAt(1);
+            title = (TextView) col.getChildAt(0);
+            sub = (TextView) col.getChildAt(1);
+        } else {
+            row = new LinearLayout(this);
+            row.setGravity(android.view.Gravity.CENTER_VERTICAL);
+            row.setMinimumHeight(Ui.dp(this, 56));
+            row.setPadding(Ui.dp(this, 12), Ui.dp(this, 8), Ui.dp(this, 12), Ui.dp(this, 8));
+            icon = new android.widget.ImageView(this);
+            LinearLayout.LayoutParams ilp = new LinearLayout.LayoutParams(Ui.dp(this, 20), Ui.dp(this, 20));
+            ilp.rightMargin = Ui.dp(this, 14);
+            row.addView(icon, ilp);
+            LinearLayout col = new LinearLayout(this);
+            col.setOrientation(LinearLayout.VERTICAL);
+            title = Ui.text(this, "", 15, Ui.TEXT, false);
+            sub = Ui.text(this, "", 13, Ui.OFF, false);
+            title.setMaxLines(2);
+            sub.setSingleLine();
+            sub.setEllipsize(android.text.TextUtils.TruncateAt.END);
+            col.addView(title);
+            col.addView(sub);
+            row.addView(col, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
+        }
+        String kind = e[0];
+        boolean quick = !kind.equals("music") && !kind.equals("folder");
+        int res = kind.equals("play") ? R.drawable.ic_play : kind.equals("link") ? R.drawable.ic_link
+                : kind.equals("search") ? R.drawable.ic_search : kind.equals("up") ? R.drawable.ic_up
+                : kind.equals("folder") ? R.drawable.ic_folder : R.drawable.ic_music;
+        icon.setImageResource(res);
+        icon.setImageTintList(android.content.res.ColorStateList.valueOf(quick ? Ui.ACCENT_TEXT : Ui.OFF));
+        title.setText(e[1]);
+        title.setTextColor(quick ? Ui.ACCENT_TEXT : Ui.TEXT);
+        sub.setText(e[2]);
+        sub.setVisibility(e[2] == null ? View.GONE : View.VISIBLE);
+        row.setBackground(Ui.touch(this, Ui.box(this, Ui.PANEL, Ui.BORDER, 12), 12));
+        return row;
     }
 }
