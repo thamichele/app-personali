@@ -14,7 +14,7 @@
       }
     },
     "address": "https://raw.githubusercontent.com/thamichele/app-personali/fdroid/repo",
-    "timestamp": 1793875969000,
+    "timestamp": 1793904339000,
     "categories": {
       "Connectivity": {
         "name": {
@@ -496,7 +496,7 @@
           "Internet"
         ],
         "issueTracker": "https://github.com/thamichele/webradiodroid/issues",
-        "lastUpdated": 1793820266000,
+        "lastUpdated": 1793904327000,
         "license": "MIT",
         "sourceCode": "https://github.com/thamichele/webradiodroid",
         "webSite": "https://github.com/thamichele/webradiodroid",
@@ -513,6 +513,62 @@
         "preferredSigner": "6f57e29c9299491823e19da5e688175f622ae14a404b7fbb2f429042214005b0"
       },
       "versions": {
+        "bbcce3036fe9c612759c020a990aa72548ff5d080409e55feec93d331675c127": {
+          "added": 1793904327000,
+          "file": {
+            "name": "/io.github.thamichele.webradiodroid_2203000.apk",
+            "sha256": "bbcce3036fe9c612759c020a990aa72548ff5d080409e55feec93d331675c127",
+            "size": 4256410
+          },
+          "manifest": {
+            "versionName": "2.3.0",
+            "versionCode": 2203000,
+            "usesSdk": {
+              "minSdkVersion": 25,
+              "targetSdkVersion": 37
+            },
+            "signer": {
+              "sha256": [
+                "6f57e29c9299491823e19da5e688175f622ae14a404b7fbb2f429042214005b0"
+              ]
+            },
+            "usesPermission": [
+              {
+                "name": "android.permission.FOREGROUND_SERVICE"
+              },
+              {
+                "name": "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"
+              },
+              {
+                "name": "android.permission.INTERNET"
+              },
+              {
+                "name": "android.permission.WAKE_LOCK"
+              },
+              {
+                "name": "android.permission.ACCESS_WIFI_STATE"
+              },
+              {
+                "name": "android.permission.ACCESS_NETWORK_STATE"
+              },
+              {
+                "name": "android.permission.READ_EXTERNAL_STORAGE"
+              },
+              {
+                "name": "android.permission.VIBRATE"
+              },
+              {
+                "name": "androidx.car.app.MEDIA_TEMPLATES"
+              },
+              {
+                "name": "android.permission.RECEIVE_BOOT_COMPLETED"
+              },
+              {
+                "name": "io.github.thamichele.webradiodroid.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+              }
+            ]
+          }
+        },
         "4036494e1675f7f49298211480fa633805bd82aa1334c6a9b4259428a738d364": {
           "added": 1793820266000,
           "file": {
@@ -579,62 +635,6 @@
           "manifest": {
             "versionName": "2.1.0",
             "versionCode": 2201000,
-            "usesSdk": {
-              "minSdkVersion": 25,
-              "targetSdkVersion": 37
-            },
-            "signer": {
-              "sha256": [
-                "6f57e29c9299491823e19da5e688175f622ae14a404b7fbb2f429042214005b0"
-              ]
-            },
-            "usesPermission": [
-              {
-                "name": "android.permission.FOREGROUND_SERVICE"
-              },
-              {
-                "name": "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"
-              },
-              {
-                "name": "android.permission.INTERNET"
-              },
-              {
-                "name": "android.permission.WAKE_LOCK"
-              },
-              {
-                "name": "android.permission.ACCESS_WIFI_STATE"
-              },
-              {
-                "name": "android.permission.ACCESS_NETWORK_STATE"
-              },
-              {
-                "name": "android.permission.READ_EXTERNAL_STORAGE"
-              },
-              {
-                "name": "android.permission.VIBRATE"
-              },
-              {
-                "name": "androidx.car.app.MEDIA_TEMPLATES"
-              },
-              {
-                "name": "android.permission.RECEIVE_BOOT_COMPLETED"
-              },
-              {
-                "name": "io.github.thamichele.webradiodroid.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
-              }
-            ]
-          }
-        },
-        "b6ccf360ad562935a38774ba767b30be2f5104c565c94a40c5cde6577abb04c4": {
-          "added": 1793433162000,
-          "file": {
-            "name": "/io.github.thamichele.webradiodroid_2200000.apk",
-            "sha256": "b6ccf360ad562935a38774ba767b30be2f5104c565c94a40c5cde6577abb04c4",
-            "size": 3589274
-          },
-          "manifest": {
-            "versionName": "2.0.0",
-            "versionCode": 2200000,
             "usesSdk": {
               "minSdkVersion": 25,
               "targetSdkVersion": 37

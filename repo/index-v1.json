@@ -1,6 +1,6 @@
 {
   "repo": {
-    "timestamp": 1793875969000,
+    "timestamp": 1793904339000,
     "version": 20002,
     "name": "App personali",
     "icon": "icon.png",
@@ -69,7 +69,7 @@
         "Multimedia",
         "Internet"
       ],
-      "suggestedVersionCode": "2202000",
+      "suggestedVersionCode": "2203000",
       "description": "Ascolta le tue webradio dal telefono e in auto con Android Auto. WebRadioDroid nasce da Transistor\n(Y20K, licenza MIT) e aggiunge loghi delle stazioni in Android Auto, preferiti, nomi personalizzati\ne un timer di spegnimento pi\u00f9 comodo.\n\nFunzioni principali:\n* ricerca delle stazioni nell'archivio radio-browser.info oppure aggiunta di un link di streaming\n* loghi delle stazioni cercati in automatico sul web quando mancano\n* tieni premuto su una stazione per fissarla in cima ai preferiti o darle un nome a tuo piacere\n* timer di spegnimento con scelta rapida della durata: allo scadere l'app si chiude del tutto, per risparmiare batteria\n* notifica con barra di avanzamento per ogni brano e cambio stazione con i tasti avanti e indietro\n* tema arancione\n\nNessuna pubblicit\u00e0 e nessun tracciamento.",
       "issueTracker": "https://github.com/thamichele/webradiodroid/issues",
       "license": "MIT",
@@ -79,7 +79,7 @@
       "webSite": "https://github.com/thamichele/webradiodroid",
       "added": 1793433162000,
       "packageName": "io.github.thamichele.webradiodroid",
-      "lastUpdated": 1793820266000
+      "lastUpdated": 1793904327000
     },
     {
       "authorName": "Michele",
@@ -527,6 +527,66 @@
     ],
     "io.github.thamichele.webradiodroid": [
       {
+        "added": 1793904327000,
+        "apkName": "io.github.thamichele.webradiodroid_2203000.apk",
+        "hash": "bbcce3036fe9c612759c020a990aa72548ff5d080409e55feec93d331675c127",
+        "hashType": "sha256",
+        "minSdkVersion": 25,
+        "packageName": "io.github.thamichele.webradiodroid",
+        "sig": "f5c6313cad11625467121d0206ed111a",
+        "signer": "6f57e29c9299491823e19da5e688175f622ae14a404b7fbb2f429042214005b0",
+        "size": 4256410,
+        "targetSdkVersion": 37,
+        "uses-permission": [
+          [
+            "android.permission.FOREGROUND_SERVICE",
+            null
+          ],
+          [
+            "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK",
+            null
+          ],
+          [
+            "android.permission.INTERNET",
+            null
+          ],
+          [
+            "android.permission.WAKE_LOCK",
+            null
+          ],
+          [
+            "android.permission.ACCESS_WIFI_STATE",
+            null
+          ],
+          [
+            "android.permission.ACCESS_NETWORK_STATE",
+            null
+          ],
+          [
+            "android.permission.READ_EXTERNAL_STORAGE",
+            null
+          ],
+          [
+            "android.permission.VIBRATE",
+            null
+          ],
+          [
+            "androidx.car.app.MEDIA_TEMPLATES",
+            null
+          ],
+          [
+            "android.permission.RECEIVE_BOOT_COMPLETED",
+            null
+          ],
+          [
+            "io.github.thamichele.webradiodroid.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION",
+            null
+          ]
+        ],
+        "versionCode": 2203000,
+        "versionName": "2.3.0"
+      },
+      {
         "added": 1793820266000,
         "apkName": "io.github.thamichele.webradiodroid_2202000.apk",
         "hash": "4036494e1675f7f49298211480fa633805bd82aa1334c6a9b4259428a738d364",
@@ -645,66 +705,6 @@
         ],
         "versionCode": 2201000,
         "versionName": "2.1.0"
-      },
-      {
-        "added": 1793433162000,
-        "apkName": "io.github.thamichele.webradiodroid_2200000.apk",
-        "hash": "b6ccf360ad562935a38774ba767b30be2f5104c565c94a40c5cde6577abb04c4",
-        "hashType": "sha256",
-        "minSdkVersion": 25,
-        "packageName": "io.github.thamichele.webradiodroid",
-        "sig": "f5c6313cad11625467121d0206ed111a",
-        "signer": "6f57e29c9299491823e19da5e688175f622ae14a404b7fbb2f429042214005b0",
-        "size": 3589274,
-        "targetSdkVersion": 37,
-        "uses-permission": [
-          [
-            "android.permission.FOREGROUND_SERVICE",
-            null
-          ],
-          [
-            "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK",
-            null
-          ],
-          [
-            "android.permission.INTERNET",
-            null
-          ],
-          [
-            "android.permission.WAKE_LOCK",
-            null
-          ],
-          [
-            "android.permission.ACCESS_WIFI_STATE",
-            null
-          ],
-          [
-            "android.permission.ACCESS_NETWORK_STATE",
-            null
-          ],
-          [
-            "android.permission.READ_EXTERNAL_STORAGE",
-            null
-          ],
-          [
-            "android.permission.VIBRATE",
-            null
-          ],
-          [
-            "androidx.car.app.MEDIA_TEMPLATES",
-            null
-          ],
-          [
-            "android.permission.RECEIVE_BOOT_COMPLETED",
-            null
-          ],
-          [
-            "io.github.thamichele.webradiodroid.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION",
-            null
-          ]
-        ],
-        "versionCode": 2200000,
-        "versionName": "2.0.0"
       }
     ],
     "it.michele.sveglia": [
