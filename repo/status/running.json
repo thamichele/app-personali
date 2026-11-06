@@ -8,16 +8,15 @@
     "--pretty"
   ],
   "disabled": [],
-  "endTimestamp": 1793965853803,
+  "endTimestamp": 1793977358352,
   "failedBuilds": {},
   "fdroiddata": {
-    "commitId": "43248578f47321d0feb07e5ed2f8f3a4221547e8",
+    "commitId": "34d65fd209075b35db0aee55f9a93eb4aa7d959a",
     "isDirty": false,
     "modifiedFiles": [],
     "untrackedFiles": [
       "config.yml",
-      "icon.png",
-      "repo/dev.antidroidvirus_156.apk"
+      "icon.png"
     ]
   },
   "jarsigner": "/usr/bin/jarsigner",
@@ -44,17 +43,17 @@
     "it.michele.wgswitch"
   ],
   "stages": {
-    "archive_old_apks archive": 1793965847909,
-    "delete_disabled_builds": 1793965836827,
-    "index.make archive": 1793965847911,
-    "index.make repo": 1793965851605,
-    "prepare_apps archive": 1793965847910,
-    "prepare_apps repo": 1793965851594,
-    "process_apks": 1793965836827,
-    "read_added_date_from_all_apks": 1793965847909,
-    "remove_apks": 1793965843482,
-    "scan_repo_files": 1793965843482
+    "archive_old_apks archive": 1793977353686,
+    "delete_disabled_builds": 1793977344936,
+    "index.make archive": 1793977353687,
+    "index.make repo": 1793977356326,
+    "prepare_apps archive": 1793977353687,
+    "prepare_apps repo": 1793977356326,
+    "process_apks": 1793977344937,
+    "read_added_date_from_all_apks": 1793977353686,
+    "remove_apks": 1793977349073,
+    "scan_repo_files": 1793977349073
   },
-  "startTimestamp": 1793965835000,
+  "startTimestamp": 1793977344000,
   "subcommand": "update"
 }
