@@ -8,15 +8,16 @@
     "--pretty"
   ],
   "disabled": [],
-  "endTimestamp": 1793977358352,
+  "endTimestamp": 1793988641084,
   "failedBuilds": {},
   "fdroiddata": {
-    "commitId": "34d65fd209075b35db0aee55f9a93eb4aa7d959a",
+    "commitId": "ebeba3dfd4f74da1b377c237093e61b807961d57",
     "isDirty": false,
     "modifiedFiles": [],
     "untrackedFiles": [
       "config.yml",
-      "icon.png"
+      "icon.png",
+      "repo/it.michele.wgswitch_20400.apk"
     ]
   },
   "jarsigner": "/usr/bin/jarsigner",
@@ -43,17 +44,17 @@
     "it.michele.wgswitch"
   ],
   "stages": {
-    "archive_old_apks archive": 1793977353686,
-    "delete_disabled_builds": 1793977344936,
-    "index.make archive": 1793977353687,
-    "index.make repo": 1793977356326,
-    "prepare_apps archive": 1793977353687,
-    "prepare_apps repo": 1793977356326,
-    "process_apks": 1793977344937,
-    "read_added_date_from_all_apks": 1793977353686,
-    "remove_apks": 1793977349073,
-    "scan_repo_files": 1793977349073
+    "archive_old_apks archive": 1793988634160,
+    "delete_disabled_builds": 1793988620244,
+    "index.make archive": 1793988634162,
+    "index.make repo": 1793988637729,
+    "prepare_apps archive": 1793988634162,
+    "prepare_apps repo": 1793988637728,
+    "process_apks": 1793988620244,
+    "read_added_date_from_all_apks": 1793988634159,
+    "remove_apks": 1793988625904,
+    "scan_repo_files": 1793988625903
   },
-  "startTimestamp": 1793977344000,
+  "startTimestamp": 1793988619000,
   "subcommand": "update"
 }
