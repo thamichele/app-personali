@@ -1,6 +1,6 @@
 {
   "repo": {
-    "timestamp": 1793947906000,
+    "timestamp": 1793965847000,
     "version": 20002,
     "name": "My First F-Droid Archive Demo",
     "icon": "icon.png",
@@ -18,7 +18,7 @@
         "Security",
         "System"
       ],
-      "suggestedVersionCode": "143",
+      "suggestedVersionCode": "146",
       "issueTracker": "https://github.com/thamichele/antidroidvirus/issues",
       "license": "Unknown",
       "name": "AntiDroidVirus",
@@ -26,7 +26,7 @@
       "webSite": "https://github.com/thamichele/antidroidvirus",
       "added": 1793433161000,
       "packageName": "dev.antidroidvirus",
-      "lastUpdated": 1793820264000
+      "lastUpdated": 1793965841000
     },
     {
       "authorName": "Michele",
@@ -102,6 +102,76 @@
   ],
   "packages": {
     "dev.antidroidvirus": [
+      {
+        "added": 1793695865000,
+        "apkName": "dev.antidroidvirus_146.apk",
+        "hash": "fe27c6b5201127e3458bb555fc9e9ca6f3387d5cac17fce34b354d50a6f8e091",
+        "hashType": "sha256",
+        "minSdkVersion": 30,
+        "nativecode": [
+          "arm64-v8a",
+          "armeabi-v7a",
+          "x86",
+          "x86_64"
+        ],
+        "packageName": "dev.antidroidvirus",
+        "sig": "416dbd272844efda19db2dbc9d74cb35",
+        "signer": "52c6192939571634951b82ee34424660f5055be2efb8c50280f0dfa772eae9eb",
+        "size": 2379233,
+        "targetSdkVersion": 36,
+        "uses-permission": [
+          [
+            "android.permission.GET_APP_OPS_STATS",
+            null
+          ],
+          [
+            "android.permission.PACKAGE_USAGE_STATS",
+            null
+          ],
+          [
+            "android.permission.QUERY_ALL_PACKAGES",
+            null
+          ],
+          [
+            "android.permission.POST_NOTIFICATIONS",
+            null
+          ],
+          [
+            "android.permission.MANAGE_EXTERNAL_STORAGE",
+            null
+          ],
+          [
+            "android.permission.REQUEST_DELETE_PACKAGES",
+            null
+          ],
+          [
+            "android.permission.FOREGROUND_SERVICE",
+            null
+          ],
+          [
+            "android.permission.FOREGROUND_SERVICE_SPECIAL_USE",
+            null
+          ],
+          [
+            "android.permission.RECEIVE_BOOT_COMPLETED",
+            null
+          ],
+          [
+            "android.permission.HIDE_OVERLAY_WINDOWS",
+            null
+          ],
+          [
+            "moe.shizuku.manager.permission.API_V23",
+            null
+          ],
+          [
+            "dev.antidroidvirus.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION",
+            null
+          ]
+        ],
+        "versionCode": 146,
+        "versionName": "0.7"
+      },
       {
         "added": 1793453065000,
         "apkName": "dev.antidroidvirus_143.apk",

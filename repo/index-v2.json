@@ -14,7 +14,7 @@
       }
     },
     "address": "https://raw.githubusercontent.com/thamichele/app-personali/fdroid/repo",
-    "timestamp": 1793947909000,
+    "timestamp": 1793965851000,
     "categories": {
       "Connectivity": {
         "name": {
@@ -57,7 +57,7 @@
           "System"
         ],
         "issueTracker": "https://github.com/thamichele/antidroidvirus/issues",
-        "lastUpdated": 1793820264000,
+        "lastUpdated": 1793965841000,
         "sourceCode": "https://github.com/thamichele/antidroidvirus",
         "webSite": "https://github.com/thamichele/antidroidvirus",
         "authorName": "Michele",
@@ -67,6 +67,71 @@
         "preferredSigner": "52c6192939571634951b82ee34424660f5055be2efb8c50280f0dfa772eae9eb"
       },
       "versions": {
+        "18195323a9e9a0834cc509f823d768872d8a72b5ff8d04d361ad267620b2799a": {
+          "added": 1793965841000,
+          "file": {
+            "name": "/dev.antidroidvirus_156.apk",
+            "sha256": "18195323a9e9a0834cc509f823d768872d8a72b5ff8d04d361ad267620b2799a",
+            "size": 2653201
+          },
+          "manifest": {
+            "nativecode": [
+              "arm64-v8a",
+              "armeabi-v7a",
+              "x86",
+              "x86_64"
+            ],
+            "versionName": "0.8.1",
+            "versionCode": 156,
+            "usesSdk": {
+              "minSdkVersion": 30,
+              "targetSdkVersion": 36
+            },
+            "signer": {
+              "sha256": [
+                "52c6192939571634951b82ee34424660f5055be2efb8c50280f0dfa772eae9eb"
+              ]
+            },
+            "usesPermission": [
+              {
+                "name": "android.permission.GET_APP_OPS_STATS"
+              },
+              {
+                "name": "android.permission.PACKAGE_USAGE_STATS"
+              },
+              {
+                "name": "android.permission.QUERY_ALL_PACKAGES"
+              },
+              {
+                "name": "android.permission.POST_NOTIFICATIONS"
+              },
+              {
+                "name": "android.permission.MANAGE_EXTERNAL_STORAGE"
+              },
+              {
+                "name": "android.permission.REQUEST_DELETE_PACKAGES"
+              },
+              {
+                "name": "android.permission.FOREGROUND_SERVICE"
+              },
+              {
+                "name": "android.permission.FOREGROUND_SERVICE_SPECIAL_USE"
+              },
+              {
+                "name": "android.permission.RECEIVE_BOOT_COMPLETED"
+              },
+              {
+                "name": "android.permission.HIDE_OVERLAY_WINDOWS"
+              },
+              {
+                "name": "moe.shizuku.manager.permission.API_V23"
+              },
+              {
+                "name": "dev.antidroidvirus.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+              }
+            ]
+          }
+        },
         "369305c0d066d9f23cbc901004e025a8e7f4ec1e69cb3ac39065eca1be144241": {
           "added": 1793820264000,
           "file": {
@@ -148,71 +213,6 @@
             ],
             "versionName": "0.7.1",
             "versionCode": 149,
-            "usesSdk": {
-              "minSdkVersion": 30,
-              "targetSdkVersion": 36
-            },
-            "signer": {
-              "sha256": [
-                "52c6192939571634951b82ee34424660f5055be2efb8c50280f0dfa772eae9eb"
-              ]
-            },
-            "usesPermission": [
-              {
-                "name": "android.permission.GET_APP_OPS_STATS"
-              },
-              {
-                "name": "android.permission.PACKAGE_USAGE_STATS"
-              },
-              {
-                "name": "android.permission.QUERY_ALL_PACKAGES"
-              },
-              {
-                "name": "android.permission.POST_NOTIFICATIONS"
-              },
-              {
-                "name": "android.permission.MANAGE_EXTERNAL_STORAGE"
-              },
-              {
-                "name": "android.permission.REQUEST_DELETE_PACKAGES"
-              },
-              {
-                "name": "android.permission.FOREGROUND_SERVICE"
-              },
-              {
-                "name": "android.permission.FOREGROUND_SERVICE_SPECIAL_USE"
-              },
-              {
-                "name": "android.permission.RECEIVE_BOOT_COMPLETED"
-              },
-              {
-                "name": "android.permission.HIDE_OVERLAY_WINDOWS"
-              },
-              {
-                "name": "moe.shizuku.manager.permission.API_V23"
-              },
-              {
-                "name": "dev.antidroidvirus.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
-              }
-            ]
-          }
-        },
-        "fe27c6b5201127e3458bb555fc9e9ca6f3387d5cac17fce34b354d50a6f8e091": {
-          "added": 1793695865000,
-          "file": {
-            "name": "/dev.antidroidvirus_146.apk",
-            "sha256": "fe27c6b5201127e3458bb555fc9e9ca6f3387d5cac17fce34b354d50a6f8e091",
-            "size": 2379233
-          },
-          "manifest": {
-            "nativecode": [
-              "arm64-v8a",
-              "armeabi-v7a",
-              "x86",
-              "x86_64"
-            ],
-            "versionName": "0.7",
-            "versionCode": 146,
             "usesSdk": {
               "minSdkVersion": 30,
               "targetSdkVersion": 36
