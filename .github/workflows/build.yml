@@ -21,7 +21,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # una voce per ogni cartella in apps/
+        # una voce per ogni app Android in apps/ (quelle per PC sono nel job "desktop")
         app: [ sveglia ]
     steps:
       - uses: actions/checkout@v5
@@ -54,6 +54,72 @@ jobs:
           name: ${{ matrix.app }}-test-apk
           path: build/${{ matrix.app }}/${{ matrix.app }}-*.apk
           if-no-files-found: error
+
+  # App per PC (TYPE=desktop in app.conf): pacchetto con Java incluso, costruito su ciascun sistema
+  desktop:
+    if: github.event_name != 'schedule'
+    strategy:
+      fail-fast: false
+      matrix:
+        app: [ calendario ]
+        os: [ ubuntu-24.04, windows-2022 ]
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Install packaging tools
+        if: runner.os == 'Linux'
+        run: sudo apt-get install -y -q fakeroot
+
+      - name: Build package
+        run: PACKAGE=1 ./build.sh ${{ matrix.app }}
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.app }}-${{ runner.os }}
+          path: |
+            build/${{ matrix.app }}/${{ matrix.app }}-*.zip
+            build/${{ matrix.app }}/${{ matrix.app }}-*.tar.gz
+            build/${{ matrix.app }}/${{ matrix.app }}-*.deb
+          if-no-files-found: error
+
+  # Release GitHub delle app per PC quando la versione in app.conf non ha ancora "<app>-vX.Y.Z"
+  desktop-release:
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    needs: desktop
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+
+      - name: Release new versions
+        run: |
+          for conf in apps/*/app.conf; do
+            grep -q '^TYPE=desktop' "$conf" || continue
+            APP=$(basename "$(dirname "$conf")")
+            VERSION=$(sed -n 's/^VERSION_NAME=//p' "$conf")
+            if gh release view "$APP-v$VERSION" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+              echo "$APP $VERSION già pubblicata"
+              continue
+            fi
+            gh release create "$APP-v$VERSION" dist/$APP-*/$APP-$VERSION-* --repo "$GITHUB_REPOSITORY" --title "$APP $VERSION" \
+              --notes "Per PC, con Java incluso. Windows: estrai lo zip e avvia Calendario.exe. Linux: installa il .deb (Debian, Ubuntu, Mint) oppure estrai il .tar.gz e avvia Calendario/bin/Calendario."
+          done
 
   # Pubblica le app nuove: release GitHub firmata + repository F-Droid unico (ramo "fdroid", servito da
   # https://raw.githubusercontent.com/thamichele/app-personali/fdroid/repo). Un'app viene pubblicata quando la
@@ -111,6 +177,7 @@ jobs:
           echo "$RELEASE_KEYSTORE_BASE64" | base64 -d > "$KEYSTORE"
           : > "$RUNNER_TEMP/apks"
           for conf in apps/*/app.conf; do
+            grep -q '^TYPE=desktop' "$conf" && continue # app per PC: job desktop-release
             APP=$(basename "$(dirname "$conf")")
             VERSION=$(sed -n 's/^VERSION_NAME=//p' "$conf")
             if gh release view "$APP-v$VERSION" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then

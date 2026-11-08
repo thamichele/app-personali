@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Build dell'APK di un'app della collezione senza Gradle: aapt2 + javac + dx + apksigner.
 # Uso: KS_PASS=... ./build.sh <app>      (es. ./build.sh sveglia → build/sveglia/sveglia-X.Y.Z.apk)
+# Le app per PC (TYPE=desktop) hanno una build a parte, più sotto: servono solo il JDK e jpackage.
 # Richiede: JDK 17+, aapt2, dalvik-exchange (dx), zipalign, apksigner (pacchetti Ubuntu)
 # e due jar: ANDROID_CLASSES (classi API 35, es. Robolectric android-all 15)
 # e ANDROID_RES (resources.arsc + AndroidManifest.xml di framework API 33).
@@ -10,6 +11,40 @@ APP=${1:?Uso: ./build.sh <app>}
 [ -f "apps/$APP/app.conf" ] || { echo "App sconosciuta: $APP" >&2; exit 1; }
 # shellcheck source=/dev/null
 . "apps/$APP/app.conf"
+
+# App per PC (TYPE=desktop in app.conf): JDK 17+ e basta. Produce build/<app>/<app>-X.Y.Z.jar;
+# con PACKAGE=1 anche il pacchetto con Java incluso, per il sistema su cui gira (jpackage):
+# Linux .deb + .tar.gz, Windows .zip con Calendario.exe.
+if [ "${TYPE:-android}" = desktop ]; then
+  OUT=build/$APP
+  rm -rf "$OUT"; mkdir -p "$OUT/classes" "$OUT/input"
+  javac --release 17 -encoding UTF-8 -Xlint:all,-serial -Werror -d "$OUT/classes" $(find "apps/$APP/src" -name '*.java')
+  cp -r "apps/$APP/res/." "$OUT/classes/"
+  printf 'Main-Class: %s\nImplementation-Title: %s\nImplementation-Version: %s\n' "$MAIN" "$NAME" "$VERSION_NAME" > "$OUT/manifest.txt"
+  jar --create --file "$OUT/$APP-$VERSION_NAME.jar" --manifest "$OUT/manifest.txt" -C "$OUT/classes" .
+  echo "JAR: $OUT/$APP-$VERSION_NAME.jar"
+  [ -n "${PACKAGE:-}" ] || exit 0
+  cp "$OUT/$APP-$VERSION_NAME.jar" "$OUT/input/$APP.jar"
+  java -Djava.awt.headless=true -cp "$OUT/classes" "$MAIN" --icone "$OUT/icone"
+  case "$(uname -s)" in MINGW*|MSYS*|CYGWIN*) OS=windows; ICON=icone/icon.ico ;; *) OS=linux; ICON=icone/icon.png ;; esac
+  # solo i moduli di Java che servono: pacchetto più piccolo
+  COMMON=(--name "$NAME" --app-version "$VERSION_NAME" --vendor Michele --description "$NAME"
+    --input "$OUT/input" --main-jar "$APP.jar" --main-class "$MAIN" --icon "$OUT/$ICON"
+    --add-modules java.base,java.desktop,java.net.http,java.xml,jdk.crypto.ec
+    --jlink-options "--strip-debug --no-man-pages --no-header-files --compress=zip-9"
+    --java-options "-Xmx384m -Dawt.useSystemAAFontSettings=lcd")
+  jpackage --type app-image --dest "$OUT/pkg" "${COMMON[@]}"
+  if [ "$OS" = windows ]; then
+    (cd "$OUT/pkg" && powershell -NoProfile -Command "Compress-Archive -Path '$NAME' -DestinationPath '../$APP-$VERSION_NAME-windows.zip'")
+  else
+    tar -C "$OUT/pkg" -czf "$OUT/$APP-$VERSION_NAME-linux.tar.gz" "$NAME"
+    jpackage --type deb --dest "$OUT" "${COMMON[@]}" --linux-package-name "$APP" --linux-shortcut \
+      --linux-menu-group Office --linux-app-category office
+    mv "$OUT/${APP}_${VERSION_NAME}"*.deb "$OUT/$APP-$VERSION_NAME-linux.deb"
+  fi
+  ls -la "$OUT"/*.zip "$OUT"/*.tar.gz "$OUT"/*.deb 2>/dev/null || true
+  exit 0
+fi
 # La password della chiave non è nel repository: passala con KS_PASS. Senza keystore ne viene creato uno nuovo
 # (va bene solo per build di prova: gli aggiornamenti richiedono sempre la chiave originale).
 : "${ANDROID_CLASSES:?}" "${ANDROID_RES:?}" "${KEYSTORE:=keystore/$APP.jks}" "${KS_PASS:?}"
