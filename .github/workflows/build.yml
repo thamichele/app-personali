@@ -102,10 +102,11 @@ jobs:
     container: archlinux:base-devel
     steps:
       - name: Install build tools
-        run: pacman -Syu --noconfirm --needed git jdk-openjdk libnotify hicolor-icon-theme
+        run: pacman -Syu --noconfirm --needed git jdk-openjdk libnotify hicolor-icon-theme ttf-dejavu
 
       - uses: actions/checkout@v5
 
+      # ttf-dejavu: Java2D vuole almeno un carattere di sistema anche per disegnare le icone
       # makepkg non gira come root
       - name: Build package
         run: |
