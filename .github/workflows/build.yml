@@ -91,10 +91,40 @@ jobs:
             build/${{ matrix.app }}/${{ matrix.app }}-*.deb
           if-no-files-found: error
 
+  # Pacchetto Arch (pacman -U) delle app per PC che hanno arch/PKGBUILD, costruito con makepkg su Arch
+  arch:
+    if: github.event_name != 'schedule'
+    strategy:
+      fail-fast: false
+      matrix:
+        app: [ calendario ]
+    runs-on: ubuntu-24.04
+    container: archlinux:base-devel
+    steps:
+      - name: Install build tools
+        run: pacman -Syu --noconfirm --needed git jdk-openjdk libnotify hicolor-icon-theme ttf-dejavu
+
+      - uses: actions/checkout@v5
+
+      # ttf-dejavu: Java2D vuole almeno un carattere di sistema anche per disegnare le icone
+      # makepkg non gira come root
+      - name: Build package
+        run: |
+          useradd -m builder
+          chown -R builder "$GITHUB_WORKSPACE"
+          su builder -c "cd '$GITHUB_WORKSPACE/apps/${{ matrix.app }}/arch' && makepkg --noconfirm"
+          ls -la apps/${{ matrix.app }}/arch/*.pkg.tar.zst
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.app }}-Arch
+          path: apps/${{ matrix.app }}/arch/*.pkg.tar.zst
+          if-no-files-found: error
+
   # Release GitHub delle app per PC quando la versione in app.conf non ha ancora "<app>-vX.Y.Z"
   desktop-release:
     if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
-    needs: desktop
+    needs: [ desktop, arch ]
     runs-on: ubuntu-24.04
     permissions:
       contents: write
@@ -118,7 +148,7 @@ jobs:
               continue
             fi
             gh release create "$APP-v$VERSION" dist/$APP-*/$APP-$VERSION-* --repo "$GITHUB_REPOSITORY" --title "$APP $VERSION" \
-              --notes "Per PC, con Java incluso. Windows: estrai lo zip e avvia Calendario.exe. Linux: installa il .deb (Debian, Ubuntu, Mint) oppure estrai il .tar.gz e avvia Calendario/bin/Calendario."
+              --notes "Per PC. Windows: estrai lo zip e avvia Calendario.exe (Java incluso). Arch: sudo pacman -U $APP-$VERSION-1-any.pkg.tar.zst. Debian/Ubuntu/Mint: installa il .deb. Altri Linux: estrai il .tar.gz e avvia Calendario/bin/Calendario."
           done
 
   # Pubblica le app nuove: release GitHub firmata + repository F-Droid unico (ramo "fdroid", servito da

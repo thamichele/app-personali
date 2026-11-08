@@ -58,7 +58,10 @@ final class MainWindow implements Views.Host {
     private final java.util.Map<String, Ui.Btn> viewButtons = new java.util.LinkedHashMap<>();
     private Ui.Btn refreshBtn;
     private Timer syncTimer;
-    private boolean tray, weekScrolled;
+    private boolean tray, weekScrolled, compactSide, narrowTitle;
+    private JPanel sidebarPanel, seg, headerPanel;
+    private Ui.Btn menuBtn;
+    private Ui.Select<String> viewSelect;
     private LocalDate today = LocalDate.now();
 
     MainWindow(Store store, Sync sync) {
@@ -68,7 +71,8 @@ final class MainWindow implements Views.Host {
         frame.setIconImages(Ui.appIcons());
         frame.getContentPane().setBackground(Ui.BG);
         frame.setLayout(new BorderLayout());
-        frame.add(sidebar(), BorderLayout.WEST);
+        sidebarPanel = sidebar();
+        frame.add(sidebarPanel, BorderLayout.WEST);
         JPanel main = new JPanel(new BorderLayout());
         main.setBackground(Ui.BG);
         main.add(header(), BorderLayout.NORTH);
@@ -82,8 +86,12 @@ final class MainWindow implements Views.Host {
         frame.add(main, BorderLayout.CENTER);
         keys(main);
 
-        frame.setMinimumSize(new Dimension(900, 600));
-        frame.setSize(store.getInt("larghezza", 1240), store.getInt("altezza", 820));
+        java.awt.Rectangle screen = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
+        frame.setMinimumSize(new Dimension(Math.min(520, screen.width), Math.min(440, screen.height)));
+        frame.setSize(Math.min(store.getInt("larghezza", 1240), screen.width), Math.min(store.getInt("altezza", 820), screen.height));
+        frame.addComponentListener(new java.awt.event.ComponentAdapter() {
+            @Override public void componentResized(java.awt.event.ComponentEvent e) { adapt(); }
+        });
         frame.setLocationRelativeTo(null);
         if (store.getBool("massimizzata", false)) frame.setExtendedState(Frame.MAXIMIZED_BOTH);
 
@@ -178,21 +186,25 @@ final class MainWindow implements Views.Host {
     // ---------- intestazione ----------
 
     private JPanel header() {
-        JPanel h = new JPanel(new BorderLayout());
+        JPanel h = new JPanel(new BorderLayout(8, 0));
+        headerPanel = h;
         h.setBackground(Ui.BG);
-        h.setBorder(Ui.pad(14, 20, 12, 16));
+        h.setBorder(Ui.pad(14, 16, 12, 12));
         JPanel left = new JPanel(new FlowLayout(FlowLayout.LEFT, 6, 0));
         left.setOpaque(false);
+        menuBtn = Ui.iconButton("menu", "Calendari", () -> { sidebarPanel.setVisible(!sidebarPanel.isVisible()); frame.revalidate(); });
+        left.add(menuBtn);
         left.add(Ui.button("Oggi", Ui.SECONDARY, () -> { anchor = LocalDate.now(); refresh(); }));
         left.add(Ui.iconButton("left", "Precedente (←)", () -> move(-1)));
         left.add(Ui.iconButton("right", "Successivo (→)", () -> move(1)));
-        title.setBorder(Ui.pad(0, 10, 0, 0));
-        left.add(title);
         h.add(left, BorderLayout.WEST);
+        title.setBorder(Ui.pad(0, 6, 0, 0));
+        title.setMinimumSize(new Dimension(0, 0));
+        h.add(title, BorderLayout.CENTER); // si accorcia con "..." quando manca spazio
 
         JPanel right = new JPanel(new FlowLayout(FlowLayout.RIGHT, 6, 0));
         right.setOpaque(false);
-        JPanel seg = new JPanel(new FlowLayout(FlowLayout.LEFT, 2, 0)) {
+        seg = new JPanel(new FlowLayout(FlowLayout.LEFT, 2, 0)) {
             @Override protected void paintComponent(Graphics g0) {
                 Graphics2D g = (Graphics2D) g0.create();
                 Ui.aa(g);
@@ -214,13 +226,43 @@ final class MainWindow implements Views.Host {
             seg.add(b);
         }
         right.add(seg);
-        right.add(javax.swing.Box.createHorizontalStrut(8));
+        // finestra stretta: la scelta della vista diventa un menu
+        viewSelect = new Ui.Select<>(java.util.List.of(MONTH, WEEK, DAY, AGENDA), v -> v);
+        viewSelect.onChange = this::setView;
+        viewSelect.setPreferredSize(new Dimension(128, 36));
+        viewSelect.setVisible(false);
+        right.add(viewSelect);
         refreshBtn = Ui.iconButton("refresh", "Sincronizza (F5)", this::syncNow);
         right.add(refreshBtn);
         right.add(Ui.iconButton("user", "Contatti", () -> ContactsDialog.open(frame, sync)));
         right.add(Ui.iconButton("settings", "Impostazioni", this::settings));
         h.add(right, BorderLayout.EAST);
         return h;
+    }
+
+    /**
+     * Adatta la finestra alla larghezza: sotto 980 la barra laterale si nasconde (pulsante menu),
+     * sotto 820 la scelta della vista diventa un menu e il titolo si rimpicciolisce.
+     */
+    private void adapt() {
+        int w = frame.getContentPane().getWidth();
+        boolean noSide = w < 980, narrow = w < 820;
+        if (noSide != compactSide) {
+            compactSide = noSide;
+            sidebarPanel.setVisible(!noSide);
+        }
+        menuBtn.setVisible(noSide);
+        seg.setVisible(!narrow);
+        viewSelect.setVisible(narrow);
+        title.setFont(Ui.font(w < 680 ? 18 : 22, true));
+        narrowTitle = w < 680;
+        // finestra molto stretta: il titolo va su una riga sua sotto i pulsanti
+        boolean below = w < 720;
+        headerPanel.remove(title);
+        title.setBorder(below ? Ui.pad(10, 2, 0, 0) : Ui.pad(0, 6, 0, 0));
+        headerPanel.add(title, below ? BorderLayout.SOUTH : BorderLayout.CENTER);
+        refresh();
+        frame.revalidate();
     }
 
     private void settings() {
@@ -393,12 +435,20 @@ final class MainWindow implements Views.Host {
         view = v;
         ((CardLayout) cards.getLayout()).show(cards, v.equals(DAY) ? WEEK : v);
         for (java.util.Map.Entry<String, Ui.Btn> e : viewButtons.entrySet()) { e.getValue().selected = e.getKey().equals(v); e.getValue().repaint(); }
+        if (viewSelect != null) viewSelect.set(v);
         weekHead.days = weekBody.days = v.equals(DAY) ? 1 : 7;
         refresh();
         if (!weekScrolled && (v.equals(WEEK) || v.equals(DAY))) {
             weekScrolled = true; // la prima volta parte dalle 7
             SwingUtilities.invokeLater(() -> weekScroll.getVerticalScrollBar().setValue(Views.HOUR * 7));
         }
+    }
+
+    /** Nome del mese: intero o di tre lettere quando manca spazio. */
+    private static String mon(LocalDate d, boolean shortName, boolean lower) {
+        String m = Ui.MONTHS[d.getMonthValue() - 1];
+        if (shortName) m = m.substring(0, 3);
+        return lower ? m.toLowerCase() : m;
     }
 
     /** Ricalcola le occorrenze dell'intervallo mostrato e ridisegna. */
@@ -414,20 +464,21 @@ final class MainWindow implements Views.Host {
         java.util.List<Model.Occ> occs = Model.occurrences(sync.colls, store.hidden(), store.getBool("compleanni", true),
                 from.atStartOfDay(z), to.atStartOfDay(z));
         for (Views.View v : new Views.View[]{month, weekHead, weekBody, agenda}) { v.anchor = anchor; v.occs = occs; }
-        if (view.equals(MONTH)) title.setText(Ui.MONTHS[anchor.getMonthValue() - 1] + " " + anchor.getYear());
+        boolean n = narrowTitle;
+        if (view.equals(MONTH)) title.setText(mon(anchor, n, false) + " " + anchor.getYear());
         else if (view.equals(WEEK)) {
-            LocalDate a = from, b = to.minusDays(1);
-            title.setText(a.getMonth() == b.getMonth() ? a.getDayOfMonth() + "–" + b.getDayOfMonth() + " " + Ui.MONTHS[a.getMonthValue() - 1].toLowerCase() + " " + a.getYear()
-                    : a.getDayOfMonth() + " " + Ui.MONTHS[a.getMonthValue() - 1].substring(0, 3).toLowerCase() + " – " + b.getDayOfMonth() + " "
-                    + Ui.MONTHS[b.getMonthValue() - 1].substring(0, 3).toLowerCase() + " " + b.getYear());
-        } else if (view.equals(DAY)) title.setText(Ui.DAYS[anchor.getDayOfWeek().getValue() - 1] + " " + anchor.getDayOfMonth() + " "
-                + Ui.MONTHS[anchor.getMonthValue() - 1].toLowerCase() + " " + anchor.getYear());
+            LocalDate x = from, y = to.minusDays(1);
+            title.setText(x.getMonth() == y.getMonth() ? x.getDayOfMonth() + "–" + y.getDayOfMonth() + " " + mon(x, n, true) + " " + x.getYear()
+                    : x.getDayOfMonth() + " " + mon(x, true, true) + " – " + y.getDayOfMonth() + " " + mon(y, true, true) + " " + y.getYear());
+        } else if (view.equals(DAY)) title.setText((n ? Ui.DAYS_SHORT : Ui.DAYS)[anchor.getDayOfWeek().getValue() - 1] + " "
+                + anchor.getDayOfMonth() + " " + mon(anchor, n, true) + " " + anchor.getYear());
         else title.setText("Agenda");
         mini.selected = anchor;
         if (!anchor.withDayOfMonth(1).equals(mini.shown) && !view.equals(AGENDA)) mini.shown = anchor.withDayOfMonth(1);
         mini.repaint();
         buildCalendars();
         status.setText(sync.busy ? "Sincronizzazione..." : sync.status.isEmpty() ? " " : sync.status);
+        if (refreshBtn != null) refreshBtn.setToolTipText("Sincronizza (F5)" + (sync.status.isEmpty() ? "" : " · " + sync.status));
         status.setForeground(sync.status.startsWith("Sincronizzato") || sync.busy ? Ui.DIM : Ui.DANGER);
         weekHead.revalidate();
         frame.getContentPane().repaint();

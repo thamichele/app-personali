@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Calendario
+Comment=Calendari CalDAV e compleanni CardDAV, con promemoria
+Exec=calendario
+Icon=calendario
+Terminal=false
+Categories=Office;Calendar;
+StartupWMClass=it-michele-calendario-Main

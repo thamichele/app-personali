@@ -145,12 +145,13 @@ final class Views {
             g.setFont(Ui.font(11, true));
             for (int i = 0; i < 7; i++) {
                 g.setColor(i >= 5 ? Ui.DIM : Ui.OFF);
-                g.drawString(Ui.DAYS_SHORT[i].toUpperCase(), (int) (i * cw) + 10, 20);
+                String dn = cw < 64 ? Ui.DAYS_SHORT[i].substring(0, 1) : Ui.DAYS_SHORT[i].toUpperCase();
+                g.drawString(dn, (int) (i * cw) + (cw < 64 ? 12 : 10), 20);
             }
             g.setColor(Ui.BORDER);
             for (int r = 0; r <= 6; r++) g.drawLine(0, head() + (int) (r * ch), w, head() + (int) (r * ch));
             for (int c = 1; c < 7; c++) g.drawLine((int) (c * cw), head(), (int) (c * cw), getHeight());
-            int rowH = 20;
+            int rowH = ch < 90 ? 17 : 20;
             for (int i = 0; i < 42; i++) {
                 LocalDate d = first.plusDays(i);
                 int x = (int) (i % 7 * cw), y = head() + (int) (i / 7 * ch), cellW = (int) cw;
@@ -171,18 +172,30 @@ final class Views {
                 List<Model.Occ> day = new ArrayList<>();
                 for (Model.Occ o : occs) if (onDay(o, d)) day.add(o);
                 int avail = (int) ((ch - 30) / (rowH + 2));
+                if (day.isEmpty()) continue;
+                if (cellW < 64 || avail < 1) {
+                    // cella piccola: pallini colorati, il clic apre il giorno
+                    int dx = x + 8, dy = y + (int) Math.min(ch - 10, 34);
+                    for (int k = 0; k < day.size() && dx < x + cellW - 8; k++, dx += 9) {
+                        g.setColor(colorOf(day.get(k)));
+                        g.fill(new Ellipse2D.Double(dx, dy, 6, 6));
+                    }
+                    hits.add(new Hit(new Rectangle(x, y, cellW, (int) ch), null, d));
+                    continue;
+                }
                 g.setFont(Ui.font(11, false));
+                boolean showTime = cellW >= 110;
                 for (int k = 0; k < day.size(); k++) {
                     int ey = y + 28 + k * (rowH + 2);
                     if (k == avail - 1 && day.size() > avail) {
-                        String more = "+" + (day.size() - k) + " altri";
+                        String more = "+" + (day.size() - k) + (cellW >= 100 ? " altri" : "");
                         g.setColor(Ui.OFF);
                         g.drawString(more, x + 8, ey + 14);
                         hits.add(new Hit(new Rectangle(x + 4, ey, cellW - 8, rowH), null, d));
                         break;
                     }
                     if (k >= avail) break;
-                    chip(g, day.get(k), x + 4, ey, cellW - 8, rowH, true);
+                    chip(g, day.get(k), x + 4, ey, cellW - 8, rowH, showTime);
                     hits.add(new Hit(new Rectangle(x + 4, ey, cellW - 8, rowH), day.get(k), null));
                 }
             }
@@ -228,10 +241,12 @@ final class Views {
                 boolean t = d.equals(today);
                 g.setFont(Ui.font(11, true));
                 g.setColor(t ? Ui.ACCENT_TEXT : Ui.OFF);
-                g.drawString(Ui.DAYS_SHORT[d.getDayOfWeek().getValue() - 1].toUpperCase(), x + 10, 18);
-                g.setFont(Ui.font(20, true));
+                String dn = Ui.DAYS_SHORT[d.getDayOfWeek().getValue() - 1];
+                int tx = x + (cw < 56 ? 6 : 10);
+                g.drawString(cw < 44 ? dn.substring(0, 1) : dn.toUpperCase(), tx, 18);
+                g.setFont(Ui.font(cw < 56 ? 16 : 20, true));
                 g.setColor(t ? Ui.ACCENT_TEXT : Ui.TEXT);
-                g.drawString(String.valueOf(d.getDayOfMonth()), x + 10, 42);
+                g.drawString(String.valueOf(d.getDayOfMonth()), tx, 42);
                 if (days > 1) hits.add(new Hit(new Rectangle(x, 0, (int) cw, 48), null, d));
                 int k = 0, n = 0;
                 g.setFont(Ui.font(11, false));
@@ -394,8 +409,8 @@ final class Views {
         @Override void paint(Graphics2D g) {
             int y = 16;
             LocalDate last = null;
-            int w = Math.min(getWidth() - 48, 760);
-            int x = 24;
+            int x = getWidth() < 600 ? 12 : 24;
+            int w = Math.min(getWidth() - 2 * x, 760);
             if (occs.isEmpty()) {
                 g.setFont(Ui.font(13, false));
                 g.setColor(Ui.OFF);
@@ -416,32 +431,41 @@ final class Views {
                         y += 22;
                         last = day;
                     }
-                    Rectangle r = new Rectangle(x, y, w, 44);
+                    boolean two = w < 560; // stretta: titolo sopra, orario e luogo sotto
+                    Rectangle r = new Rectangle(x, y, w, two ? 54 : 44);
                     g.setColor(Ui.PANEL);
                     g.fill(new RoundRectangle2D.Double(r.x, r.y, r.width, r.height, 12, 12));
                     g.setColor(Ui.BORDER);
                     g.draw(new RoundRectangle2D.Double(r.x + 0.5, r.y + 0.5, r.width - 1, r.height - 1, 12, 12));
                     g.setColor(colorOf(o));
-                    g.fill(new RoundRectangle2D.Double(r.x + 12, r.y + 12, 4, 20, 4, 4));
-                    g.setFont(Ui.font(12, false));
-                    g.setColor(Ui.OFF);
+                    g.fill(new RoundRectangle2D.Double(r.x + 12, r.y + 12, 4, r.height - 24, 4, 4));
                     String when = o.allDay ? "tutto il giorno" : Ui.time(o.start) + "–" + Ui.time(o.end);
-                    g.drawString(when, r.x + 28, r.y + 27);
-                    g.setFont(Ui.font(13, true));
-                    g.setColor(Ui.TEXT);
-                    String title = o.title();
                     String loc = o.location();
-                    FontMetrics fm = g.getFontMetrics();
-                    int tx = r.x + 28 + 150;
-                    g.drawString(fit(fm, title, w - 190 - (loc != null ? 160 : 0)), tx, r.y + 27);
-                    if (loc != null && !loc.isBlank()) {
+                    boolean hasLoc = loc != null && !loc.isBlank();
+                    if (two) {
+                        g.setFont(Ui.font(13, true));
+                        g.setColor(Ui.TEXT);
+                        g.drawString(fit(g.getFontMetrics(), o.title(), w - 44), r.x + 28, r.y + 23);
+                        g.setFont(Ui.font(11, false));
+                        g.setColor(Ui.OFF);
+                        g.drawString(fit(g.getFontMetrics(), when + (hasLoc ? " · " + loc.trim() : ""), w - 44), r.x + 28, r.y + 41);
+                    } else {
                         g.setFont(Ui.font(12, false));
                         g.setColor(Ui.OFF);
-                        String l = fit(g.getFontMetrics(), loc.trim(), 150);
-                        g.drawString(l, r.x + w - 16 - g.getFontMetrics().stringWidth(l), r.y + 27);
+                        g.drawString(when, r.x + 28, r.y + 27);
+                        int locW = hasLoc ? Math.min(220, (w - 200) / 3) : 0;
+                        g.setFont(Ui.font(13, true));
+                        g.setColor(Ui.TEXT);
+                        g.drawString(fit(g.getFontMetrics(), o.title(), w - 200 - locW), r.x + 28 + 150, r.y + 27);
+                        if (hasLoc) {
+                            g.setFont(Ui.font(12, false));
+                            g.setColor(Ui.OFF);
+                            String l = fit(g.getFontMetrics(), loc.trim(), locW);
+                            g.drawString(l, r.x + w - 16 - g.getFontMetrics().stringWidth(l), r.y + 27);
+                        }
                     }
                     hits.add(new Hit(r, o, null));
-                    y += 50;
+                    y += r.height + 6;
                 }
             }
             if (Math.abs(height - (y + 24)) > 2) {

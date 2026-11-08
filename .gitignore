@@ -7,3 +7,7 @@
 *.pass
 *.apk
 *.idsig
+# makepkg
+apps/*/arch/src/
+apps/*/arch/pkg/
+apps/*/arch/*.pkg.tar.*

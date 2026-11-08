@@ -40,7 +40,8 @@ public final class Main {
         }
         if (!singleInstance()) return;
         Store store = new Store();
-        if (store.scale() > 0) System.setProperty("sun.java2d.uiScale", String.valueOf(store.scale() / 100.0));
+        double scale = store.scale() > 0 ? store.scale() / 100.0 : WINDOWS ? 0 : linuxScale();
+        if (scale > 0) System.setProperty("sun.java2d.uiScale", String.valueOf(scale));
         System.setProperty("awt.useSystemAAFontSettings", "lcd");
         System.setProperty("swing.aatext", "true");
         boolean hidden = Arrays.asList(args).contains("--tray");
@@ -53,6 +54,26 @@ public final class Main {
             window = new MainWindow(store, sync);
             if (!hidden || !window.hasTray()) window.show();
         });
+    }
+
+    /**
+     * Scala automatica su Linux: Java segue GDK_SCALE, ma GNOME/KDE con scala frazionaria o testo ingrandito
+     * la indicano solo in Xft.dpi (96 = 100%). 0 = lascia decidere a Java.
+     */
+    private static double linuxScale() {
+        if (System.getenv("GDK_SCALE") != null) return 0;
+        try {
+            Process p = new ProcessBuilder("xrdb", "-query").redirectErrorStream(true).start();
+            String out = new String(p.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
+            p.waitFor(2, java.util.concurrent.TimeUnit.SECONDS);
+            java.util.regex.Matcher m = java.util.regex.Pattern.compile("Xft\\.dpi:\\s*(\\d+)").matcher(out);
+            if (m.find()) {
+                // su Linux Java accetta solo scale intere: 150% diventa 200%, 125% resta 100%
+                long s = Math.round(Integer.parseInt(m.group(1)) / 96.0);
+                return s >= 2 && s <= 4 ? s : 0;
+            }
+        } catch (Exception ignored) { }
+        return 0;
     }
 
     /**
