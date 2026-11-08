@@ -62,7 +62,9 @@ final class ContactsDialog {
         });
         fill.run();
         d.setContentPane(root);
-        d.setSize(520, 620);
+        java.awt.Rectangle scr = Ui.screen(owner);
+        d.setSize(Math.min(520, scr.width - 32), Math.min(620, scr.height - 32));
+        d.setMinimumSize(new Dimension(Math.min(340, d.getWidth()), Math.min(320, d.getHeight())));
         d.setLocationRelativeTo(owner);
         d.setVisible(true);
     }

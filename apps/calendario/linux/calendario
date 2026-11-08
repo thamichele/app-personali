@@ -1,0 +1,4 @@
+#!/bin/sh
+# Avvio di Calendario installato dal pacchetto (Arch): usa il Java del sistema.
+exec java -Dawt.useSystemAAFontSettings=lcd -Dcalendario.comando=/usr/bin/calendario \
+  -jar /usr/share/java/calendario/calendario.jar "$@"

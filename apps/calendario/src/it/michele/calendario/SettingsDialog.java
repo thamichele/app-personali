@@ -128,7 +128,8 @@ final class SettingsDialog {
         swatches.setMaximumSize(new Dimension(Integer.MAX_VALUE, 34));
         body.add(Ui.labeled("Colore principale", swatches));
         body.add(Ui.gap(12));
-        Ui.Select<Integer> scale = new Ui.Select<>(List.of(0, 100, 125, 150, 175, 200), s -> s == 0 ? "Automatica" : s + "%");
+        Ui.Select<Integer> scale = new Ui.Select<>(Main.WINDOWS ? List.of(0, 100, 125, 150, 175, 200) : List.of(0, 100, 200, 300),
+                s -> s == 0 ? "Automatica" : s + "%"); // su Linux Java scala solo per numeri interi
         scale.set(store.scale());
         JPanel sc = new JPanel(new GridLayout(1, 2, 12, 0));
         sc.setOpaque(false);
@@ -168,13 +169,9 @@ final class SettingsDialog {
         });
         buttons.add(save);
         buttons.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
-        body.add(buttons);
+
         d.getRootPane().setDefaultButton(save);
-        d.setContentPane(body);
-        d.pack();
-        d.setSize(Math.max(520, d.getWidth()), d.getHeight());
-        d.setResizable(false);
-        d.setLocationRelativeTo(owner);
+        Ui.place(d, body, buttons, 540);
         d.setVisible(true);
     }
 

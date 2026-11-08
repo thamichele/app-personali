@@ -152,9 +152,6 @@ final class EventDialog {
         ns.getViewport().setBackground(Ui.BG);
         body.add(Ui.labeled("Note", ns));
         body.add(Ui.gap(8));
-        error.setAlignmentX(0);
-        body.add(error);
-        body.add(Ui.gap(8));
 
         JPanel buttons = new JPanel(new BorderLayout());
         buttons.setOpaque(false);
@@ -178,18 +175,16 @@ final class EventDialog {
             error.setText(why);
         }
         buttons.add(right, BorderLayout.EAST);
+        error.setBorder(Ui.pad(0, 0, 10, 0));
+        buttons.add(error, BorderLayout.NORTH);
         buttons.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
-        body.add(buttons);
+
         if (writable.isEmpty() && editable) {
             error.setText("Nessun calendario scrivibile: configura il server nelle impostazioni");
         }
 
         times();
-        d.setContentPane(body);
-        d.pack();
-        d.setSize(Math.max(460, d.getWidth()), d.getHeight());
-        d.setMinimumSize(d.getSize());
-        d.setLocationRelativeTo(owner);
+        Ui.place(d, body, buttons, 480);
         title.requestFocusInWindow();
     }
 

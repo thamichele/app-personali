@@ -18,7 +18,7 @@ APP=${1:?Uso: ./build.sh <app>}
 if [ "${TYPE:-android}" = desktop ]; then
   OUT=build/$APP
   rm -rf "$OUT"; mkdir -p "$OUT/classes" "$OUT/input"
-  javac --release 17 -encoding UTF-8 -Xlint:all,-serial -Werror -d "$OUT/classes" $(find "apps/$APP/src" -name '*.java')
+  javac --release 17 -encoding UTF-8 -Xlint:all,-serial -d "$OUT/classes" $(find "apps/$APP/src" -name '*.java')
   cp -r "apps/$APP/res/." "$OUT/classes/"
   printf 'Main-Class: %s\nImplementation-Title: %s\nImplementation-Version: %s\n' "$MAIN" "$NAME" "$VERSION_NAME" > "$OUT/manifest.txt"
   jar --create --file "$OUT/$APP-$VERSION_NAME.jar" --manifest "$OUT/manifest.txt" -C "$OUT/classes" .

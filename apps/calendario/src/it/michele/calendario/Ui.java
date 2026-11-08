@@ -205,6 +205,7 @@ final class Ui {
             case "right": poly(g, 9, 6, 15, 12, 9, 18); break;
             case "down": poly(g, 6, 9, 12, 15, 18, 9); break;
             case "close": line(g, 6, 6, 18, 18); line(g, 18, 6, 6, 18); break;
+            case "menu": line(g, 4, 7, 20, 7); line(g, 4, 12, 20, 12); line(g, 4, 17, 20, 17); break;
             case "check": poly(g, 5, 12.5, 10, 17, 19, 7); break;
             case "search":
                 g.draw(new Ellipse2D.Double(5, 5, 12, 12)); line(g, 15.5, 15.5, 20, 20); break;
@@ -294,7 +295,7 @@ final class Ui {
         return l;
     }
 
-    /** Scrive icon.png (256) e icon.ico (16-256, PNG dentro ICO) per i pacchetti; usato da build.sh. */
+    /** Scrive icon.png (256), icon-N.png e icon.ico (16-256, PNG dentro ICO) per i pacchetti; usato da build.sh. */
     static void exportIcons(Path dir) throws IOException {
         Files.createDirectories(dir);
         Color orange = themeColor(0);
@@ -305,6 +306,7 @@ final class Ui {
             ByteArrayOutputStream b = new ByteArrayOutputStream();
             ImageIO.write(appIcon(s, orange), "png", b);
             pngs.add(b.toByteArray());
+            Files.write(dir.resolve("icon-" + s + ".png"), b.toByteArray());
         }
         try (OutputStream out = Files.newOutputStream(dir.resolve("icon.ico"));
              DataOutputStream d = new DataOutputStream(out)) {
@@ -692,6 +694,49 @@ final class Ui {
         d.getRootPane().registerKeyboardAction(e -> d.dispose(), javax.swing.KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
                 JComponent.WHEN_IN_FOCUSED_WINDOW);
         return d;
+    }
+
+    /** Area utile dello schermo su cui si trova la finestra (senza barre di sistema). */
+    static java.awt.Rectangle screen(Window w) {
+        java.awt.GraphicsConfiguration gc = w != null ? w.getGraphicsConfiguration()
+                : java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
+        java.awt.Rectangle r = gc.getBounds();
+        Insets in = java.awt.Toolkit.getDefaultToolkit().getScreenInsets(gc);
+        return new java.awt.Rectangle(r.x + in.left, r.y + in.top, r.width - in.left - in.right, r.height - in.top - in.bottom);
+    }
+
+    /** Contenuto che segue la larghezza della finestra e scorre in verticale quando lo schermo è basso. */
+    private static final class Fit extends JPanel implements javax.swing.Scrollable {
+        Fit(Component c) { super(new BorderLayout()); setOpaque(false); add(c); }
+        @Override public Dimension getPreferredScrollableViewportSize() { return getPreferredSize(); }
+        @Override public int getScrollableUnitIncrement(java.awt.Rectangle r, int o, int d) { return 24; }
+        @Override public int getScrollableBlockIncrement(java.awt.Rectangle r, int o, int d) { return r.height - 40; }
+        @Override public boolean getScrollableTracksViewportWidth() { return true; }
+        @Override public boolean getScrollableTracksViewportHeight() { return getParent() != null && getParent().getHeight() > getPreferredSize().height; }
+    }
+
+    /**
+     * Mette nel dialogo il contenuto (che scorre se serve) e i pulsanti sempre visibili in fondo,
+     * con una dimensione che sta nello schermo anche piccolo o con la scala alta.
+     */
+    static void place(JDialog d, JComponent body, JComponent footer, int width) {
+        JPanel root = new JPanel(new BorderLayout());
+        root.setBackground(PANEL);
+        body.setBorder(pad(20, 20, 4, 20));
+        JScrollPane sp = scroll(new Fit(body));
+        sp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        sp.getViewport().setBackground(PANEL);
+        sp.setBackground(PANEL);
+        root.add(sp, BorderLayout.CENTER);
+        footer.setBorder(pad(10, 20, 16, 20));
+        root.add(footer, BorderLayout.SOUTH);
+        d.setContentPane(root);
+        d.pack();
+        java.awt.Rectangle scr = screen(d.getOwner());
+        int w = Math.min(Math.max(width, d.getWidth()), scr.width - 32), h = Math.min(d.getHeight(), scr.height - 32);
+        d.setSize(w, h);
+        d.setMinimumSize(new Dimension(Math.min(360, w), Math.min(300, h)));
+        d.setLocationRelativeTo(d.getOwner());
     }
 
     /** Domanda con più risposte (l'ultima è quella principale); restituisce l'indice scelto o -1. */

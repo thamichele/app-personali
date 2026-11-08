@@ -21,7 +21,8 @@ final class Autostart {
     /** Comando che avvia questa installazione: l'eseguibile del pacchetto, altrimenti java -jar. */
     static List<String> command() {
         List<String> cmd = new ArrayList<>();
-        String app = System.getProperty("jpackage.app-path");
+        // eseguibile del pacchetto jpackage (Windows, .deb) o lanciatore del pacchetto Arch
+        String app = System.getProperty("jpackage.app-path", System.getProperty("calendario.comando"));
         if (app != null) cmd.add(app);
         else {
             cmd.add(Paths.get(System.getProperty("java.home"), "bin", Main.WINDOWS ? "javaw.exe" : "java").toString());

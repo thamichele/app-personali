@@ -1,0 +1,30 @@
+# Pacchetto Arch di Calendario, compilato dai sorgenti di questo repository.
+# Da qui: `makepkg -si` (compila e installa). In CI lo crea il job "arch" e va nella release.
+pkgname=calendario
+pkgver=$(sed -n 's/^VERSION_NAME=//p' "$startdir/../app.conf")
+pkgrel=1
+pkgdesc="Calendario per PC: calendari CalDAV e compleanni CardDAV, con promemoria"
+arch=('any')
+url="https://github.com/thamichele/app-personali/tree/main/apps/calendario"
+license=('LicenseRef-proprietary' 'OFL-1.1')
+depends=('java-runtime>=17' 'libnotify' 'hicolor-icon-theme')
+makedepends=('java-environment>=17')
+
+_root="$startdir/../../.."
+
+build() {
+  cd "$_root"
+  ./build.sh calendario
+  java -Djava.awt.headless=true -cp build/calendario/classes it.michele.calendario.Main --icone build/calendario/icone
+}
+
+package() {
+  cd "$_root"
+  install -Dm644 "build/calendario/calendario-$pkgver.jar" "$pkgdir/usr/share/java/calendario/calendario.jar"
+  install -Dm755 apps/calendario/linux/calendario "$pkgdir/usr/bin/calendario"
+  install -Dm644 apps/calendario/linux/calendario.desktop "$pkgdir/usr/share/applications/calendario.desktop"
+  for s in 16 24 32 48 64 128 256; do
+    install -Dm644 "build/calendario/icone/icon-$s.png" "$pkgdir/usr/share/icons/hicolor/${s}x${s}/apps/calendario.png"
+  done
+  install -Dm644 apps/calendario/JetBrainsMono-OFL.txt "$pkgdir/usr/share/licenses/calendario/JetBrainsMono-OFL.txt"
+}

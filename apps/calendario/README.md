@@ -9,6 +9,9 @@ compleanni dei contatti CardDAV e avvisa degli eventi con i promemoria.
   luogo, note, ripetizioni (ogni giorno/settimana/mese/anno; le regole più complesse fatte con altre app si vedono
   e restano intatte) e modifica o eliminazione di una sola volta di un evento ripetuto.
 - **Viste**: mese, settimana, giorno, agenda dei prossimi 60 giorni, mini mese nella barra laterale.
+  Si adatta alla finestra: sotto i 980 punti la barra laterale si apre col pulsante menu, sotto gli 820 la vista si
+  sceglie da un menu, le celle piccole mostrano pallini colorati; i dialoghi scorrono sugli schermi bassi. La scala
+  segue il sistema (anche quella frazionaria di GNOME/KDE) o si imposta nelle Impostazioni.
   Doppio clic su uno spazio vuoto per creare un evento. Tasti: ← → per spostarsi, T oggi, M/S/G/A per la vista,
   Ctrl+N nuovo evento, F5 sincronizza.
 - **Promemoria**: notifica di sistema e finestrella con "Posticipa 5 min". Funzionano finché l'app è aperta: chiudendo
@@ -27,8 +30,12 @@ compleanni dei contatti CardDAV e avvisa degli eventi con i promemoria.
 ## Installare
 Dalla [release](https://github.com/thamichele/app-personali/releases) `calendario-vX.Y.Z` (Java incluso):
 - **Windows**: estrai `calendario-X.Y.Z-windows.zip` e avvia `Calendario\Calendario.exe`.
-- **Linux**: installa `calendario-X.Y.Z-linux.deb` (Debian, Ubuntu, Mint: compare nel menu) oppure estrai il
+- **Arch**: `sudo pacman -U calendario-X.Y.Z-1-any.pkg.tar.zst` (usa il Java del sistema, compare nel menu e si
+  avvia con `calendario`). Oppure dai sorgenti: `cd apps/calendario/arch && makepkg -si`.
+- **Debian, Ubuntu, Mint**: installa `calendario-X.Y.Z-linux.deb` (Debian, Ubuntu, Mint: compare nel menu) oppure estrai il
   `.tar.gz` e avvia `Calendario/bin/Calendario`. Le notifiche usano `notify-send` (pacchetto `libnotify-bin`).
+- Avviata dal terminale si chiude con lui: meglio dal menu. Con "Avvia con il computer" parte all'accesso e resta
+  nell'area di notifica (su GNOME serve l'estensione AppIndicator, altrimenti chiudendo la finestra si chiude).
 
 ## Build
 `./build.sh calendario` crea il jar (`java -jar build/calendario/calendario-X.Y.Z.jar`, JDK 17+).
