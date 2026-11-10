@@ -8,10 +8,10 @@
     "--pretty"
   ],
   "disabled": [],
-  "endTimestamp": 1794304137509,
+  "endTimestamp": 1794305188344,
   "failedBuilds": {},
   "fdroiddata": {
-    "commitId": "c59d71c11b8bf2a69c53ecf7be14b6229c5ef2d2",
+    "commitId": "c55b91ba40813444bf6b1af9637f22580e50efcb",
     "isDirty": false,
     "modifiedFiles": [],
     "untrackedFiles": [
@@ -43,17 +43,17 @@
     "it.michele.wgswitch"
   ],
   "stages": {
-    "archive_old_apks archive": 1794304129492,
-    "delete_disabled_builds": 1794304114309,
-    "index.make archive": 1794304129493,
-    "index.make repo": 1794304134268,
-    "prepare_apps archive": 1794304129493,
-    "prepare_apps repo": 1794304134267,
-    "process_apks": 1794304114309,
-    "read_added_date_from_all_apks": 1794304129491,
-    "remove_apks": 1794304121594,
-    "scan_repo_files": 1794304121593
+    "archive_old_apks archive": 1794305180880,
+    "delete_disabled_builds": 1794305166233,
+    "index.make archive": 1794305180881,
+    "index.make repo": 1794305185205,
+    "prepare_apps archive": 1794305180881,
+    "prepare_apps repo": 1794305185204,
+    "process_apks": 1794305166233,
+    "read_added_date_from_all_apks": 1794305180879,
+    "remove_apks": 1794305172962,
+    "scan_repo_files": 1794305172961
   },
-  "startTimestamp": 1794304112000,
+  "startTimestamp": 1794305164000,
   "subcommand": "update"
 }
