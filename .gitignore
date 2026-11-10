@@ -11,3 +11,4 @@
 apps/*/arch/src/
 apps/*/arch/pkg/
 apps/*/arch/*.pkg.tar.*
+__pycache__/

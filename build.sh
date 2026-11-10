@@ -45,6 +45,18 @@ if [ "${TYPE:-android}" = desktop ]; then
   ls -la "$OUT"/*.zip "$OUT"/*.tar.gz "$OUT"/*.deb 2>/dev/null || true
   exit 0
 fi
+
+# App da terminale (TYPE=cli in app.conf): Python puro, nessuna dipendenza pip. Niente da compilare:
+# la "build" controlla la sintassi e crea un tar della cartella (install.sh la copia in ~/.local).
+if [ "${TYPE:-android}" = cli ]; then
+  OUT=build/$APP
+  rm -rf "$OUT"; mkdir -p "$OUT"
+  python3 -m compileall -q "apps/$APP/src"
+  tar -C "apps/$APP" --exclude='__pycache__' -czf "$OUT/$APP-$VERSION_NAME.tar.gz" .
+  echo "Pacchetto: $OUT/$APP-$VERSION_NAME.tar.gz"
+  exit 0
+fi
+
 # La password della chiave non è nel repository: passala con KS_PASS. Senza keystore ne viene creato uno nuovo
 # (va bene solo per build di prova: gli aggiornamenti richiedono sempre la chiave originale).
 : "${ANDROID_CLASSES:?}" "${ANDROID_RES:?}" "${KEYSTORE:=keystore/$APP.jks}" "${KS_PASS:?}"
