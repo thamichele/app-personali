@@ -55,6 +55,31 @@ jobs:
           path: build/${{ matrix.app }}/${{ matrix.app }}-*.apk
           if-no-files-found: error
 
+  # App da terminale (TYPE=cli in app.conf): Python puro, nessuna dipendenza pip
+  cli:
+    if: github.event_name != 'schedule'
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        app: [ b1g-pentester ]
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Controlla la sintassi e impacchetta
+        run: ./build.sh ${{ matrix.app }}
+
+      - name: Avvio di prova (senza TTY esce subito)
+        run: |
+          command -v ssh >/dev/null || sudo apt-get install -y -q openssh-client
+          printf 'q\n' | PYTHONPATH=apps/${{ matrix.app }}/src python3 -m b1gpentester
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.app }}
+          path: build/${{ matrix.app }}/${{ matrix.app }}-*.tar.gz
+          if-no-files-found: error
+
   # App per PC (TYPE=desktop in app.conf): pacchetto con Java incluso, costruito su ciascun sistema
   desktop:
     if: github.event_name != 'schedule'
@@ -207,7 +232,7 @@ jobs:
           echo "$RELEASE_KEYSTORE_BASE64" | base64 -d > "$KEYSTORE"
           : > "$RUNNER_TEMP/apks"
           for conf in apps/*/app.conf; do
-            grep -q '^TYPE=desktop' "$conf" && continue # app per PC: job desktop-release
+            grep -qE '^TYPE=(desktop|cli)' "$conf" && continue # app per PC: job desktop-release; CLI: non si pubblica
             APP=$(basename "$(dirname "$conf")")
             VERSION=$(sed -n 's/^VERSION_NAME=//p' "$conf")
             if gh release view "$APP-v$VERSION" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
