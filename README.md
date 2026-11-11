@@ -6,7 +6,6 @@ interfaccia costruita da codice, nessuna libreria esterna, build senza Gradle.
 |-----|---------|
 | [Sveglia](apps/sveglia/README.md) | Sveglie multiple che suonano con un'app musicale (WebRadioDroid, Qobuz, ...) |
 | [Calendario](apps/calendario/README.md) | Per PC (Windows e Linux): calendari CalDAV e compleanni CardDAV, con promemoria |
-| [B1g-Pentester](apps/b1g-pentester/README.md) | Per Linux, da terminale: pentesting SSH della propria rete (solo su dispositivi propri) |
 
 Nel repository F-Droid ci sono anche le app che hanno un repository GitHub proprio:
 
@@ -30,10 +29,6 @@ che Android accetta solo se firmati con la stessa chiave. Ogni app ha la sua chi
 Un'app per PC ha invece `TYPE=desktop` e `MAIN` in `app.conf`, i sorgenti in `src/`, le risorse in `res/` e va nella
 matrice del job `desktop`: `build.sh` crea il jar e, con `PACKAGE=1`, il pacchetto con Java incluso (jpackage).
 Le release per Windows e Linux le pubblica il job `desktop-release`; non va nel repository F-Droid.
-
-Un'app da terminale per Linux ha `TYPE=cli` in `app.conf` e i sorgenti Python (libreria standard, niente `pip`) in
-`src/`: `build.sh` controlla la sintassi e crea un tar; `install.sh` la installa in `~/.local`. Va nella matrice del
-job `cli`; non ha release né repository F-Droid.
 
 Un'app che resta nel suo repository basta aggiungerla a `fdroid/esterne.txt` (indirizzo del suo repository F-Droid)
 e alla seconda tabella: `fdroid.sh` ne copia l'ultima versione, con la sua firma, nel repository unico.
