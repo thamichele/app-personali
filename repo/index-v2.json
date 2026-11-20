@@ -14,7 +14,7 @@
       }
     },
     "address": "https://raw.githubusercontent.com/thamichele/app-personali/fdroid/repo",
-    "timestamp": 1795184211000,
+    "timestamp": 1795184560000,
     "categories": {
       "Connectivity": {
         "name": {
@@ -272,7 +272,7 @@
           "Multimedia"
         ],
         "issueTracker": "https://github.com/thamichele/SMBCommander/issues",
-        "lastUpdated": 1795184199000,
+        "lastUpdated": 1795184548000,
         "license": "Proprietary",
         "sourceCode": "https://github.com/thamichele/SMBCommander",
         "authorName": "Michele",
@@ -288,6 +288,81 @@
         "preferredSigner": "3b92a1bacd13aa6c05b651eb0a2489c8032f62b4f7c6834835cae72e23d9028c"
       },
       "versions": {
+        "d467f31b2f8e696ea2e889716b8e18aacef3fbb831fa9169e9391e06ce9410c1": {
+          "added": 1795184548000,
+          "file": {
+            "name": "/io.github.thamichele.smbcommander_1021000.apk",
+            "sha256": "d467f31b2f8e696ea2e889716b8e18aacef3fbb831fa9169e9391e06ce9410c1",
+            "size": 18417637
+          },
+          "manifest": {
+            "nativecode": [
+              "arm64-v8a",
+              "armeabi-v7a",
+              "x86",
+              "x86_64"
+            ],
+            "versionName": "1.21.0",
+            "versionCode": 1021000,
+            "usesSdk": {
+              "minSdkVersion": 26,
+              "targetSdkVersion": 37
+            },
+            "signer": {
+              "sha256": [
+                "3b92a1bacd13aa6c05b651eb0a2489c8032f62b4f7c6834835cae72e23d9028c"
+              ]
+            },
+            "usesPermission": [
+              {
+                "name": "android.permission.INTERNET"
+              },
+              {
+                "name": "android.permission.READ_MEDIA_IMAGES"
+              },
+              {
+                "name": "android.permission.READ_MEDIA_VIDEO"
+              },
+              {
+                "name": "android.permission.READ_EXTERNAL_STORAGE",
+                "maxSdkVersion": 32
+              },
+              {
+                "name": "android.permission.ACCESS_MEDIA_LOCATION"
+              },
+              {
+                "name": "android.permission.POST_NOTIFICATIONS"
+              },
+              {
+                "name": "android.permission.FOREGROUND_SERVICE"
+              },
+              {
+                "name": "android.permission.FOREGROUND_SERVICE_DATA_SYNC"
+              },
+              {
+                "name": "android.permission.WAKE_LOCK"
+              },
+              {
+                "name": "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"
+              },
+              {
+                "name": "android.permission.USE_BIOMETRIC"
+              },
+              {
+                "name": "android.permission.USE_FINGERPRINT"
+              },
+              {
+                "name": "android.permission.ACCESS_NETWORK_STATE"
+              },
+              {
+                "name": "android.permission.RECEIVE_BOOT_COMPLETED"
+              },
+              {
+                "name": "io.github.thamichele.smbcommander.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+              }
+            ]
+          }
+        },
         "65abd483971abc95206f78c7e5fccaec7fc57e7645716af3b9c1c7d1f8d3a5f0": {
           "added": 1795184199000,
           "file": {
@@ -379,81 +454,6 @@
             ],
             "versionName": "1.19.0",
             "versionCode": 1019000,
-            "usesSdk": {
-              "minSdkVersion": 26,
-              "targetSdkVersion": 37
-            },
-            "signer": {
-              "sha256": [
-                "3b92a1bacd13aa6c05b651eb0a2489c8032f62b4f7c6834835cae72e23d9028c"
-              ]
-            },
-            "usesPermission": [
-              {
-                "name": "android.permission.INTERNET"
-              },
-              {
-                "name": "android.permission.READ_MEDIA_IMAGES"
-              },
-              {
-                "name": "android.permission.READ_MEDIA_VIDEO"
-              },
-              {
-                "name": "android.permission.READ_EXTERNAL_STORAGE",
-                "maxSdkVersion": 32
-              },
-              {
-                "name": "android.permission.ACCESS_MEDIA_LOCATION"
-              },
-              {
-                "name": "android.permission.POST_NOTIFICATIONS"
-              },
-              {
-                "name": "android.permission.FOREGROUND_SERVICE"
-              },
-              {
-                "name": "android.permission.FOREGROUND_SERVICE_DATA_SYNC"
-              },
-              {
-                "name": "android.permission.WAKE_LOCK"
-              },
-              {
-                "name": "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"
-              },
-              {
-                "name": "android.permission.USE_BIOMETRIC"
-              },
-              {
-                "name": "android.permission.USE_FINGERPRINT"
-              },
-              {
-                "name": "android.permission.ACCESS_NETWORK_STATE"
-              },
-              {
-                "name": "android.permission.RECEIVE_BOOT_COMPLETED"
-              },
-              {
-                "name": "io.github.thamichele.smbcommander.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
-              }
-            ]
-          }
-        },
-        "69f31942118fe292bef4febefbe108afb0b66ff629b99a4d5fc5e916857b7c3c": {
-          "added": 1794843705000,
-          "file": {
-            "name": "/io.github.thamichele.smbcommander_1018000.apk",
-            "sha256": "69f31942118fe292bef4febefbe108afb0b66ff629b99a4d5fc5e916857b7c3c",
-            "size": 18244957
-          },
-          "manifest": {
-            "nativecode": [
-              "arm64-v8a",
-              "armeabi-v7a",
-              "x86",
-              "x86_64"
-            ],
-            "versionName": "1.18.0",
-            "versionCode": 1018000,
             "usesSdk": {
               "minSdkVersion": 26,
               "targetSdkVersion": 37
